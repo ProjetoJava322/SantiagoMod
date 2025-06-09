@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "santiago_tools",
+  "key": {
+    "g": "santiago:underline",
+    "s": "santiago:santiaguita_ingot"
+  },
+  "pattern": [
+    "sss",
+    " g ",
+    " g "
+  ],
+  "result": {
+    "count": 1,
+    "id": "santiago:santiaguita_pickaxe"
+  }
+}

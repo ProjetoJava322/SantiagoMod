@@ -1,0 +1,16 @@
+{
+  "popipo": {
+    "category": "neutral",
+    "sounds": [
+      "santiago:popipo"
+    ],
+    "subtitle": "sound.santiago.popipo"
+  },
+  "temmie": {
+    "category": "neutral",
+    "sounds": [
+      "santiago:temmie"
+    ],
+    "subtitle": "sound.santiago.temmie"
+  }
+}

@@ -1,0 +1,4 @@
+// 1.21.5	-999999999-01-01T00:00:00	Santiago/Block Loot Tables
+baf1b03c73e6650cc88bef66c68a5577836c88aa data/santiago/loot_table/blocks/cat_block.json
+33f35a72f7c368aad7670386e034d8ff6f97cc1e data/santiago/loot_table/blocks/creature_block.json
+1912ed20b464537f2f78cf78ccb69a611248ef55 data/santiago/loot_table/blocks/miku_block.json

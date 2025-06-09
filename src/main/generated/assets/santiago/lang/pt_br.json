@@ -1,0 +1,18 @@
+{
+  "block.santiago.cat_block": "Bloco de Gato",
+  "block.santiago.creature_block": "Bloco de Criatura",
+  "block.santiago.miku_block": "Blocosune Miku",
+  "item.santiago.cat_block": "Bloco de Gato",
+  "item.santiago.creature_block": "Bloco de Criatura",
+  "item.santiago.hamster": "Hamster",
+  "item.santiago.miku_block": "Blocosune Miku",
+  "item.santiago.santiaguita_axe": "Machado de Santiaguita",
+  "item.santiago.santiaguita_hoe": "Enxada de Santiaguita",
+  "item.santiago.santiaguita_ingot": "Barra de Santiaguita",
+  "item.santiago.santiaguita_pickaxe": "Picareta de Santiaguita",
+  "item.santiago.santiaguita_shovel": "Pá de Santiaguita",
+  "item.santiago.santiaguita_sword": "Espada de Santiaguita",
+  "item.santiago.super_snowball": "Rasenga",
+  "item.santiago.underline": "Guião Baixo",
+  "itemGroup.santiago": "Mod do Santiago"
+}

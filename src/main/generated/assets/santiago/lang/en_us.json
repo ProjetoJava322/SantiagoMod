@@ -1,0 +1,19 @@
+{
+  "block.santiago.cat_block": "Block of Cat",
+  "block.santiago.creature_block": "Block of Creature",
+  "block.santiago.miku_block": "Blocksune Miku",
+  "item.santiago.cat_block": "Block of Cat",
+  "item.santiago.creature_block": "Block of Creature",
+  "item.santiago.hamster": "Hamster",
+  "item.santiago.miku_block": "Blocksune Miku",
+  "item.santiago.santiaguita_axe": "Santiaguita Axe",
+  "item.santiago.santiaguita_hoe": "Santiaguita Hoe",
+  "item.santiago.santiaguita_ingot": "Santiaguita Ingot",
+  "item.santiago.santiaguita_pickaxe": "Santiaguita Pickaxe",
+  "item.santiago.santiaguita_shovel": "Santiaguita Shovel",
+  "item.santiago.santiaguita_sword": "Santiaguita Sword",
+  "item.santiago.super_snowball": "Super Snowball",
+  "item.santiago.underline": "Downwards Guide",
+  "itemGroup.santiago": "Santiago Mod",
+  "sound.santiago.temmie": "Temmie Talking"
+}

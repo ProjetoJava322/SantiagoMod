@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "santiago:block/creature_block"
+    }
+  }
+}
