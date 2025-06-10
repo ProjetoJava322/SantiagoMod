@@ -1,4 +1,4 @@
-package org.amemeida.santiago.client.datagen;
+package org.amemeida.santiago.client.datagen.tags;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -13,8 +13,8 @@ import org.amemeida.santiago.registry.ModTags;
 
 import java.util.concurrent.CompletableFuture;
 
-public class TagGenerator extends FabricTagProvider<Item> {
-    public TagGenerator(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+public class ItemTagGenerator extends FabricTagProvider<Item> {
+    public ItemTagGenerator(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
         super(output, RegistryKeys.ITEM, registriesFuture);
     }
 

@@ -2,6 +2,8 @@ package org.amemeida.santiago.client.datagen.loot;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryWrapper;
 import org.amemeida.santiago.registry.ModBlocks;
 import org.amemeida.santiago.registry.ModItems;
@@ -19,7 +21,11 @@ public class BlockLootGenerator extends FabricBlockLootTableProvider {
         addDrop(ModBlocks.CREATURE_BLOCK);
         addDrop(ModBlocks.MIKU_BLOCK);
 
-        oreDrops(ModBlocks.SANTIAGUITA_ORE, ModItems.RAW_SANTIAGUITA);
-        oreDrops(ModBlocks.DEEPSLATE_SANTIAGUITA_ORE, ModItems.RAW_SANTIAGUITA);
+        addOre(ModBlocks.SANTIAGUITA_ORE, ModItems.RAW_SANTIAGUITA);
+        addOre(ModBlocks.DEEPSLATE_SANTIAGUITA_ORE, ModItems.RAW_SANTIAGUITA);
+    }
+
+    public void addOre(Block block, Item item) {
+        addDrop(block, oreDrops(block, item));
     }
 }

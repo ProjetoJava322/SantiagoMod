@@ -4,6 +4,8 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import org.amemeida.santiago.client.datagen.loot.BlockLootGenerator;
 import org.amemeida.santiago.client.datagen.loot.ChestLootGenerator;
+import org.amemeida.santiago.client.datagen.tags.BlockTagGenerator;
+import org.amemeida.santiago.client.datagen.tags.ItemTagGenerator;
 import org.amemeida.santiago.client.datagen.translations.EnglishGenerator;
 import org.amemeida.santiago.client.datagen.translations.PortugueseGenerator;
 
@@ -13,7 +15,8 @@ public class SantiagoDataGenerator implements DataGeneratorEntrypoint {
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
-        pack.addProvider(TagGenerator::new);
+        pack.addProvider(ItemTagGenerator::new);
+        pack.addProvider(BlockTagGenerator::new);
 
         pack.addProvider(EnglishGenerator::new);
         pack.addProvider(PortugueseGenerator::new);
