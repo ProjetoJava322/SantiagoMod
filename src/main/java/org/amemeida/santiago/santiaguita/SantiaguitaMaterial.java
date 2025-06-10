@@ -13,7 +13,7 @@ public class SantiaguitaMaterial {
             TagKey.of(RegistryKeys.ITEM, Identifier.of(Santiago.MOD_ID, "repairs_santiaguita"));
 
     public static final ToolMaterial TOOL_MATERIAL = new ToolMaterial(
-            BlockTags.INCORRECT_FOR_NETHERITE_TOOL,
+            BlockTags.INCORRECT_FOR_IRON_TOOL,
             1000,
             10,
             8,

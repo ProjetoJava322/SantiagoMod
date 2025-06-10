@@ -20,9 +20,9 @@ public class ModBlocks {
     public static final Block CREATURE_BLOCK = register("creature_block");
 
     public static final Block SANTIAGUITA_ORE = register("santiaguita_ore",
-            AbstractBlock.Settings.create().requiresTool().hardness(3.5f));
+            AbstractBlock.Settings.create().requiresTool().strength(4.5f));
     public static final Block DEEPSLATE_SANTIAGUITA_ORE = register("deepslate_santiaguita_ore",
-            AbstractBlock.Settings.create().requiresTool().hardness(4f));
+            AbstractBlock.Settings.create().requiresTool().strength(4f));
 
     private static Block register(String name) {
         return register(name, Block::new, AbstractBlock.Settings.create());

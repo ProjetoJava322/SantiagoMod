@@ -1,2 +1,4 @@
 // 1.21.5	-999999999-01-01T00:00:00	Santiago/Tags for minecraft:block
+36fec5e970d21f4429e4ec59b7e735ffe72cedbb data/c/tags/block/ores.json
 36fec5e970d21f4429e4ec59b7e735ffe72cedbb data/minecraft/tags/block/mineable/pickaxe.json
+36fec5e970d21f4429e4ec59b7e735ffe72cedbb data/minecraft/tags/block/needs_diamond_tool.json
