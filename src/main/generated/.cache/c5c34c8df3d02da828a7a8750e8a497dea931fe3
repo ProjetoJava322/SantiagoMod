@@ -1,2 +1,13 @@
 // 1.21.5	-999999999-01-01T00:00:00	Santiago/Tags for minecraft:item
+129c38e7519a3bb42c3ca6a00c0a03d30d91719c data/c/tags/item/ingots.json
+ac49bc04f67cc0c71515e5b4a9caeb9ac145cca6 data/c/tags/item/ores.json
+811a5fc431495fc6be214ade5ad2df4a5ebe1a81 data/c/tags/item/raw_materials.json
+21c3eef07be9532d072cbfeab502b23396f89901 data/c/tags/item/rods.json
+3d1938e3990eb2fe089dc0797b9b5c40ee0ed656 data/c/tags/item/tools.json
+bc0985403f2b50ebe93d39aeda1a08ae26417495 data/c/tags/item/tools/melee_weapon.json
+06f37b7bb43f8fe106c0740f432b9fe3e341fda6 data/minecraft/tags/item/axes.json
+cefee17462b3d14a032531ad935c1a2c3dae82f3 data/minecraft/tags/item/hoes.json
+648aeca9e154a136f8cb6bc6b8b3e4e50c786833 data/minecraft/tags/item/pickaxes.json
+112d4faa03b1436a78f04f8444e0265ca566f3cd data/minecraft/tags/item/shovels.json
+381f4389eb19d44acae8cf6bceeb39584a9e95b9 data/minecraft/tags/item/swords.json
 129c38e7519a3bb42c3ca6a00c0a03d30d91719c data/santiago/tags/item/repairs_santiaguita.json

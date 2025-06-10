@@ -6,7 +6,6 @@ import org.amemeida.santiago.client.datagen.loot.BlockLootGenerator;
 import org.amemeida.santiago.client.datagen.loot.ChestLootGenerator;
 import org.amemeida.santiago.client.datagen.translations.EnglishGenerator;
 import org.amemeida.santiago.client.datagen.translations.PortugueseGenerator;
-import org.amemeida.santiago.client.datagen.translations.Translator;
 
 public class SantiagoDataGenerator implements DataGeneratorEntrypoint {
 

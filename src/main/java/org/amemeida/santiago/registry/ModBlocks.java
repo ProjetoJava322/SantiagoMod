@@ -2,12 +2,9 @@ package org.amemeida.santiago.registry;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.FurnaceBlockEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -58,9 +55,7 @@ public class ModBlocks {
 
             BlockItem blockItem = new BlockItem(block, new Item.Settings().registryKey(itemKey));
 
-            ItemGroupEvents.modifyEntriesEvent(ModGroups.DEFAULT_GROUP_KEY).register(group -> {
-                group.add(blockItem);
-            });
+            ItemGroupEvents.modifyEntriesEvent(ModGroups.DEFAULT_GROUP_KEY).register(group -> group.add(blockItem));
 
             Registry.register(Registries.ITEM, itemKey, blockItem);
         }

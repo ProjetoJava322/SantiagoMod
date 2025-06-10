@@ -6,7 +6,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.sound.SoundEvent;
-import org.amemeida.santiago.Santiago;
 
 import java.util.concurrent.CompletableFuture;
 

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 150,
+  "experience": 2.0,
+  "group": "santiaguita_ingot_from_blasting_santiaguita_ore",
+  "ingredient": "santiago:santiaguita_ore",
+  "result": {
+    "id": "santiago:santiaguita_ingot"
+  }
+}

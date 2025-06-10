@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw_santiaguita": {
+      "conditions": {
+        "items": [
+          {
+            "items": "santiago:raw_santiaguita"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:santiaguita_ingot_from_blasting_raw_santiaguita"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_raw_santiaguita"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:santiaguita_ingot_from_blasting_raw_santiaguita"
+    ]
+  }
+}

@@ -3,7 +3,7 @@
   "category": "food",
   "cookingtime": 20,
   "experience": 0.1,
-  "group": "slime_to_hamster",
+  "group": "smelt_slime_to_hamster",
   "ingredient": "minecraft:slime_ball",
   "result": {
     "id": "santiago:hamster"

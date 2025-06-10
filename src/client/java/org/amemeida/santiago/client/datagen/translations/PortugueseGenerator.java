@@ -1,7 +1,6 @@
 package org.amemeida.santiago.client.datagen.translations;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.registry.RegistryWrapper;
 import org.amemeida.santiago.registry.ModBlocks;
 import org.amemeida.santiago.registry.ModItems;

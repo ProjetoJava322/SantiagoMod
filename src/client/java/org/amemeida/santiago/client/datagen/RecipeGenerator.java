@@ -3,10 +3,8 @@ package org.amemeida.santiago.client.datagen;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.data.recipe.RecipeExporter;
-import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import org.amemeida.santiago.registry.ModBlocks;
 import org.amemeida.santiago.registry.ModItems;
@@ -24,8 +22,6 @@ public class RecipeGenerator extends FabricRecipeProvider {
         return new net.minecraft.data.recipe.RecipeGenerator(registryLookup, exporter) {
             @Override
             public void generate() {
-                RegistryWrapper.Impl<Item> itemLookup = registries.getOrThrow(RegistryKeys.ITEM);
-
                 createShaped(RecipeCategory.TOOLS, ModItems.SANTIAGUITA_PICKAXE)
                         .pattern("sss")
                         .pattern(" g ")

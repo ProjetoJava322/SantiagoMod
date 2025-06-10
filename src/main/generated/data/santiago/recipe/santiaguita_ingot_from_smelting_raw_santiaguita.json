@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 300,
+  "experience": 2.0,
+  "group": "santiaguita_ingot_from_smelting_raw_santiaguita",
+  "ingredient": "santiago:raw_santiaguita",
+  "result": {
+    "id": "santiago:santiaguita_ingot"
+  }
+}

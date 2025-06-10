@@ -2,10 +2,6 @@ package org.amemeida.santiago.client.datagen.loot;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.function.ApplyBonusLootFunction;
-import net.minecraft.loot.function.LootFunction;
 import net.minecraft.registry.RegistryWrapper;
 import org.amemeida.santiago.registry.ModBlocks;
 import org.amemeida.santiago.registry.ModItems;

@@ -4,10 +4,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DeathProtectionComponent;
 import net.minecraft.component.type.FoodComponents;
-import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -62,9 +59,7 @@ public class ModItems {
         // Create the item instance.
         Item item = itemFactory.apply(settings.registryKey(itemKey));
 
-        ItemGroupEvents.modifyEntriesEvent(ModGroups.DEFAULT_GROUP_KEY).register(group -> {
-            group.add(item);
-        });
+        ItemGroupEvents.modifyEntriesEvent(ModGroups.DEFAULT_GROUP_KEY).register(group -> group.add(item));
 
         // Register the item.
         Registry.register(Registries.ITEM, itemKey, item);
