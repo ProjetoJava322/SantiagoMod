@@ -9,7 +9,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
 import org.amemeida.santiago.registry.ModBlocks;
 import org.amemeida.santiago.registry.ModItems;
-import org.amemeida.santiago.santiaguita.SantiaguitaMaterial;
+import org.amemeida.santiago.registry.ModTags;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -20,7 +20,7 @@ public class TagGenerator extends FabricTagProvider<Item> {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-        getOrCreateTagBuilder(SantiaguitaMaterial.REPAIRS_SANTIAGUITA)
+        getOrCreateTagBuilder(ModTags.REPAIRS_SANTIAGUITA)
                 .add(ModItems.SANTIAGUITA_INGOT);
 
         getOrCreateTagBuilder(ItemTags.PICKAXES)

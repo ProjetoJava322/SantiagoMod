@@ -1,14 +1,11 @@
 package org.amemeida.santiago.registry;
 
 import net.minecraft.item.Item;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
-import org.amemeida.santiago.Santiago;
+import org.amemeida.santiago.santiaguita.SantiaguitaMaterial;
 
 public class ModTags {
-    public static final TagKey<Item> REPAIRS_SANTIAGUITA =
-            TagKey.of(RegistryKeys.ITEM, Identifier.of(Santiago.MOD_ID, "repairs_santiaguita"));
+    public static final TagKey<Item> REPAIRS_SANTIAGUITA = SantiaguitaMaterial.REPAIRS_SANTIAGUITA;
 
     public static void initialize() {}
 }
