@@ -14,7 +14,7 @@ import org.amemeida.santiago.Santiago;
 public class ModGroups {
     public static final RegistryKey<ItemGroup> DEFAULT_GROUP_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(Santiago.MOD_ID, "item_group"));
     public static final ItemGroup DEFAULT_GROUP = FabricItemGroup.builder()
-            .icon(() -> new ItemStack(Items.POTATO))
+            .icon(() -> new ItemStack(ModItems.SANTIAGUITA_PICKAXE))
             .displayName(Text.translatable("itemGroup.santiago"))
             .build();
 
