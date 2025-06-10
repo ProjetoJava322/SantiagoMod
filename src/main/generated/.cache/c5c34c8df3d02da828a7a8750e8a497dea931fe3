@@ -1,6 +1,7 @@
 // 1.21.5	-999999999-01-01T00:00:00	Santiago/Tags for minecraft:item
 129c38e7519a3bb42c3ca6a00c0a03d30d91719c data/c/tags/item/ingots.json
-ac49bc04f67cc0c71515e5b4a9caeb9ac145cca6 data/c/tags/item/ores.json
+36fec5e970d21f4429e4ec59b7e735ffe72cedbb data/c/tags/item/ores.json
+a64939c25b5892bac5f0d8cd1352da2eca517763 data/c/tags/item/ores_in_ground/deepslate.json
 811a5fc431495fc6be214ade5ad2df4a5ebe1a81 data/c/tags/item/raw_materials.json
 21c3eef07be9532d072cbfeab502b23396f89901 data/c/tags/item/rods.json
 3d1938e3990eb2fe089dc0797b9b5c40ee0ed656 data/c/tags/item/tools.json

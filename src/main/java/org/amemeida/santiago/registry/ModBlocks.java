@@ -18,23 +18,25 @@ public class ModBlocks {
     public static final Block CAT_BLOCK = register("cat_block");
     public static final Block MIKU_BLOCK = register("miku_block");
     public static final Block CREATURE_BLOCK = register("creature_block");
+
     public static final Block SANTIAGUITA_ORE = register("santiaguita_ore");
+    public static final Block DEEPSLATE_SANTIAGUITA_ORE = register("deepslate_santiaguita_ore");
 
     private static Block register(String name) {
         return register(name, Block::new, AbstractBlock.Settings.create());
     }
 
-    private static Block register(String name, AbstractBlock.Settings settings) {
-        return register(name, Block::new, settings);
-    }
+//    private static Block register(String name, AbstractBlock.Settings settings) {
+//        return register(name, Block::new, settings);
+//    }
 
-    private static Block register(String name, AbstractBlock.Settings settings, boolean shouldRegisterItem) {
-        return register(name, Block::new, settings, shouldRegisterItem);
-    }
+//    private static Block register(String name, AbstractBlock.Settings settings, boolean shouldRegisterItem) {
+//        return register(name, Block::new, settings, shouldRegisterItem);
+//    }
 
-    private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory) {
-        return register(name, blockFactory, AbstractBlock.Settings.create());
-    }
+//    private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory) {
+//        return register(name, blockFactory, AbstractBlock.Settings.create());
+//    }
 
     private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings) {
         return register(name, blockFactory, settings, true);

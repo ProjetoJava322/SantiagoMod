@@ -1,10 +1,12 @@
 {
   "block.santiago.cat_block": "Bloco de Gato",
   "block.santiago.creature_block": "Bloco de Criatura",
+  "block.santiago.deepslate_santiaguita_ore": "Minério de Santiaguita de Ardosiabissal",
   "block.santiago.miku_block": "Blocosune Miku",
   "block.santiago.santiaguita_ore": "Minério de Santiaguita",
   "item.santiago.cat_block": "Bloco de Gato",
   "item.santiago.creature_block": "Bloco de Criatura",
+  "item.santiago.deepslate_santiaguita_ore": "Minério de Santiaguita de Ardosiabissal",
   "item.santiago.hamster": "Hamster",
   "item.santiago.miku_block": "Blocosune Miku",
   "item.santiago.punch_card": "Cartão Perfurado",

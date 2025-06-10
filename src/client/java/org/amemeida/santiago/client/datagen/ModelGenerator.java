@@ -19,6 +19,7 @@ public class ModelGenerator extends FabricModelProvider {
         gen.registerSimpleCubeAll(ModBlocks.MIKU_BLOCK);
         gen.registerSimpleCubeAll(ModBlocks.CREATURE_BLOCK);
         gen.registerSimpleCubeAll(ModBlocks.SANTIAGUITA_ORE);
+        gen.registerSimpleCubeAll(ModBlocks.DEEPSLATE_SANTIAGUITA_ORE);
     }
 
     @Override

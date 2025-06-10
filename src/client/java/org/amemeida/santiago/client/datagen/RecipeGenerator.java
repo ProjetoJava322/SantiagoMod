@@ -82,7 +82,8 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 );
 
                 offerSmelting(
-                        List.of(ModItems.RAW_SANTIAGUITA),
+                        List.of(ModItems.RAW_SANTIAGUITA, ModBlocks.SANTIAGUITA_ORE.asItem(),
+                                ModBlocks.DEEPSLATE_SANTIAGUITA_ORE.asItem()),
                         RecipeCategory.MISC,
                         ModItems.SANTIAGUITA_INGOT,
                         2f,
@@ -91,30 +92,13 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 );
 
                 offerBlasting(
-                        List.of(ModItems.RAW_SANTIAGUITA),
+                        List.of(ModItems.RAW_SANTIAGUITA, ModBlocks.SANTIAGUITA_ORE.asItem(),
+                                ModBlocks.DEEPSLATE_SANTIAGUITA_ORE.asItem()),
                         RecipeCategory.MISC,
                         ModItems.SANTIAGUITA_INGOT,
                         2f,
                         150,
                         "santiaguita_ingot_from_blasting_raw_santiaguita"
-                );
-
-                offerSmelting(
-                        List.of(ModBlocks.SANTIAGUITA_ORE.asItem()),
-                        RecipeCategory.MISC,
-                        ModItems.SANTIAGUITA_INGOT,
-                        2f,
-                        300,
-                        "santiaguita_ingot_from_smelting_santiaguita_ore"
-                );
-
-                offerBlasting(
-                        List.of(ModBlocks.SANTIAGUITA_ORE.asItem()),
-                        RecipeCategory.MISC,
-                        ModItems.SANTIAGUITA_INGOT,
-                        2f,
-                        150,
-                        "santiaguita_ingot_from_blasting_santiaguita_ore"
                 );
             }
         };

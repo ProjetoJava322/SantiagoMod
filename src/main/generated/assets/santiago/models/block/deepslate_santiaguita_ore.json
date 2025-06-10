@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "santiago:block/deepslate_santiaguita_ore"
+  }
+}

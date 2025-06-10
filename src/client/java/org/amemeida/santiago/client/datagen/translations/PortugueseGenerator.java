@@ -21,6 +21,7 @@ public class PortugueseGenerator extends Translator {
         add(ModBlocks.CAT_BLOCK, "Bloco de Gato");
         add(ModBlocks.MIKU_BLOCK, "Blocosune Miku");
         add(ModBlocks.SANTIAGUITA_ORE, "Minério de Santiaguita");
+        add(ModBlocks.DEEPSLATE_SANTIAGUITA_ORE, "Minério de Santiaguita de Ardosiabissal");
 
         add(ModItems.HAMSTER, "Hamster");
 

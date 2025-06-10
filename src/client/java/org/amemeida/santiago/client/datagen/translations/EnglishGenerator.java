@@ -22,6 +22,7 @@ public class EnglishGenerator extends Translator {
         add(ModBlocks.CAT_BLOCK, "Block of Cat");
         add(ModBlocks.MIKU_BLOCK, "Blocksune Miku");
         add(ModBlocks.SANTIAGUITA_ORE, "Santiaguita Ore");
+        add(ModBlocks.DEEPSLATE_SANTIAGUITA_ORE, "Deepslate Santiaguita Ore");
 
         add(ModItems.HAMSTER, "Hamster");
 

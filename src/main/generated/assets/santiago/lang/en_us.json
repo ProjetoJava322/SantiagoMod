@@ -1,10 +1,12 @@
 {
   "block.santiago.cat_block": "Block of Cat",
   "block.santiago.creature_block": "Block of Creature",
+  "block.santiago.deepslate_santiaguita_ore": "Deepslate Santiaguita Ore",
   "block.santiago.miku_block": "Blocksune Miku",
   "block.santiago.santiaguita_ore": "Santiaguita Ore",
   "item.santiago.cat_block": "Block of Cat",
   "item.santiago.creature_block": "Block of Creature",
+  "item.santiago.deepslate_santiaguita_ore": "Deepslate Santiaguita Ore",
   "item.santiago.hamster": "Hamster",
   "item.santiago.miku_block": "Blocksune Miku",
   "item.santiago.punch_card": "Punch Card",

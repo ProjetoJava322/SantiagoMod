@@ -39,7 +39,11 @@ public class TagGenerator extends FabricTagProvider<Item> {
                 .add(ModItems.SANTIAGUITA_SWORD);
 
         getOrCreateTagBuilder(ConventionalItemTags.ORES)
-                .add(ModBlocks.SANTIAGUITA_ORE.asItem());
+                .add(ModBlocks.SANTIAGUITA_ORE.asItem())
+                .add(ModBlocks.DEEPSLATE_SANTIAGUITA_ORE.asItem());
+
+        getOrCreateTagBuilder(ConventionalItemTags.ORES_IN_GROUND_DEEPSLATE)
+                .add(ModBlocks.DEEPSLATE_SANTIAGUITA_ORE.asItem());
 
         getOrCreateTagBuilder(ConventionalItemTags.INGOTS)
                 .add(ModItems.SANTIAGUITA_INGOT);

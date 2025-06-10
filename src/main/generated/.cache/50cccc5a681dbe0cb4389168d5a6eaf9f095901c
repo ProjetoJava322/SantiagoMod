@@ -1,10 +1,12 @@
 // 1.21.5	-999999999-01-01T00:00:00	Santiago/Santiago Model Provider
 02759ffcb065eb943c514496b1d202476419e354 assets/santiago/blockstates/cat_block.json
 f84b39fbcb0106c7edc05204beeece8ccc96fa9a assets/santiago/blockstates/creature_block.json
+aec15de3e47185f3fac39badf88c0c141794b5cd assets/santiago/blockstates/deepslate_santiaguita_ore.json
 4e872553012d4ebf3f0ea9a21d48cb7b90ec8610 assets/santiago/blockstates/miku_block.json
 fcee58c5ec0403b0b1d803fb5672cb32f9d36891 assets/santiago/blockstates/santiaguita_ore.json
 83427ed6754856825605fad3629d249c8b37da5a assets/santiago/items/cat_block.json
 c92e3b3a958736be72413121d04369eb3fa1fc75 assets/santiago/items/creature_block.json
+a6c90858ed478db6b00d9bb6a8b39ce817428b09 assets/santiago/items/deepslate_santiaguita_ore.json
 17addfe3bf9519b7932880d3d1b11920c75a3861 assets/santiago/items/hamster.json
 27ca669f5d70fac65082860ead0dde55b6f1a18f assets/santiago/items/miku_block.json
 b899b7f2609994155873e07b95ff188f648f9a43 assets/santiago/items/punch_card.json
@@ -20,6 +22,7 @@ b899b7f2609994155873e07b95ff188f648f9a43 assets/santiago/items/punch_card.json
 f86234ebd707884ce49a36e36da6faad48645650 assets/santiago/items/underline.json
 ead1488bb0f107a029ce4478a3f1e7f848c91935 assets/santiago/models/block/cat_block.json
 5b6d38bc8540c20e77acedab38d817ca5d755092 assets/santiago/models/block/creature_block.json
+15e782cdb41a6c777b4f90fa87becc0c7bda586d assets/santiago/models/block/deepslate_santiaguita_ore.json
 3747c4c40c874760d038809ea377a6a3ba9ddb5b assets/santiago/models/block/miku_block.json
 9bf5e07ac2578381cf43b7b38228d92fd63777ae assets/santiago/models/block/santiaguita_ore.json
 de22df0d94cac044a94a3e7953ca09b2e546bf77 assets/santiago/models/item/hamster.json
