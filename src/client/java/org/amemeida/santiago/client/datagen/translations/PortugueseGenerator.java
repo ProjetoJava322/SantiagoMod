@@ -21,6 +21,7 @@ public class PortugueseGenerator extends Translator {
         add(ModBlocks.CREATURE_BLOCK, "Bloco de Criatura");
         add(ModBlocks.CAT_BLOCK, "Bloco de Gato");
         add(ModBlocks.MIKU_BLOCK, "Blocosune Miku");
+        add(ModBlocks.SANTIAGUITA_ORE, "Minério de Santiaguita");
 
         add(ModItems.HAMSTER, "Hamster");
 
@@ -30,8 +31,10 @@ public class PortugueseGenerator extends Translator {
         add(ModItems.SANTIAGUITA_SWORD,  "Espada de Santiaguita");
         add(ModItems.SANTIAGUITA_SHOVEL, "Pá de Santiaguita");
         add(ModItems.SANTIAGUITA_INGOT, "Barra de Santiaguita");
+        add(ModItems.RAW_SANTIAGUITA, "Santiaguita Bruta");
         add(ModItems.UNDERLINE, "Guião Baixo");
 
-        add(ModItems.SUPER_SNOWBALL, "Rasenga");
+        add(ModItems.SUPER_SNOWBALL, "Bolinha");
+        add(ModItems.PUNCH_CARD, "Cartão Perfurado");
     }
 }

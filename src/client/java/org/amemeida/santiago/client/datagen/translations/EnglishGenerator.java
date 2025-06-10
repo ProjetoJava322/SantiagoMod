@@ -24,6 +24,7 @@ public class EnglishGenerator extends Translator {
         add(ModBlocks.CREATURE_BLOCK, "Block of Creature");
         add(ModBlocks.CAT_BLOCK, "Block of Cat");
         add(ModBlocks.MIKU_BLOCK, "Blocksune Miku");
+        add(ModBlocks.SANTIAGUITA_ORE, "Santiaguita Ore");
 
         add(ModItems.HAMSTER, "Hamster");
 
@@ -33,9 +34,11 @@ public class EnglishGenerator extends Translator {
         add(ModItems.SANTIAGUITA_SWORD,  "Santiaguita Sword");
         add(ModItems.SANTIAGUITA_SHOVEL, "Santiaguita Shovel");
         add(ModItems.SANTIAGUITA_INGOT, "Santiaguita Ingot");
+        add(ModItems.RAW_SANTIAGUITA, "Raw Santiaguita");
         add(ModItems.UNDERLINE, "Downwards Guide");
 
         add(ModItems.SUPER_SNOWBALL, "Super Snowball");
+        add(ModItems.PUNCH_CARD, "Punch Card");
 
         add(ModSounds.TEMMIE, "Temmie Talking");
     }

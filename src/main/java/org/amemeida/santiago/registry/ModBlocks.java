@@ -3,9 +3,11 @@ package org.amemeida.santiago.registry;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.FurnaceBlockEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -19,6 +21,7 @@ public class ModBlocks {
     public static final Block CAT_BLOCK = register("cat_block");
     public static final Block MIKU_BLOCK = register("miku_block");
     public static final Block CREATURE_BLOCK = register("creature_block");
+    public static final Block SANTIAGUITA_ORE = register("santiaguita_ore");
 
     private static Block register(String name) {
         return register(name, Block::new, AbstractBlock.Settings.create());

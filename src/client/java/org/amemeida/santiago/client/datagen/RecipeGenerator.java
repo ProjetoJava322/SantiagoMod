@@ -8,6 +8,7 @@ import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
+import org.amemeida.santiago.registry.ModBlocks;
 import org.amemeida.santiago.registry.ModItems;
 
 import java.util.List;
@@ -81,7 +82,43 @@ public class RecipeGenerator extends FabricRecipeProvider {
                         ModItems.HAMSTER,
                         0.1f,
                         20,
-                        "slime_to_hamster"
+                        "smelt_slime_to_hamster"
+                );
+
+                offerSmelting(
+                        List.of(ModItems.RAW_SANTIAGUITA),
+                        RecipeCategory.MISC,
+                        ModItems.SANTIAGUITA_INGOT,
+                        2f,
+                        300,
+                        "santiaguita_ingot_from_smelting_raw_santiaguita"
+                );
+
+                offerBlasting(
+                        List.of(ModItems.RAW_SANTIAGUITA),
+                        RecipeCategory.MISC,
+                        ModItems.SANTIAGUITA_INGOT,
+                        2f,
+                        150,
+                        "santiaguita_ingot_from_blasting_raw_santiaguita"
+                );
+
+                offerSmelting(
+                        List.of(ModBlocks.SANTIAGUITA_ORE.asItem()),
+                        RecipeCategory.MISC,
+                        ModItems.SANTIAGUITA_INGOT,
+                        2f,
+                        300,
+                        "santiaguita_ingot_from_smelting_santiaguita_ore"
+                );
+
+                offerBlasting(
+                        List.of(ModBlocks.SANTIAGUITA_ORE.asItem()),
+                        RecipeCategory.MISC,
+                        ModItems.SANTIAGUITA_INGOT,
+                        2f,
+                        150,
+                        "santiaguita_ingot_from_blasting_santiaguita_ore"
                 );
             }
         };

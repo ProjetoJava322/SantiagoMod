@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DeathProtectionComponent;
 import net.minecraft.component.type.FoodComponents;
+import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
@@ -13,6 +14,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
+import org.amemeida.santiago.items.PunchCard;
 import org.amemeida.santiago.items.SuperSnowball;
 import org.amemeida.santiago.santiaguita.SantiaguitaMaterial;
 
@@ -31,6 +33,10 @@ public class ModItems {
             new Item.Settings().hoe(SantiaguitaMaterial.TOOL_MATERIAL, 1.0F, -5.0F));
     public static final Item SANTIAGUITA_SHOVEL = register("santiaguita_shovel",
             new Item.Settings().shovel(SantiaguitaMaterial.TOOL_MATERIAL, 1.0F, -1.0F));
+
+    public static final Item PUNCH_CARD = register("punch_card", PunchCard::new);
+
+    public static final Item RAW_SANTIAGUITA = register("raw_santiaguita");
 
     public static final Item SANTIAGUITA_INGOT = register("santiaguita_ingot");
     public static final Item UNDERLINE = register("underline");

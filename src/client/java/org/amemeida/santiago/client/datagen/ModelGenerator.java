@@ -18,6 +18,7 @@ public class ModelGenerator extends FabricModelProvider {
         gen.registerSimpleCubeAll(ModBlocks.CAT_BLOCK);
         gen.registerSimpleCubeAll(ModBlocks.MIKU_BLOCK);
         gen.registerSimpleCubeAll(ModBlocks.CREATURE_BLOCK);
+        gen.registerSimpleCubeAll(ModBlocks.SANTIAGUITA_ORE);
     }
 
     @Override
@@ -27,6 +28,8 @@ public class ModelGenerator extends FabricModelProvider {
         gen.register(ModItems.UNDERLINE, Models.HANDHELD_ROD);
 
         gen.register(ModItems.SANTIAGUITA_INGOT, Models.GENERATED);
+        gen.register(ModItems.RAW_SANTIAGUITA, Models.GENERATED);
+
         gen.register(ModItems.SANTIAGUITA_SHOVEL, Models.HANDHELD);
         gen.register(ModItems.SANTIAGUITA_AXE, Models.HANDHELD);
         gen.register(ModItems.SANTIAGUITA_HOE, Models.HANDHELD);
@@ -34,6 +37,7 @@ public class ModelGenerator extends FabricModelProvider {
         gen.register(ModItems.SANTIAGUITA_SWORD, Models.HANDHELD);
 
         gen.register(ModItems.SUPER_SNOWBALL, Models.GENERATED);
+        gen.register(ModItems.PUNCH_CARD, Models.GENERATED);
     }
 
     @Override
