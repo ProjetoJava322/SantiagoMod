@@ -5,8 +5,8 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.client.data.BlockStateModelGenerator;
 import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.Models;
-import org.amemeida.santiago.registry.ModBlocks;
-import org.amemeida.santiago.registry.ModItems;
+import org.amemeida.santiago.registry.blocks.ModBlocks;
+import org.amemeida.santiago.registry.items.ModItems;
 
 public class ModelGenerator extends FabricModelProvider {
     public ModelGenerator(FabricDataOutput output) {
@@ -20,6 +20,7 @@ public class ModelGenerator extends FabricModelProvider {
         gen.registerSimpleCubeAll(ModBlocks.CREATURE_BLOCK);
         gen.registerSimpleCubeAll(ModBlocks.SANTIAGUITA_ORE);
         gen.registerSimpleCubeAll(ModBlocks.DEEPSLATE_SANTIAGUITA_ORE);
+        gen.registerSimpleCubeAll(ModBlocks.INCUBATOR);
     }
 
     @Override

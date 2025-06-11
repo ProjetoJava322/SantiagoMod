@@ -2,7 +2,6 @@ package org.amemeida.santiago.items;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.entity.projectile.thrown.SnowballEntity;
 import net.minecraft.item.*;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -19,11 +18,6 @@ public class SuperSnowball extends Item implements ProjectileItem {
 
     public SuperSnowball(Item.Settings settings) {
         super(settings);
-    }
-
-    static {
-        SnowballEntity a = null;
-        SnowballItem b = null;
     }
 
     @Override

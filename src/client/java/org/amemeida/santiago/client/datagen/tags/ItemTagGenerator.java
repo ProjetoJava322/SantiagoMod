@@ -7,8 +7,8 @@ import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
-import org.amemeida.santiago.registry.ModBlocks;
-import org.amemeida.santiago.registry.ModItems;
+import org.amemeida.santiago.registry.blocks.ModBlocks;
+import org.amemeida.santiago.registry.items.ModItems;
 import org.amemeida.santiago.registry.ModTags;
 
 import java.util.concurrent.CompletableFuture;

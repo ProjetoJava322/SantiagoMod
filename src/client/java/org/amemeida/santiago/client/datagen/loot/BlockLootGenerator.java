@@ -5,8 +5,8 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryWrapper;
-import org.amemeida.santiago.registry.ModBlocks;
-import org.amemeida.santiago.registry.ModItems;
+import org.amemeida.santiago.registry.blocks.ModBlocks;
+import org.amemeida.santiago.registry.items.ModItems;
 
 import java.util.concurrent.CompletableFuture;
 
