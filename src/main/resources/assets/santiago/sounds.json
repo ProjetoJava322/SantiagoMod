@@ -12,5 +12,13 @@
       "santiago:temmie"
     ],
     "subtitle": "sound.santiago.temmie"
+  },
+  "santiagos_anthem": {
+    "sounds": [
+      {
+        "name": "santiago:santiagos_anthem",
+        "stream": true
+      }
+    ]
   }
 }

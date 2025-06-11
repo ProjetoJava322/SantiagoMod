@@ -22,6 +22,7 @@ public class SoundGenerator extends FabricSoundsProvider {
 
         register(ModSounds.TEMMIE);
         register(ModSounds.POPIPO);
+        register(ModSounds.SANTIAGOS_ANTHEM);
     }
 
     protected void register(SoundEvent sound, SoundTypeBuilder builder) {
