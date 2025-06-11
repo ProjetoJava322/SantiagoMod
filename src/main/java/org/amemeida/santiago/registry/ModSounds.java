@@ -9,6 +9,7 @@ import org.amemeida.santiago.Santiago;
 public class ModSounds {
     public static final SoundEvent POPIPO = register("popipo");
     public static final SoundEvent TEMMIE = register("temmie");
+    public static final SoundEvent SANTIAGOS_ANTHEM = register("santiagos_anthem");
 
     public static SoundEvent register(String name) {
         var id = Identifier.of(Santiago.MOD_ID, name);

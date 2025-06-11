@@ -19,7 +19,5 @@ public class Santiago implements ModInitializer {
         ModItems.initialize();
         ModTags.initialize();
         ModFeatures.initialize();
-
-        //Branch test upstream
     }
 }

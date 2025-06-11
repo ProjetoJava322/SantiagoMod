@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DeathProtectionComponent;
 import net.minecraft.component.type.FoodComponents;
+import net.minecraft.component.type.JukeboxPlayableComponent;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -39,6 +40,9 @@ public class ModItems {
     public static final Item UNDERLINE = register("underline");
 
     public static final Item SUPER_SNOWBALL = register("super_snowball", SuperSnowball::new);
+
+    public static final Item SANTIAGOS_ANTHEM_MUSIC_DISK = register("santiagos_anthem_music_disk",
+            new Item.Settings().component(DataComponentTypes.JUKEBOX_PLAYABLE, JukeboxPlayableComponent.SANTIAGOS_ANTHEM));
 
     protected static Item register(String name) {
          return register(name, Item::new, new Item.Settings());
