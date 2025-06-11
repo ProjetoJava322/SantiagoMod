@@ -1,6 +1,10 @@
 package org.amemeida.santiago;
 
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.util.Identifier;
+import net.minecraft.world.gen.feature.PlacedFeature;
 import org.amemeida.santiago.registry.*;
 
 public class Santiago implements ModInitializer {
@@ -14,5 +18,6 @@ public class Santiago implements ModInitializer {
         ModGroups.initialize();
         ModItems.initialize();
         ModTags.initialize();
+        ModFeatures.initialize();
     }
 }
