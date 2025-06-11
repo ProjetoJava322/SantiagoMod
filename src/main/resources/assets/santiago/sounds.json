@@ -6,18 +6,19 @@
     ],
     "subtitle": "sound.santiago.popipo"
   },
-  "santiagos_anthem": {
-    "category": "neutral",
-    "sounds": [
-      "santiago:santiagos_anthem"
-    ],
-    "subtitle": "sound.santiago.santiagos_anthem"
-  },
   "temmie": {
     "category": "neutral",
     "sounds": [
       "santiago:temmie"
     ],
     "subtitle": "sound.santiago.temmie"
+  },
+  "santiagos_antem": {
+    "sounds": [
+      {
+        "name": "santiago:santiagos_anthem",
+        "stream": true
+      }
+    ]
   }
 }
