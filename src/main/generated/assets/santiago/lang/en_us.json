@@ -21,5 +21,8 @@
   "item.santiago.super_snowball": "Super Snowball",
   "item.santiago.underline": "Downwards Guide",
   "itemGroup.santiago": "Santiago Mod",
-  "sound.santiago.temmie": "Temmie Talking"
+  "sound.santiago.temmie": "Temmie Talking",
+
+  "item.santiago.santiagos_anthem_music_disc": "Santiago's Anthem",
+  "item.santiago.santiagos_anthem_music_disc.desc": "8bit Soviet Union Anthem - Unknown (CC0)"
 }

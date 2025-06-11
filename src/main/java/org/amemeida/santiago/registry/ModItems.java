@@ -5,11 +5,14 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.DeathProtectionComponent;
 import net.minecraft.component.type.FoodComponents;
 import net.minecraft.component.type.JukeboxPlayableComponent;
+import net.minecraft.item.DiscFragmentItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
 import org.amemeida.santiago.items.PunchCard;
@@ -41,8 +44,7 @@ public class ModItems {
 
     public static final Item SUPER_SNOWBALL = register("super_snowball", SuperSnowball::new);
 
-    public static final Item SANTIAGOS_ANTHEM_MUSIC_DISK = register("santiagos_anthem_music_disk",
-            new Item.Settings().component(DataComponentTypes.JUKEBOX_PLAYABLE, JukeboxPlayableComponent.SANTIAGOS_ANTHEM));
+    public static final Item SANTIAGOS_ANTHEM_MUSIC_DISC = register("santiagos_anthem_music_disc", new Item.Settings().jukeboxPlayable(ModSounds.SANTIAGOS_ANTHEM_KEY).maxCount(1));
 
     protected static Item register(String name) {
          return register(name, Item::new, new Item.Settings());
