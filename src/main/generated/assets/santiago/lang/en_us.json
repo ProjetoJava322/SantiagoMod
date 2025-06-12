@@ -11,9 +11,15 @@
   "item.santiago.miku_block": "Blocksune Miku",
   "item.santiago.punch_card": "Punch Card",
   "item.santiago.raw_santiaguita": "Raw Santiaguita",
+  "item.santiago.santiagos_anthem_music_disc": "Music Disc",
+  "item.santiago.santiagos_anthem_music_disc.desc": "Santiago's Anthem",
   "item.santiago.santiaguita_axe": "Santiaguita Axe",
+  "item.santiago.santiaguita_boots": "Santiaguita Boots",
+  "item.santiago.santiaguita_chestplate": "Santiaguita Chestplate",
+  "item.santiago.santiaguita_helmet": "Santiaguita Helmet",
   "item.santiago.santiaguita_hoe": "Santiaguita Hoe",
   "item.santiago.santiaguita_ingot": "Santiaguita Ingot",
+  "item.santiago.santiaguita_leggings": "Santiaguita Leggings",
   "item.santiago.santiaguita_ore": "Santiaguita Ore",
   "item.santiago.santiaguita_pickaxe": "Santiaguita Pickaxe",
   "item.santiago.santiaguita_shovel": "Santiaguita Shovel",
@@ -21,8 +27,5 @@
   "item.santiago.super_snowball": "Super Snowball",
   "item.santiago.underline": "Downwards Guide",
   "itemGroup.santiago": "Santiago Mod",
-  "sound.santiago.temmie": "Temmie Talking",
-
-  "item.santiago.santiagos_anthem_music_disc": "Santiago's Anthem",
-  "item.santiago.santiagos_anthem_music_disc.desc": "8bit Soviet Union Anthem - Unknown (CC0)"
+  "sound.santiago.temmie": "Temmie Talking"
 }

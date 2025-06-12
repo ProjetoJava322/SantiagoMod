@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "santiago:santiaguita"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "santiago:santiaguita"
+      }
+    ]
+  }
+}

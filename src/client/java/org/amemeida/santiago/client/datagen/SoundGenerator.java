@@ -8,6 +8,7 @@ import net.minecraft.sound.SoundEvent;
 import org.amemeida.santiago.registry.ModSounds;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
 public class SoundGenerator extends FabricSoundsProvider {
     public SoundGenerator(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
@@ -22,12 +23,19 @@ public class SoundGenerator extends FabricSoundsProvider {
 
         register(ModSounds.TEMMIE);
         register(ModSounds.POPIPO);
-        register(ModSounds.SANTIAGOS_ANTHEM);
+        register(ModSounds.SANTIAGOS_ANTHEM, (entry) -> entry.stream(true));
     }
 
     protected void register(SoundEvent sound, SoundTypeBuilder builder) {
         var key = sound.id().toTranslationKey("sound");
         exp.add(sound, builder.subtitle(key));
+    }
+
+    protected void register(SoundEvent sound, Function<SoundTypeBuilder.EntryBuilder, SoundTypeBuilder.EntryBuilder> builder) {
+        var entry = builder.apply(SoundTypeBuilder.EntryBuilder.ofFile(sound.id()));
+        var soundBuilder = SoundTypeBuilder.of(sound).sound(entry);
+
+        register(sound, soundBuilder);
     }
 
     protected void register(SoundEvent sound) {

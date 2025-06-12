@@ -37,6 +37,11 @@ public class ModelGenerator extends FabricModelProvider {
         gen.register(ModItems.SANTIAGUITA_PICKAXE, Models.HANDHELD);
         gen.register(ModItems.SANTIAGUITA_SWORD, Models.HANDHELD);
 
+        gen.register(ModItems.SANTIAGUITA_HELMET, Models.GENERATED);
+        gen.register(ModItems.SANTIAGUITA_CHESTPLATE, Models.GENERATED);
+        gen.register(ModItems.SANTIAGUITA_LEGGINGS, Models.GENERATED);
+        gen.register(ModItems.SANTIAGUITA_BOOTS, Models.GENERATED);
+
         gen.register(ModItems.SUPER_SNOWBALL, Models.GENERATED);
         gen.register(ModItems.PUNCH_CARD, Models.GENERATED);
 

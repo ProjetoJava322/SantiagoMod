@@ -2,6 +2,7 @@ package org.amemeida.santiago.client.datagen.translations;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryWrapper;
@@ -25,8 +26,15 @@ public abstract class Translator extends FabricLanguageProvider {
 
     public abstract void translate();
 
-    protected final Translator add(Block block, String translation) {
-        String key = block.getTranslationKey();
+    protected final Translator add(SoundEvent soundEvent, String translation) {
+        var key = soundEvent.id().toTranslationKey("sound");
+        builder.add(key, translation);
+
+        return this;
+    }
+
+    protected final Translator add(AbstractBlock block, String translation) {
+        var key = block.getTranslationKey();
         builder.add(key, translation);
 
         if (block.asItem() != null) {
@@ -44,15 +52,15 @@ public abstract class Translator extends FabricLanguageProvider {
         return this;
     }
 
-    protected final Translator add(String key, String translation) {
+    protected final Translator addDesc(Item item, String translation) {
+        String key = item.getTranslationKey() + ".desc";
         builder.add(key, translation);
+
         return this;
     }
 
-    protected final Translator add(SoundEvent soundEvent, String translation) {
-        var key = soundEvent.id().toTranslationKey("sound");
+    protected final Translator add(String key, String translation) {
         builder.add(key, translation);
-
         return this;
     }
 }

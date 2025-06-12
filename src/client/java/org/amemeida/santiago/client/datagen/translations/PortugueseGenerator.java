@@ -30,9 +30,17 @@ public class PortugueseGenerator extends Translator {
         add(ModItems.SANTIAGUITA_PICKAXE, "Picareta de Santiaguita");
         add(ModItems.SANTIAGUITA_SWORD,  "Espada de Santiaguita");
         add(ModItems.SANTIAGUITA_SHOVEL, "Pá de Santiaguita");
+
+        add(ModItems.SANTIAGUITA_HELMET, "Capacete de Santiaguita");
+        add(ModItems.SANTIAGUITA_CHESTPLATE, "Peitoral de Santiaguita");
+        add(ModItems.SANTIAGUITA_LEGGINGS, "Calça de Santiaguita");
+        add(ModItems.SANTIAGUITA_BOOTS, "Botas de Santiaguita");
+
         add(ModItems.SANTIAGUITA_INGOT, "Barra de Santiaguita");
         add(ModItems.RAW_SANTIAGUITA, "Santiaguita Bruta");
         add(ModItems.UNDERLINE, "Guião Baixo");
+        add(ModItems.SANTIAGOS_ANTHEM_MUSIC_DISC, "Disco Musical");
+        addDesc(ModItems.SANTIAGOS_ANTHEM_MUSIC_DISC, "Hino do Santiago");
 
         add(ModItems.SUPER_SNOWBALL, "Bolinha");
         add(ModItems.PUNCH_CARD, "Cartão Perfurado");

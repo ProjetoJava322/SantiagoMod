@@ -31,9 +31,17 @@ public class EnglishGenerator extends Translator {
         add(ModItems.SANTIAGUITA_PICKAXE, "Santiaguita Pickaxe");
         add(ModItems.SANTIAGUITA_SWORD,  "Santiaguita Sword");
         add(ModItems.SANTIAGUITA_SHOVEL, "Santiaguita Shovel");
+
+        add(ModItems.SANTIAGUITA_HELMET, "Santiaguita Helmet");
+        add(ModItems.SANTIAGUITA_CHESTPLATE, "Santiaguita Chestplate");
+        add(ModItems.SANTIAGUITA_LEGGINGS, "Santiaguita Leggings");
+        add(ModItems.SANTIAGUITA_BOOTS, "Santiaguita Boots");
+
         add(ModItems.SANTIAGUITA_INGOT, "Santiaguita Ingot");
         add(ModItems.RAW_SANTIAGUITA, "Raw Santiaguita");
         add(ModItems.UNDERLINE, "Downwards Guide");
+        add(ModItems.SANTIAGOS_ANTHEM_MUSIC_DISC, "Music Disc");
+        addDesc(ModItems.SANTIAGOS_ANTHEM_MUSIC_DISC, "Santiago's Anthem");
 
         add(ModItems.SUPER_SNOWBALL, "Super Snowball");
         add(ModItems.PUNCH_CARD, "Punch Card");
