@@ -16,6 +16,6 @@ public class ModFeatures {
         BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, SANTIAGUITA_ORE_KEY);
     }
 
-    public static void initialize(){}
+    public static void initialize() {}
 }
 

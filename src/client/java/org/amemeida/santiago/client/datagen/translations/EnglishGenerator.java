@@ -2,8 +2,8 @@ package org.amemeida.santiago.client.datagen.translations;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.registry.RegistryWrapper;
-import org.amemeida.santiago.registry.ModBlocks;
-import org.amemeida.santiago.registry.ModItems;
+import org.amemeida.santiago.registry.blocks.ModBlocks;
+import org.amemeida.santiago.registry.items.ModItems;
 import org.amemeida.santiago.registry.ModSounds;
 
 import java.util.concurrent.CompletableFuture;
@@ -21,6 +21,8 @@ public class EnglishGenerator extends Translator {
         add(ModBlocks.CREATURE_BLOCK, "Block of Creature");
         add(ModBlocks.CAT_BLOCK, "Block of Cat");
         add(ModBlocks.MIKU_BLOCK, "Blocksune Miku");
+        add(ModBlocks.INCUBATOR, "Incubator");
+
         add(ModBlocks.SANTIAGUITA_ORE, "Santiaguita Ore");
         add(ModBlocks.DEEPSLATE_SANTIAGUITA_ORE, "Deepslate Santiaguita Ore");
 

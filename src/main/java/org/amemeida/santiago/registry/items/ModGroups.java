@@ -1,4 +1,4 @@
-package org.amemeida.santiago.registry;
+package org.amemeida.santiago.registry.items;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemGroup;

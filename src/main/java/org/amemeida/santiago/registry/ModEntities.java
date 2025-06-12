@@ -21,13 +21,8 @@ public class ModEntities {
                     .trackingTickInterval(10)
     );
 
-    static {
-
-    }
-
     protected static <T extends Entity> EntityType<T> register(String name, EntityType.Builder<T> type) {
         var key = RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(Santiago.MOD_ID, name));
-
         return Registry.register(Registries.ENTITY_TYPE, key, type.build(key));
     }
 

@@ -1,4 +1,4 @@
-package org.amemeida.santiago.registry;
+package org.amemeida.santiago.registry.items;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.component.DataComponentTypes;
@@ -15,6 +15,7 @@ import org.amemeida.santiago.Santiago;
 import org.amemeida.santiago.items.PunchCard;
 import org.amemeida.santiago.items.SuperSnowball;
 import org.amemeida.santiago.santiaguita.SantiaguitaMaterial;
+import org.amemeida.santiago.registry.ModSounds;
 
 import java.util.function.Function;
 

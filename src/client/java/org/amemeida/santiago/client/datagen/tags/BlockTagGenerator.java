@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.minecraft.block.Block;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
-import org.amemeida.santiago.registry.ModBlocks;
+import org.amemeida.santiago.registry.blocks.ModBlocks;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -19,8 +19,12 @@ public class BlockTagGenerator extends FabricTagProvider<Block> {
 
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
+                .add(ModBlocks.INCUBATOR)
                 .add(ModBlocks.SANTIAGUITA_ORE)
                 .add(ModBlocks.DEEPSLATE_SANTIAGUITA_ORE);
+
+        getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL)
+                .add(ModBlocks.INCUBATOR);
 
         getOrCreateTagBuilder(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(ModBlocks.SANTIAGUITA_ORE)
@@ -29,5 +33,8 @@ public class BlockTagGenerator extends FabricTagProvider<Block> {
         getOrCreateTagBuilder(ConventionalBlockTags.ORES)
                 .add(ModBlocks.SANTIAGUITA_ORE)
                 .add(ModBlocks.DEEPSLATE_SANTIAGUITA_ORE);
+
+        getOrCreateTagBuilder(ConventionalBlockTags.PLAYER_WORKSTATIONS_FURNACES)
+                .add(ModBlocks.INCUBATOR);
     }
 }

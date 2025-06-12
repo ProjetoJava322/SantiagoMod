@@ -11,7 +11,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import org.amemeida.santiago.registry.ModEntities;
 import net.minecraft.util.math.Position;
-import org.amemeida.santiago.registry.ModItems;
+import org.amemeida.santiago.registry.items.ModItems;
 
 public class SuperSnowballEntity extends ThrownItemEntity {
     public SuperSnowballEntity(World world, LivingEntity owner, ItemStack stack) {
@@ -20,10 +20,6 @@ public class SuperSnowballEntity extends ThrownItemEntity {
 
     public SuperSnowballEntity(World world, Position pos, ItemStack stack) {
         super(ModEntities.SUPER_SNOWBALL, pos.getX(), pos.getY(), pos.getZ(), world, stack);
-    }
-
-    public SuperSnowballEntity(World world, double x, double y, double z, ItemStack stack) {
-        super(ModEntities.SUPER_SNOWBALL, x, y, z, world, stack);
     }
 
     public SuperSnowballEntity(EntityType<? extends SuperSnowballEntity> entityType, World world) {
@@ -56,6 +52,7 @@ public class SuperSnowballEntity extends ThrownItemEntity {
             this.discard();
         }
     }
+
     @Override
     protected Item getDefaultItem() {
         return ModItems.SUPER_SNOWBALL;
