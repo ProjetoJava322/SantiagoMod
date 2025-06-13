@@ -14,7 +14,7 @@
   "item.santiago.punch_card": "Cartão Perfurado",
   "item.santiago.raw_santiaguita": "Santiaguita Bruta",
   "item.santiago.santiagos_anthem_music_disc": "Disco Musical",
-  "item.santiago.santiagos_anthem_music_disc.desc": "Hino do Santiago",
+  "item.santiago.santiagos_anthem_music_disc.desc": "PanZiyue - Soviet Union National Anthem 8-bit Remix (Hino do Santiago)",
   "item.santiago.santiaguita_axe": "Machado de Santiaguita",
   "item.santiago.santiaguita_boots": "Botas de Santiaguita",
   "item.santiago.santiaguita_chestplate": "Peitoral de Santiaguita",
@@ -28,5 +28,6 @@
   "item.santiago.santiaguita_sword": "Espada de Santiaguita",
   "item.santiago.super_snowball": "Bolinha",
   "item.santiago.underline": "Guião Baixo",
-  "itemGroup.santiago": "Mod do Santiago"
+  "itemGroup.santiago": "Mod do Santiago",
+  "sound.santiago.temmie": "Temmie Talking"
 }
