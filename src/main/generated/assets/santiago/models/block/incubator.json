@@ -1,12 +1,12 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "stone",
-		"1": "encubadora_sides",
-		"2": "encubadora_top",
-		"3": "encubadora_topper_1",
-		"6": "encubadora_details_corner",
-		"7": "encubadora_details_sides",
+		"0": "santiago:block/blockbench/encubadora_bottom",
+		"1": "santiago:block/blockbench/encubadora_sides",
+		"2": "santiago:block/blockbench/encubadora_top",
+		"3": "santiago:block/blockbench/encubadora_topper_1",
+		"6": "santiago:block/blockbench/encubadora_details_corner",
+		"7": "santiago:block/blockbench/encubadora_details_sides",
 		"particle": "stone"
 	},
 	"elements": [
