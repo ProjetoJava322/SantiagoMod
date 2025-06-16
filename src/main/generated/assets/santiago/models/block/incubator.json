@@ -7,7 +7,7 @@
 		"3": "santiago:block/blockbench/encubadora_topper_1",
 		"6": "santiago:block/blockbench/encubadora_details_corner",
 		"7": "santiago:block/blockbench/encubadora_details_sides",
-		"particle": "stone"
+		"particle": "santiago:block/blockbench/encubadora_sides"
 	},
 	"elements": [
 		{
