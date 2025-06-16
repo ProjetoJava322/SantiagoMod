@@ -75,9 +75,10 @@ public class RevolutionTableScreenHandler extends ScreenHandler {
         return newStack;
     }
 
+    //TEM QUE AJEITAR ISSO +
     @Override
     public boolean canUse(PlayerEntity player) {
-        return false;
+        return this.inventory.canPlayerUse(player);
     }
 
     private void addPlayerInventory(PlayerInventory playerInventory) {
