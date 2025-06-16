@@ -8,10 +8,13 @@ import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
 import org.amemeida.santiago.santiaguita.encubadora.IncubatorScreenHandler;
+import org.amemeida.santiago.santiaguita.revolution_table.RevolutionTableScreenHandler;
 
 public class ModScreenHandlers {
     public static final ScreenHandlerType<IncubatorScreenHandler> INCUBATOR_SCREEN_HANDLER = register("incubator",
             IncubatorScreenHandler::new);
+    public static final ScreenHandlerType<RevolutionTableScreenHandler> REVOLUTION_TABLE_SCREEN_HANDLER = register("revolution_table",
+            RevolutionTableScreenHandler::new);
 
     public static <T extends ScreenHandler> ScreenHandlerType<T> register(String name, ScreenHandlerType.Factory<T> factory) {
         return Registry.register(Registries.SCREEN_HANDLER, Identifier.of(Santiago.MOD_ID, name),
