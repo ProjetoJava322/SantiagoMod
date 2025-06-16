@@ -32,7 +32,7 @@ public class ModBlocks {
     public static final Block INCUBATOR = register("incubator",
             IncubatorBlock::new, AbstractBlock.Settings.create().requiresTool().strength(3f));
 
-    public static final Block REVOLUTION_TABLE = register("revolution_table",  RevolutionTableBlock::new, AbstractBlock.Settings.copy(Blocks.STONE).nonOpaque(), true);
+    public static final Block REVOLUTION_TABLE = register("revolution_table",  RevolutionTableBlock::new, AbstractBlock.Settings.create().requiresTool().strength(3f));
 
     static {
         var b = Blocks.FURNACE;
