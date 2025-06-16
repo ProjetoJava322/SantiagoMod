@@ -93,6 +93,10 @@ public class RevolutionTableScreenHandler extends AbstractRecipeScreenHandler {
         return stack.isOf(Items.AIR);
     }
 
+    public Slot getOutputSlot() {
+        return this._outputSlot;
+    }
+
     public void updateResult(
             ServerWorld world,
             @Nullable RecipeEntry<RevolutionTableRecipe> recipe
@@ -190,6 +194,8 @@ public class RevolutionTableScreenHandler extends AbstractRecipeScreenHandler {
     public boolean canInsertIntoSlot(ItemStack stack, Slot slot) {
         return slot.inventory != this.resultInventory && super.canInsertIntoSlot(stack, slot);
     }
+
+    public int getWidthAndHeight(){return this.MAX_WIDTH_AND_HEIGHT;}
 
     @Override
     public void onClosed(PlayerEntity player) {

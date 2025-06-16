@@ -6,6 +6,7 @@ import org.amemeida.santiago.registry.blocks.ModScreenHandlers;
 public class ModScreens {
     static {
         HandledScreens.register(ModScreenHandlers.INCUBATOR_SCREEN_HANDLER, IncubatorScreen::new);
+        HandledScreens.register(ModScreenHandlers.REVOLUTION_TABLE_SCREEN_HANDLER, );
     }
 
     public static void initialize() {}

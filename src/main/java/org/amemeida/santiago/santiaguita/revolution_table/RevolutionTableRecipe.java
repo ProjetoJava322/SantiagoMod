@@ -50,11 +50,11 @@ public class RevolutionTableRecipe implements Recipe<RevolutionTableRecipeInput>
 
     @Override
     public RecipeSerializer<? extends RevolutionTableRecipe> getSerializer() {
-        return ModRecipeSerializers.EFFIGY_ALTAR_RECIPE_SERIALIZER;
+        return ModRecipeSerializers.REVOLUTION_TABLE_RECIPE_SERIALIZER;
     }
     @Override
     public RecipeBookCategory getRecipeBookCategory() {
-        return ModRecipeBooks.EFFIGY_ALTAR_RECIPE_BOOK_CATEGORY;
+        return ModRecipeBooks.REVOLUTION_TABLE_RECIPE_BOOK_CATEGORY;
     }
 
     @Override

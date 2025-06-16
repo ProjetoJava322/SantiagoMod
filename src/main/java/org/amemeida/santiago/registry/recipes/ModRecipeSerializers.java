@@ -8,6 +8,6 @@ import org.amemeida.santiago.Santiago;
 import org.amemeida.santiago.santiaguita.revolution_table.RevolutionTableRecipe;
 
 public class ModRecipeSerializers {
-    public static final RecipeSerializer<RevolutionTableRecipe> EFFIGY_ALTAR_RECIPE_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, Identifier.of(Santiago.MOD_ID, "revolution_table"), new RevolutionTableRecipe.Serializer());
+    public static final RecipeSerializer<RevolutionTableRecipe> REVOLUTION_TABLE_RECIPE_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, Identifier.of(Santiago.MOD_ID, "revolution_table"), new RevolutionTableRecipe.Serializer());
     public static void initialize() {}
 }
