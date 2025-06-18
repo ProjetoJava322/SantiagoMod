@@ -68,22 +68,25 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
     }
 
      public void tick(World world, BlockPos pos, BlockState state) {
-        if (hasRecipe()){
+
+        if (hasRecipe()) {
+            //esse metodo funciona, mas ele sempre só faz um item stack de count 1 e eu ainda não sei ajeitar
+            int recipe_amnt = checkRecipeAmount();
             if (!getRecipeStandby()){
                 toggleRecipeStandby(); //seta como true
-                craftItem();
+                //não funcionou fazer isso, mudar depois
+                for (int i = 0; i < recipe_amnt; i++) {craftItem();}
             }
 
             if (getRecipeStandby() && this.getStack(OUTPUT_SLOT).isEmpty()){
                 toggleRecipeStandby(); //seta como false
-                clearGrid();
+                clearGrid(recipe_amnt);
             }
         } else {
             this.removeStack(OUTPUT_SLOT);
-            if (getRecipeStandby()){toggleRecipeStandby();}
+            if (getRecipeStandby()){toggleRecipeStandby();} //seta como false
         }
          markDirty(world, pos, state);
-
      }
 
      private boolean getRecipeStandby(){
@@ -92,6 +95,19 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
 
     private void toggleRecipeStandby() {
         this.recipeStandby = !this.getRecipeStandby();
+    }
+
+    //checa quantas receitas os itens da grid satisfazem
+    private int checkRecipeAmount(){
+        //64 é o stack máximo num geral, mudar essa função para receber um stack máximo depois;
+        int min_recipes = 64, item_amount;
+        for (int i = INPUT_GRID_START; i <= INPUT_GRID_END; i++){
+            item_amount = this.getStack(i).getCount();
+            if (item_amount < min_recipes){
+                min_recipes = item_amount;
+            }
+        }
+        return min_recipes;
     }
 
     //receita hardcoded teste pra ver se o babado funciona
@@ -121,9 +137,9 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
         return this.getStack(OUTPUT_SLOT).isEmpty() || this.getStack(OUTPUT_SLOT).getItem() == output.getItem();
     }
 
-    private void clearGrid(){
+    private void clearGrid(int amnt){
         for (int i = INPUT_GRID_START; i <= INPUT_GRID_END; i++) {
-            this.removeStack(i, 1);
+            this.removeStack(i, amnt);
         }
     }
 

@@ -40,7 +40,7 @@ public class RevolutionTableScreenHandler extends ScreenHandler {
         this.addSlot(new Slot(inventory, 9, 76, 43));
         this.addSlot(new Slot(inventory, 10, 40, 61));
         this.addSlot(new Slot(inventory, 11, 58, 61));
-        this.addSlot(new Slot(inventory, 12, 114, 34));
+        this.addSlot(new Slot(inventory, 12, 124, 36));
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
