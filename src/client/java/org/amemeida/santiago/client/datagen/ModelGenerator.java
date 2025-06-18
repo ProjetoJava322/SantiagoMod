@@ -46,6 +46,7 @@ public class ModelGenerator extends FabricModelProvider {
 
         gen.register(ModItems.SUPER_SNOWBALL, Models.GENERATED);
         gen.register(ModItems.PUNCH_CARD, Models.GENERATED);
+        gen.register(ModItems.FLOPPY_DISK, Models.GENERATED);
 
         gen.register(ModItems.SANTIAGOS_ANTHEM_MUSIC_DISC, Models.GENERATED);
     }

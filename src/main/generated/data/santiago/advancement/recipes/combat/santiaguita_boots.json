@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "santiago:santiaguita_axe"
+        "recipe": "santiago:santiaguita_boots"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "santiago:santiaguita_axe"
+      "santiago:santiaguita_boots"
     ]
   }
 }

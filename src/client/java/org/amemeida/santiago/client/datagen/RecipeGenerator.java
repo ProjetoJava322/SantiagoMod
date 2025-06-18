@@ -29,7 +29,7 @@ public class RecipeGenerator extends FabricRecipeProvider {
                         .input('s', ModItems.SANTIAGUITA_INGOT)
                         .input('g', ModItems.UNDERLINE)
                         .group("santiago_tools")
-                        .criterion(hasItem(ModItems.SANTIAGUITA_PICKAXE), conditionsFromItem(ModItems.SANTIAGUITA_PICKAXE))
+                        .criterion(hasItem(ModItems.SANTIAGUITA_INGOT), conditionsFromItem(ModItems.SANTIAGUITA_INGOT))
                         .offerTo(exporter);
 
                 createShaped(RecipeCategory.TOOLS, ModItems.SANTIAGUITA_AXE)
@@ -39,7 +39,7 @@ public class RecipeGenerator extends FabricRecipeProvider {
                         .input('s', ModItems.SANTIAGUITA_INGOT)
                         .input('g', ModItems.UNDERLINE)
                         .group("santiago_tools")
-                        .criterion(hasItem(ModItems.SANTIAGUITA_AXE), conditionsFromItem(ModItems.SANTIAGUITA_AXE))
+                        .criterion(hasItem(ModItems.SANTIAGUITA_INGOT), conditionsFromItem(ModItems.SANTIAGUITA_INGOT))
                         .offerTo(exporter);
 
                 createShaped(RecipeCategory.TOOLS, ModItems.SANTIAGUITA_SHOVEL)
@@ -49,7 +49,7 @@ public class RecipeGenerator extends FabricRecipeProvider {
                         .input('s', ModItems.SANTIAGUITA_INGOT)
                         .input('g', ModItems.UNDERLINE)
                         .group("santiago_tools")
-                        .criterion(hasItem(ModItems.SANTIAGUITA_SHOVEL), conditionsFromItem(ModItems.SANTIAGUITA_SHOVEL))
+                        .criterion(hasItem(ModItems.SANTIAGUITA_INGOT), conditionsFromItem(ModItems.SANTIAGUITA_INGOT))
                         .offerTo(exporter);
 
                 createShaped(RecipeCategory.TOOLS, ModItems.SANTIAGUITA_HOE)
@@ -59,7 +59,7 @@ public class RecipeGenerator extends FabricRecipeProvider {
                         .input('s', ModItems.SANTIAGUITA_INGOT)
                         .input('g', ModItems.UNDERLINE)
                         .group("santiago_tools")
-                        .criterion(hasItem(ModItems.SANTIAGUITA_HOE), conditionsFromItem(ModItems.SANTIAGUITA_HOE))
+                        .criterion(hasItem(ModItems.SANTIAGUITA_INGOT), conditionsFromItem(ModItems.SANTIAGUITA_INGOT))
                         .offerTo(exporter);
 
                 createShaped(RecipeCategory.COMBAT, ModItems.SANTIAGUITA_SWORD)
@@ -69,7 +69,43 @@ public class RecipeGenerator extends FabricRecipeProvider {
                         .input('s', ModItems.SANTIAGUITA_INGOT)
                         .input('g', ModItems.UNDERLINE)
                         .group("santiago_tools")
-                        .criterion(hasItem(ModItems.SANTIAGUITA_SWORD), conditionsFromItem(ModItems.SANTIAGUITA_SWORD))
+                        .criterion(hasItem(ModItems.SANTIAGUITA_INGOT), conditionsFromItem(ModItems.SANTIAGUITA_INGOT))
+                        .offerTo(exporter);
+
+                createShaped(RecipeCategory.COMBAT, ModItems.SANTIAGUITA_HELMET)
+                        .input('#', ModItems.SANTIAGUITA_INGOT)
+                        .pattern("###")
+                        .pattern("# #")
+                        .pattern("   ")
+                        .group("santiago_tools")
+                        .criterion(hasItem(ModItems.SANTIAGUITA_INGOT), conditionsFromItem(ModItems.SANTIAGUITA_INGOT))
+                        .offerTo(exporter);
+
+                createShaped(RecipeCategory.COMBAT, ModItems.SANTIAGUITA_CHESTPLATE)
+                        .input('#', ModItems.SANTIAGUITA_INGOT)
+                        .pattern("# #")
+                        .pattern("###")
+                        .pattern("###")
+                        .group("santiago_tools")
+                        .criterion(hasItem(ModItems.SANTIAGUITA_INGOT), conditionsFromItem(ModItems.SANTIAGUITA_INGOT))
+                        .offerTo(exporter);
+
+                createShaped(RecipeCategory.COMBAT, ModItems.SANTIAGUITA_LEGGINGS)
+                        .input('#', ModItems.SANTIAGUITA_INGOT)
+                        .pattern("###")
+                        .pattern("# #")
+                        .pattern("# #")
+                        .group("santiago_tools")
+                        .criterion(hasItem(ModItems.SANTIAGUITA_INGOT), conditionsFromItem(ModItems.SANTIAGUITA_INGOT))
+                        .offerTo(exporter);
+
+                createShaped(RecipeCategory.COMBAT, ModItems.SANTIAGUITA_BOOTS)
+                        .input('#', ModItems.SANTIAGUITA_INGOT)
+                        .pattern("   ")
+                        .pattern("# #")
+                        .pattern("# #")
+                        .group("santiago_tools")
+                        .criterion(hasItem(ModItems.SANTIAGUITA_INGOT), conditionsFromItem(ModItems.SANTIAGUITA_INGOT))
                         .offerTo(exporter);
 
                 offerSmelting(

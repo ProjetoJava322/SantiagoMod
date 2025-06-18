@@ -12,6 +12,9 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
+import org.amemeida.santiago.components.LocalText;
+import org.amemeida.santiago.components.EnderText;
+import org.amemeida.santiago.items.FloppyDisk;
 import org.amemeida.santiago.items.PunchCard;
 import org.amemeida.santiago.items.SuperSnowball;
 import org.amemeida.santiago.santiaguita.SantiaguitaMaterial;
@@ -25,7 +28,8 @@ import java.util.function.Function;
 
 public class ModItems {
     public static final Item HAMSTER = register("hamster",
-            new Item.Settings().food(FoodComponents.APPLE).component(DataComponentTypes.DEATH_PROTECTION, DeathProtectionComponent.TOTEM_OF_UNDYING));
+            new Item.Settings().food(FoodComponents.APPLE)
+                    .component(DataComponentTypes.DEATH_PROTECTION, DeathProtectionComponent.TOTEM_OF_UNDYING));
     public static final Item SANTIAGUITA_SWORD = register("santiaguita_sword",
             new Item.Settings().sword(SantiaguitaMaterial.TOOL_MATERIAL, 3.0F, -2.4F));
     public static final Item SANTIAGUITA_PICKAXE = register("santiaguita_pickaxe",
@@ -37,7 +41,10 @@ public class ModItems {
     public static final Item SANTIAGUITA_SHOVEL = register("santiaguita_shovel",
             new Item.Settings().shovel(SantiaguitaMaterial.TOOL_MATERIAL, 1.0F, -1.0F));
 
-    public static final Item PUNCH_CARD = register("punch_card", PunchCard::new);
+    public static final Item PUNCH_CARD = register("punch_card", PunchCard::new, new Item.Settings()
+            .maxCount(1).component(ModComponents.LOCAL_TEXT, new LocalText("punch")));
+    public static final Item FLOPPY_DISK = register("floppy_disk", FloppyDisk::new, new Item.Settings()
+            .maxCount(1).component(ModComponents.LOCAL_TEXT, new LocalText("floppy")));
 
     public static final Item RAW_SANTIAGUITA = register("raw_santiaguita");
 

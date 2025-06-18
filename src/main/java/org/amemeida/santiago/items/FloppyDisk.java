@@ -9,20 +9,12 @@ import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
-import org.amemeida.santiago.components.EnderText;
 import org.amemeida.santiago.components.LocalText;
-import org.amemeida.santiago.components.TextContent;
 import org.amemeida.santiago.net.OpenScreenS2CPayload;
 import org.amemeida.santiago.registry.items.ModComponents;
 
-/**
- *
- * @see net.minecraft.item.WritableBookItem
- * @see net.minecraft.item.Items
- */
-
-public class PunchCard extends Item {
-    public PunchCard(Item.Settings settings) {
+public class FloppyDisk extends Item {
+    public FloppyDisk(Item.Settings settings) {
         super(settings);
     }
 

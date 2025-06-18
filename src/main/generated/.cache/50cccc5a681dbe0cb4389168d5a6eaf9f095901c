@@ -9,6 +9,7 @@ fcee58c5ec0403b0b1d803fb5672cb32f9d36891 assets/santiago/blockstates/santiaguita
 83427ed6754856825605fad3629d249c8b37da5a assets/santiago/items/cat_block.json
 c92e3b3a958736be72413121d04369eb3fa1fc75 assets/santiago/items/creature_block.json
 a6c90858ed478db6b00d9bb6a8b39ce817428b09 assets/santiago/items/deepslate_santiaguita_ore.json
+0611b93b26b30ad486bd66be550a58ef25bde334 assets/santiago/items/floppy_disk.json
 17addfe3bf9519b7932880d3d1b11920c75a3861 assets/santiago/items/hamster.json
 dbc4c9172a611585edbef1f2befa9e9e3ee8e06c assets/santiago/items/incubator.json
 27ca669f5d70fac65082860ead0dde55b6f1a18f assets/santiago/items/miku_block.json
@@ -36,6 +37,7 @@ e38531cceb51ca294c1eee62e72edecb88169e03 assets/santiago/models/block/incubator.
 3747c4c40c874760d038809ea377a6a3ba9ddb5b assets/santiago/models/block/miku_block.json
 814d72f6e51f1e899a42b0cc1c931ef6f9d262b7 assets/santiago/models/block/revolution_table.json
 9bf5e07ac2578381cf43b7b38228d92fd63777ae assets/santiago/models/block/santiaguita_ore.json
+b1b05229b4aa7b373d7e0f2adc1da6d846243308 assets/santiago/models/item/floppy_disk.json
 de22df0d94cac044a94a3e7953ca09b2e546bf77 assets/santiago/models/item/hamster.json
 2ba3b743a0de78810a9c7da7d7832168bd112936 assets/santiago/models/item/punch_card.json
 08437068166dc7a9d091cc1b6a5b2e5115af1bae assets/santiago/models/item/raw_santiaguita.json

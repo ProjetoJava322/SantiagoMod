@@ -1,10 +1,12 @@
 package org.amemeida.santiago;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.feature.PlacedFeature;
+import org.amemeida.santiago.net.OpenScreenS2CPayload;
 import org.amemeida.santiago.registry.*;
 import org.amemeida.santiago.registry.blocks.ModBlockEntities;
 import org.amemeida.santiago.registry.blocks.ModBlocks;
@@ -36,5 +38,7 @@ public class Santiago implements ModInitializer {
         ModRecipeSerializers.initialize();
         ModRecipeTypes.initialize();
         ModFeatures.initialize();
+
+        PayloadTypeRegistry.playS2C().register(OpenScreenS2CPayload.ID, OpenScreenS2CPayload.CODEC);
     }
 }
