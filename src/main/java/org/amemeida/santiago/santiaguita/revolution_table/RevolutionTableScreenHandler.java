@@ -28,23 +28,19 @@ public class RevolutionTableScreenHandler extends ScreenHandler {
         this.inventory = ((Inventory) blockEntity);
         this.blockEntity = ((RevolutionTableBlockEntity) blockEntity);
 
-        this.addSlot(new Slot(inventory, 0, 22, 7));
-        this.addSlot(new Slot(inventory, 1, 40, 7));
-        this.addSlot(new Slot(inventory, 2, 58, 7));
-        this.addSlot(new Slot(inventory, 3, 76, 7));
-        this.addSlot(new Slot(inventory, 4, 22, 25));
-        this.addSlot(new Slot(inventory, 5, 40, 25));
-        this.addSlot(new Slot(inventory, 6, 58, 25));
-        this.addSlot(new Slot(inventory, 7, 76, 25));
-        this.addSlot(new Slot(inventory, 8, 22, 43));
-        this.addSlot(new Slot(inventory, 9, 40, 43));
-        this.addSlot(new Slot(inventory, 10, 58, 43));
-        this.addSlot(new Slot(inventory, 11, 76, 43));
-        this.addSlot(new Slot(inventory, 12, 22, 61));
-        this.addSlot(new Slot(inventory, 13, 40, 61));
-        this.addSlot(new Slot(inventory, 14, 58, 61));
-        this.addSlot(new Slot(inventory, 15, 76, 61));
-        this.addSlot(new Slot(inventory, 16, 104, 34));
+        this.addSlot(new Slot(inventory, 0, 40, 7));
+        this.addSlot(new Slot(inventory, 1, 58, 7));
+        this.addSlot(new Slot(inventory, 2, 22, 25));
+        this.addSlot(new Slot(inventory, 3, 40, 25));
+        this.addSlot(new Slot(inventory, 4, 58, 25));
+        this.addSlot(new Slot(inventory, 5, 76, 25));
+        this.addSlot(new Slot(inventory, 6, 22, 43));
+        this.addSlot(new Slot(inventory, 7, 40, 43));
+        this.addSlot(new Slot(inventory, 8, 58, 43));
+        this.addSlot(new Slot(inventory, 9, 76, 43));
+        this.addSlot(new Slot(inventory, 10, 40, 61));
+        this.addSlot(new Slot(inventory, 11, 58, 61));
+        this.addSlot(new Slot(inventory, 12, 114, 34));
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);

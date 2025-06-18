@@ -32,8 +32,8 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
 
     private final DefaultedList<ItemStack> INVENTORY = DefaultedList.ofSize(17, ItemStack.EMPTY);
     private static final int INPUT_GRID_START = 0;
-    private static final int INPUT_GRID_END = 15;
-    private static final int OUTPUT_SLOT = 16;
+    private static final int INPUT_GRID_END = 11;
+    private static final int OUTPUT_SLOT = 12;
     private boolean recipeStandby;
 
     public RevolutionTableBlockEntity( BlockPos pos, BlockState state) {
@@ -78,8 +78,12 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
                 toggleRecipeStandby(); //seta como false
                 clearGrid();
             }
-            markDirty(world, pos, state);
+        } else {
+            this.removeStack(OUTPUT_SLOT);
+            if (getRecipeStandby()){toggleRecipeStandby();}
         }
+         markDirty(world, pos, state);
+
      }
 
      private boolean getRecipeStandby(){
@@ -92,10 +96,10 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
 
     //receita hardcoded teste pra ver se o babado funciona
     private boolean hasRecipe() {
-        ItemStack input = new ItemStack(ModItems.SANTIAGUITA_INGOT, 16);
+        ItemStack input = new ItemStack(ModItems.SANTIAGUITA_INGOT, 12);
         ItemStack output = new ItemStack(ModBlocks.CREATURE_BLOCK, 1);
 
-        for (int i = 0; i < INPUT_GRID_END; i++) {
+        for (int i = INPUT_GRID_START; i <= INPUT_GRID_END; i++) {
             if (!this.getStack(i).isOf(ModItems.SANTIAGUITA_INGOT)) {
                 return false;
             }
@@ -118,7 +122,7 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
     }
 
     private void clearGrid(){
-        for (int i = 0; i <= INPUT_GRID_END; i++) {
+        for (int i = INPUT_GRID_START; i <= INPUT_GRID_END; i++) {
             this.removeStack(i, 1);
         }
     }
