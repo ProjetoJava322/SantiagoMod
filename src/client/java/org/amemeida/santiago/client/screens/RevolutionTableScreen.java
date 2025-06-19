@@ -26,6 +26,8 @@ public class RevolutionTableScreen extends HandledScreen<RevolutionTableScreenHa
         super(handler, inventory, title);
         this.backgroundWidth = 206;
         this.backgroundHeight = 185;
+        this.playerInventoryTitleX = 23;
+        this.playerInventoryTitleY = this.backgroundHeight - 94;
     }
 
     @Override
