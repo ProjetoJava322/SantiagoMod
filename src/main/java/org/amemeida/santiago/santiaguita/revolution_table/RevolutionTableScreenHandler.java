@@ -28,23 +28,19 @@ public class RevolutionTableScreenHandler extends ScreenHandler {
         this.inventory = ((Inventory) blockEntity);
         this.blockEntity = ((RevolutionTableBlockEntity) blockEntity);
 
-        this.addSlot(new Slot(inventory, 0, 22, 7));
-        this.addSlot(new Slot(inventory, 1, 40, 7));
-        this.addSlot(new Slot(inventory, 2, 58, 7));
-        this.addSlot(new Slot(inventory, 3, 76, 7));
-        this.addSlot(new Slot(inventory, 4, 22, 25));
-        this.addSlot(new Slot(inventory, 5, 40, 25));
-        this.addSlot(new Slot(inventory, 6, 58, 25));
-        this.addSlot(new Slot(inventory, 7, 76, 25));
-        this.addSlot(new Slot(inventory, 8, 22, 43));
-        this.addSlot(new Slot(inventory, 9, 40, 43));
-        this.addSlot(new Slot(inventory, 10, 58, 43));
-        this.addSlot(new Slot(inventory, 11, 76, 43));
-        this.addSlot(new Slot(inventory, 12, 22, 61));
-        this.addSlot(new Slot(inventory, 13, 40, 61));
-        this.addSlot(new Slot(inventory, 14, 58, 61));
-        this.addSlot(new Slot(inventory, 15, 76, 61));
-        this.addSlot(new Slot(inventory, 16, 104, 34));
+        this.addSlot(new Slot(inventory, 0, 52, 17));
+        this.addSlot(new Slot(inventory, 1, 70, 17));
+        this.addSlot(new Slot(inventory, 2, 34, 35));
+        this.addSlot(new Slot(inventory, 3, 52, 35));
+        this.addSlot(new Slot(inventory, 4, 70, 35));
+        this.addSlot(new Slot(inventory, 5, 88, 35));
+        this.addSlot(new Slot(inventory, 6, 34, 53));
+        this.addSlot(new Slot(inventory, 7, 52, 53));
+        this.addSlot(new Slot(inventory, 8, 70, 53));
+        this.addSlot(new Slot(inventory, 9, 88, 53));
+        this.addSlot(new Slot(inventory, 10, 52, 71));
+        this.addSlot(new Slot(inventory, 11, 70, 71));
+        this.addSlot(new Slot(inventory, 12, 147, 44));
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
@@ -75,7 +71,6 @@ public class RevolutionTableScreenHandler extends ScreenHandler {
         return newStack;
     }
 
-    //TEM QUE AJEITAR ISSO +
     @Override
     public boolean canUse(PlayerEntity player) {
         return this.inventory.canPlayerUse(player);
@@ -84,14 +79,14 @@ public class RevolutionTableScreenHandler extends ScreenHandler {
     private void addPlayerInventory(PlayerInventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 23 + l * 18, 103 + i * 18));
             }
         }
     }
 
     private void addPlayerHotbar(PlayerInventory playerInventory) {
         for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
+            this.addSlot(new Slot(playerInventory, i, 23 + i * 18, 161));
         }
     }
 }
