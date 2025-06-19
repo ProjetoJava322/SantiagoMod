@@ -68,15 +68,15 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
     }
 
      public void tick(World world, BlockPos pos, BlockState state) {
-
-        if (hasRecipe()) {
-            //esse metodo funciona, mas ele sempre só faz um item stack de count 1 e eu ainda não sei ajeitar
-            int recipe_amnt = checkRecipeAmount();
+        int recipe_amnt = checkRecipeAmount();
+        if (hasRecipe(recipe_amnt)) {
+            if (this.getStack(OUTPUT_SLOT).getCount() >= 64) {return;}
             if (!getRecipeStandby()){
                 toggleRecipeStandby(); //seta como true
-                //não funcionou fazer isso, mudar depois
-                for (int i = 0; i < recipe_amnt; i++) {craftItem();}
+                craftItem(recipe_amnt);
             }
+
+            if (getRecipeStandby() && !this.getStack(OUTPUT_SLOT).isEmpty() && this.getStack(OUTPUT_SLOT).getCount() != recipe_amnt) {craftItem(recipe_amnt);}
 
             if (getRecipeStandby() && this.getStack(OUTPUT_SLOT).isEmpty()){
                 toggleRecipeStandby(); //seta como false
@@ -111,16 +111,15 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
     }
 
     //receita hardcoded teste pra ver se o babado funciona
-    private boolean hasRecipe() {
-        ItemStack input = new ItemStack(ModItems.SANTIAGUITA_INGOT, 12);
-        ItemStack output = new ItemStack(ModBlocks.CREATURE_BLOCK, 1);
+    private boolean hasRecipe(int amnt) {
+        ItemStack output = new ItemStack(ModBlocks.CREATURE_BLOCK, amnt);
 
         for (int i = INPUT_GRID_START; i <= INPUT_GRID_END; i++) {
             if (!this.getStack(i).isOf(ModItems.SANTIAGUITA_INGOT)) {
                 return false;
             }
         }
-        if (!canInsertItemIntoOutputSlot(output) || !canInsertAmountIntoOutputSlot(output.getCount())){
+        if (!canInsertItemIntoOutputSlot(output)) {
             return false;
         }
         return true;
@@ -143,12 +142,9 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
         }
     }
 
-    private void craftItem() {
-        ItemStack output = new ItemStack(ModBlocks.CREATURE_BLOCK, 1);
-
-        this.setStack(OUTPUT_SLOT, new ItemStack(output.getItem(),
-                this.getStack(OUTPUT_SLOT).getCount() + output.getCount()));
-
+    private void craftItem(int amnt) {
+        ItemStack output = new ItemStack(ModBlocks.CREATURE_BLOCK, amnt);
+        this.setStack(OUTPUT_SLOT, output);
     }
 
     @Override

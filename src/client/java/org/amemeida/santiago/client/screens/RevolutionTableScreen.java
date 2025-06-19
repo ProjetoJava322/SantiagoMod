@@ -18,10 +18,14 @@ import org.amemeida.santiago.santiaguita.revolution_table.RevolutionTableScreenH
 
 import java.util.List;
 
+//206x185
+
 public class RevolutionTableScreen extends HandledScreen<RevolutionTableScreenHandler> {
     public static final Identifier TEXTURE = Identifier.of(Santiago.MOD_ID, "textures/gui/revolution_table_gui.png");
     public RevolutionTableScreen(RevolutionTableScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
+        this.backgroundWidth = 206;
+        this.backgroundHeight = 185;
     }
 
     @Override
