@@ -11,6 +11,7 @@ public class ModScreens {
     static {
         HandledScreens.register(ModScreenHandlers.INCUBATOR_SCREEN_HANDLER, IncubatorScreen::new);
         HandledScreens.register(ModScreenHandlers.REVOLUTION_TABLE_SCREEN_HANDLER, RevolutionTableScreen::new);
+        HandledScreens.register(ModScreenHandlers.COMPUTER_SCREEN_SCREEN_HANDLER, ComputerScreen::new);
     }
 
     public static void initialize() {}

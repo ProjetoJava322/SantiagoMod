@@ -2,6 +2,7 @@ package org.amemeida.santiago.client.screens;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.NarratorManager;
@@ -10,10 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.StringHelper;
 import net.minecraft.client.gui.widget.MultilineTextWidget;
-import org.amemeida.santiago.components.LocalText;
-import org.amemeida.santiago.components.EnderText;
 import org.amemeida.santiago.components.TextContent;
-import org.amemeida.santiago.registry.items.ModComponents;
+import org.amemeida.santiago.net.UpdateStackC2SPayload;
 
 
 /**
@@ -22,6 +21,7 @@ import org.amemeida.santiago.registry.items.ModComponents;
 
 @Environment(EnvType.CLIENT)
 public class TextEditScreen extends Screen {
+    private final int slot;
     private final ItemStack stack;
 
     private Text text;
@@ -29,8 +29,9 @@ public class TextEditScreen extends Screen {
 
     private final SelectionManager selectionManager;
 
-    public TextEditScreen(ItemStack stack, TextContent textContent) {
+    public TextEditScreen(int slot, ItemStack stack, TextContent textContent) {
         super(NarratorManager.EMPTY);
+        this.slot = slot;
         this.stack = stack;
 
         this.textContent = textContent;
@@ -86,8 +87,10 @@ public class TextEditScreen extends Screen {
 
     private void writeNbtData() {
         var text = this.trim();
-        stack.set(ModComponents.LOCAL_TEXT, new LocalText(text));
-//        this.textContent.setComponent(text, this.stack);
+        this.textContent.setComponent(text, this.stack);
+        
+        var payload = new UpdateStackC2SPayload(this.slot, this.stack);
+        ClientPlayNetworking.send(payload);
     }
 
     private void setClipboard(String clipboard) {

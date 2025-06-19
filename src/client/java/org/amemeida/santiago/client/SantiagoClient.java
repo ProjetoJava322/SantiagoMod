@@ -17,20 +17,14 @@ public class SantiagoClient implements ClientModInitializer {
         ModScreens.initialize();
 
         ClientPlayNetworking.registerGlobalReceiver(OpenScreenS2CPayload.ID, (payload, context) -> {
-            ItemStack stack;
-
-            if (context.player().getMainHandStack().getItem().equals(payload.stack().getItem())) {
-                stack = context.player().getMainHandStack();
-            } else {
-                stack = context.player().getOffHandStack();
-            }
+            ItemStack stack = context.player().getInventory().getStack(payload.slot());
 
             TextContent comp = stack.get(ModComponents.LOCAL_TEXT);
 
             if (comp == null) comp = stack.get(ModComponents.ENDER_TEXT);
             if (comp == null) return;
 
-            var screen = new TextEditScreen(stack, comp);
+            var screen = new TextEditScreen(payload.slot(), stack, comp);
             MinecraftClient.getInstance().setScreen(screen);
         });
     }

@@ -1,5 +1,6 @@
 {
   "block.santiago.cat_block": "Bloco de Gato",
+  "block.santiago.computer": "Computador",
   "block.santiago.creature_block": "Bloco de Criatura",
   "block.santiago.deepslate_santiaguita_ore": "Minério de Santiaguita de Ardosiabissal",
   "block.santiago.incubator": "Encubadora",
@@ -7,6 +8,7 @@
   "block.santiago.revolution_table": "Mesa da Revolução",
   "block.santiago.santiaguita_ore": "Minério de Santiaguita",
   "item.santiago.cat_block": "Bloco de Gato",
+  "item.santiago.computer": "Computador",
   "item.santiago.creature_block": "Bloco de Criatura",
   "item.santiago.deepslate_santiaguita_ore": "Minério de Santiaguita de Ardosiabissal",
   "item.santiago.floppy_disk": "Disquete",

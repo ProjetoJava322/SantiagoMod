@@ -20,6 +20,9 @@ public class BlockLootGenerator extends FabricBlockLootTableProvider {
         addDrop(ModBlocks.CAT_BLOCK);
         addDrop(ModBlocks.CREATURE_BLOCK);
         addDrop(ModBlocks.MIKU_BLOCK);
+        addDrop(ModBlocks.COMPUTER);
+        addDrop(ModBlocks.INCUBATOR);
+        addDrop(ModBlocks.REVOLUTION_TABLE);
 
         addOre(ModBlocks.SANTIAGUITA_ORE, ModItems.RAW_SANTIAGUITA);
         addOre(ModBlocks.DEEPSLATE_SANTIAGUITA_ORE, ModItems.RAW_SANTIAGUITA);

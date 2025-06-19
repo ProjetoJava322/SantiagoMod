@@ -5,8 +5,9 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
-import org.amemeida.santiago.components.LocalText;
-import org.amemeida.santiago.components.EnderText;
+import org.amemeida.santiago.components.IOComponent;
+import org.amemeida.santiago.components.ScriptComponent;
+import org.amemeida.santiago.components.TextContent;
 
 import java.util.function.UnaryOperator;
 
@@ -15,13 +16,13 @@ import java.util.function.UnaryOperator;
  */
 
 public class ModComponents {
-    public static final ComponentType<EnderText> ENDER_TEXT = register(
+    public static final ComponentType<TextContent> ENDER_TEXT = register(
             "ender_text", builder ->
-                    builder.codec(EnderText.CODEC).cache());
+                    builder.codec(ScriptComponent.CODEC).cache());
 
-    public static final ComponentType<LocalText> LOCAL_TEXT = register(
+    public static final ComponentType<TextContent> LOCAL_TEXT = register(
             "local_text", builder ->
-                    builder.codec(LocalText.CODEC).cache());
+                    builder.codec(IOComponent.CODEC).cache());
 
     private static <T> ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         return Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of(Santiago.MOD_ID, name),

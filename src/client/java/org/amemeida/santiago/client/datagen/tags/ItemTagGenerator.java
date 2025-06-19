@@ -65,5 +65,11 @@ public class ItemTagGenerator extends FabricTagProvider<Item> {
         getOrCreateTagBuilder(ConventionalItemTags.MELEE_WEAPON_TOOLS)
                 .add(ModItems.SANTIAGUITA_SWORD)
                 .add(ModItems.SANTIAGUITA_INGOT);
+
+        getOrCreateTagBuilder(ConventionalItemTags.ARMORS)
+                .add(ModItems.SANTIAGUITA_HELMET)
+                .add(ModItems.SANTIAGUITA_CHESTPLATE)
+                .add(ModItems.SANTIAGUITA_LEGGINGS)
+                .add(ModItems.SANTIAGUITA_BOOTS);
     }
 }

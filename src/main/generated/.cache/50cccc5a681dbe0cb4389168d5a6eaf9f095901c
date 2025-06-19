@@ -1,5 +1,6 @@
 // 1.21.5	-999999999-01-01T00:00:00	Santiago/Santiago Model Provider
 02759ffcb065eb943c514496b1d202476419e354 assets/santiago/blockstates/cat_block.json
+c56c24246063124987359c54bd95002df1cac428 assets/santiago/blockstates/computer.json
 f84b39fbcb0106c7edc05204beeece8ccc96fa9a assets/santiago/blockstates/creature_block.json
 aec15de3e47185f3fac39badf88c0c141794b5cd assets/santiago/blockstates/deepslate_santiaguita_ore.json
 f42fa3c4be156460181521f3d75d8166c3bb0387 assets/santiago/blockstates/incubator.json
@@ -7,6 +8,7 @@ f42fa3c4be156460181521f3d75d8166c3bb0387 assets/santiago/blockstates/incubator.j
 0ed12264909068865b81709c8b5e6c60f9566ff7 assets/santiago/blockstates/revolution_table.json
 fcee58c5ec0403b0b1d803fb5672cb32f9d36891 assets/santiago/blockstates/santiaguita_ore.json
 83427ed6754856825605fad3629d249c8b37da5a assets/santiago/items/cat_block.json
+6ac2fbc238bd2d32d8db5ddefa872ecc579b37a1 assets/santiago/items/computer.json
 c92e3b3a958736be72413121d04369eb3fa1fc75 assets/santiago/items/creature_block.json
 a6c90858ed478db6b00d9bb6a8b39ce817428b09 assets/santiago/items/deepslate_santiaguita_ore.json
 0611b93b26b30ad486bd66be550a58ef25bde334 assets/santiago/items/floppy_disk.json
@@ -31,6 +33,7 @@ d8a44ac6e5626cc12c6259f438b74a7a204da4b1 assets/santiago/items/revolution_table.
 5e229ab9c91d79fc456eae8db8137276c40ee982 assets/santiago/items/super_snowball.json
 f86234ebd707884ce49a36e36da6faad48645650 assets/santiago/items/underline.json
 ead1488bb0f107a029ce4478a3f1e7f848c91935 assets/santiago/models/block/cat_block.json
+34a5a58c637ec65c951889e11c8236f5cea6cbe9 assets/santiago/models/block/computer.json
 5b6d38bc8540c20e77acedab38d817ca5d755092 assets/santiago/models/block/creature_block.json
 15e782cdb41a6c777b4f90fa87becc0c7bda586d assets/santiago/models/block/deepslate_santiaguita_ore.json
 e38531cceb51ca294c1eee62e72edecb88169e03 assets/santiago/models/block/incubator.json

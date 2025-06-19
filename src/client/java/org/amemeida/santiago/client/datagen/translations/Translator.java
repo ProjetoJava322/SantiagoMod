@@ -38,8 +38,8 @@ public abstract class Translator extends FabricLanguageProvider {
         builder.add(key, translation);
 
         if (block.asItem() != null) {
-            key = block.asItem().getTranslationKey();
-            builder.add(key, translation);
+            var item = block.asItem();
+            add(item, translation);
         }
 
         return this;

@@ -5,15 +5,20 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.ItemStack;
 import org.amemeida.santiago.registry.items.ModComponents;
 
-public record EnderText(String text) implements TextContent {
-    public static final Codec<EnderText> CODEC = RecordCodecBuilder.create(builder -> {
+public record ScriptComponent(String text) implements TextContent {
+    public static final Codec<TextContent> CODEC = RecordCodecBuilder.create(builder -> {
         return builder.group(
                 Codec.STRING.fieldOf("file").forGetter(TextContent::text)
-        ).apply(builder, EnderText::new);
+        ).apply(builder, ScriptComponent::new);
     });
 
     @Override
     public void setComponent(String text, ItemStack stack) {
-        stack.set(ModComponents.ENDER_TEXT, new EnderText(text));
+        stack.set(ModComponents.ENDER_TEXT, new ScriptComponent(text));
+    }
+
+    @Override
+    public Codec<TextContent> getCodec() {
+        return CODEC;
     }
 }

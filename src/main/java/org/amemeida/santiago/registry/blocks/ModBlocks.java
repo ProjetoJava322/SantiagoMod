@@ -13,6 +13,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
+import org.amemeida.santiago.computer.Computer;
 import org.amemeida.santiago.registry.items.ModGroups;
 import org.amemeida.santiago.santiaguita.encubadora.IncubatorBlock;
 import org.amemeida.santiago.santiaguita.revolution_table.RevolutionTableBlock;
@@ -31,6 +32,9 @@ public class ModBlocks {
 
     public static final Block INCUBATOR = register("incubator",
             IncubatorBlock::new, AbstractBlock.Settings.create().requiresTool().strength(3f));
+
+    public static final Block COMPUTER = register("computer",
+            Computer::new, AbstractBlock.Settings.create().strength(1f));
 
     public static final Block REVOLUTION_TABLE = register("revolution_table",  RevolutionTableBlock::new, AbstractBlock.Settings.create().requiresTool().strength(3f));
 

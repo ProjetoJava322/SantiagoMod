@@ -12,8 +12,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
-import org.amemeida.santiago.components.LocalText;
-import org.amemeida.santiago.components.EnderText;
+import org.amemeida.santiago.components.IOComponent;
 import org.amemeida.santiago.items.FloppyDisk;
 import org.amemeida.santiago.items.PunchCard;
 import org.amemeida.santiago.items.SuperSnowball;
@@ -42,9 +41,9 @@ public class ModItems {
             new Item.Settings().shovel(SantiaguitaMaterial.TOOL_MATERIAL, 1.0F, -1.0F));
 
     public static final Item PUNCH_CARD = register("punch_card", PunchCard::new, new Item.Settings()
-            .maxCount(1).component(ModComponents.LOCAL_TEXT, new LocalText("punch")));
+            .maxCount(1).component(ModComponents.LOCAL_TEXT, new IOComponent("punch")));
     public static final Item FLOPPY_DISK = register("floppy_disk", FloppyDisk::new, new Item.Settings()
-            .maxCount(1).component(ModComponents.LOCAL_TEXT, new LocalText("floppy")));
+            .maxCount(1).component(ModComponents.LOCAL_TEXT, new IOComponent("floppy")));
 
     public static final Item RAW_SANTIAGUITA = register("raw_santiaguita");
 

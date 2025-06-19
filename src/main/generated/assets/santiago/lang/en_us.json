@@ -1,5 +1,6 @@
 {
   "block.santiago.cat_block": "Block of Cat",
+  "block.santiago.computer": "Computer",
   "block.santiago.creature_block": "Block of Creature",
   "block.santiago.deepslate_santiaguita_ore": "Deepslate Santiaguita Ore",
   "block.santiago.incubator": "Incubator",
@@ -7,6 +8,7 @@
   "block.santiago.revolution_table": "Revolution Table",
   "block.santiago.santiaguita_ore": "Santiaguita Ore",
   "item.santiago.cat_block": "Block of Cat",
+  "item.santiago.computer": "Computer",
   "item.santiago.creature_block": "Block of Creature",
   "item.santiago.deepslate_santiaguita_ore": "Deepslate Santiaguita Ore",
   "item.santiago.floppy_disk": "Floppy Disk",
