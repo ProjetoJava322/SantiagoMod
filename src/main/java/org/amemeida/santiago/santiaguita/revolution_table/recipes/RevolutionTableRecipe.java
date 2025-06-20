@@ -122,6 +122,7 @@ public class RevolutionTableRecipe implements Recipe<RevolutionTableRecipeInput>
         private static final int MAX_WIDTH_TOP_AND_BOTTOM = 2;
         private static final int TOP_POS = 1;
         private static final int BOTTOM_POS = 4;
+        private static final int INPUT_SLOTS = 12;
         public static final char SPACE = ' ';
         public static final MapCodec<RawRecipe> CODEC = RawRecipe.Data.CODEC
                 .flatXmap(
@@ -241,28 +242,17 @@ public class RevolutionTableRecipe implements Recipe<RevolutionTableRecipeInput>
             if (input.getStackCount() != this.ingredientCount) {
                 return false;
             } else {
-                for (int i = 0; i < MAX_WIDTH_AND_HEIGHT; i++) {
+                for (int i = 0; i < INPUT_SLOTS; i++) {
                     final int fi = i + 1;
-                    if (fi == MAX_WIDTH_AND_HEIGHT) {
-                        Optional<Ingredient> optional = (Optional<Ingredient>)this.ingredients.get(i * MAX_WIDTH_AND_HEIGHT);
+                    if (fi == INPUT_SLOTS) {
+                        Optional<Ingredient> optional = (Optional<Ingredient>)this.ingredients.get(i);
 
-                        ItemStack itemStack = input.getStackInSlot(i*MAX_WIDTH_AND_HEIGHT);
+                        ItemStack itemStack = input.getStackInSlot(i);
                         if (!Ingredient.matches(optional, itemStack)) {
                             return false;
                         }
                     }
-                    else {
-                        for (int j = 0; j < MAX_WIDTH_AND_HEIGHT; j++) {
-                            Optional<Ingredient> optional = (Optional<Ingredient>)this.ingredients.get(j + i * MAX_WIDTH_AND_HEIGHT);
-
-                            ItemStack itemStack = input.getStackInSlot(j + i * MAX_WIDTH_AND_HEIGHT);
-                            if (!Ingredient.matches(optional, itemStack)) {
-                                return false;
-                            }
-                        }
-                    }
                 }
-
                 return true;
             }
         }

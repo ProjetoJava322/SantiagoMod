@@ -14,9 +14,12 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
@@ -25,12 +28,18 @@ import net.minecraft.world.World;
 import org.amemeida.santiago.registry.blocks.ModBlockEntities;
 import org.amemeida.santiago.registry.blocks.ModBlocks;
 import org.amemeida.santiago.registry.items.ModItems;
+import org.amemeida.santiago.registry.recipes.ModRecipeTypes;
+import org.amemeida.santiago.santiaguita.revolution_table.recipes.RevolutionTableRecipe;
+import org.amemeida.santiago.santiaguita.revolution_table.recipes.RevolutionTableRecipeInput;
 import org.amemeida.santiago.util.ImplementedInventory;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+import java.util.Optional;
+
 public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPos>, ImplementedInventory {
 
-    private final DefaultedList<ItemStack> INVENTORY = DefaultedList.ofSize(17, ItemStack.EMPTY);
+    private final DefaultedList<ItemStack> INVENTORY = DefaultedList.ofSize(13, ItemStack.EMPTY);
     private static final int INPUT_GRID_START = 0;
     private static final int INPUT_GRID_END = 11;
     private static final int OUTPUT_SLOT = 12;
@@ -69,18 +78,18 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
 
      public void tick(World world, BlockPos pos, BlockState state) {
         int recipe_amnt = checkRecipeAmount();
-        if (hasRecipe(recipe_amnt)) {
+        if (hasRecipe()) {
             if (this.getStack(OUTPUT_SLOT).getCount() >= 64) {return;}
             if (!getRecipeStandby()){
                 toggleRecipeStandby(); //seta como true
-                craftItem(recipe_amnt);
+                craftItem();
             }
 
-            if (getRecipeStandby() && !this.getStack(OUTPUT_SLOT).isEmpty() && this.getStack(OUTPUT_SLOT).getCount() != recipe_amnt) {craftItem(recipe_amnt);}
+            if (getRecipeStandby() && !this.getStack(OUTPUT_SLOT).isEmpty() && this.getStack(OUTPUT_SLOT).getCount() != recipe_amnt) {craftItem();}
 
             if (getRecipeStandby() && this.getStack(OUTPUT_SLOT).isEmpty()){
                 toggleRecipeStandby(); //seta como false
-                clearGrid(recipe_amnt);
+                clearGrid(1);
             }
         } else {
             this.removeStack(OUTPUT_SLOT);
@@ -111,18 +120,22 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
     }
 
     //receita hardcoded teste pra ver se o babado funciona
-    private boolean hasRecipe(int amnt) {
-        ItemStack output = new ItemStack(ModBlocks.CREATURE_BLOCK, amnt);
-
-        for (int i = INPUT_GRID_START; i <= INPUT_GRID_END; i++) {
-            if (!this.getStack(i).isOf(ModItems.SANTIAGUITA_INGOT)) {
-                return false;
-            }
+    private boolean hasRecipe() {
+        Optional<RecipeEntry<RevolutionTableRecipe>> recipe = getCurrentRecipe();
+        if (recipe.isEmpty()){
+            return false;
         }
+        ItemStack output = recipe.get().value().result();
+
         if (!canInsertItemIntoOutputSlot(output)) {
             return false;
         }
         return true;
+    }
+
+    private Optional<RecipeEntry<RevolutionTableRecipe>> getCurrentRecipe(){
+        RevolutionTableRecipeInput recipeInput = RevolutionTableRecipeInput.create(INVENTORY);
+        return world.getServer().getRecipeManager().getFirstMatch(ModRecipeTypes.REVOLUTION_TABLE_RECIPE_TYPE, recipeInput, world);
     }
 
     private boolean canInsertAmountIntoOutputSlot(int count) {
@@ -142,8 +155,9 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
         }
     }
 
-    private void craftItem(int amnt) {
-        ItemStack output = new ItemStack(ModBlocks.CREATURE_BLOCK, amnt);
+    private void craftItem() {
+        Optional<RecipeEntry<RevolutionTableRecipe>> recipe = getCurrentRecipe();
+        ItemStack output = recipe.get().value().result();
         this.setStack(OUTPUT_SLOT, output);
     }
 
