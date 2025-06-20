@@ -46,26 +46,32 @@ public class Script {
         return trimmed.endsWith(".py") ? trimmed : trimmed + ".py";
     }
 
-    public String runScript() throws PythonRunner.RunningException {
+    public String runScript(String in) throws PythonRunner.RunningException {
         var file = file();
-        return PythonRunner.getInstance().run(file);
+
+        if (file.length() <= 0) {
+            throw new PythonRunner.RunningException("Empty script");
+        }
+
+        return PythonRunner.getInstance().run(file, in);
+    }
+
+    public String runScript() throws PythonRunner.RunningException {
+        return runScript("");
     }
 
     public void writeScript(String script) {
         var file = this.file();
 
-        try {
-            Files.createDirectories(folder());
-            boolean created = file.createNewFile();
-            System.out.println(created);
-            file.setWritable(true);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
+        if (script.length() <= 0 && !file.exists()) {
+            return;
         }
 
+        this.create();
+        file.setWritable(true);
+
         try (var fileWriter = new FileWriter(file))  {
-            fileWriter.flush();
-            fileWriter.write(script);
+            fileWriter.write(script.trim());
         } catch (IOException ex) {
             throw new RuntimeException("Cannot write to script file.");
         }
@@ -74,10 +80,14 @@ public class Script {
     public String getScript() {
         var file = this.file();
 
+        if (!file.exists()) {
+            return "";
+        }
+
         try (var scanner = new Scanner(file)) {
             return Files.readString(file.toPath());
         } catch (IOException ex) {
-            throw  new RuntimeException("Cannot read script file.");
+            throw new RuntimeException("Cannot read script file.");
         }
     }
 
@@ -87,7 +97,23 @@ public class Script {
                 .resolve("scripts");
     }
 
-    public File file() {
-        return folder().resolve(file).toFile();
+    protected File file() {
+        return folder().resolve(this.file).toFile();
+    }
+
+    protected void create() {
+        try {
+            Files.createDirectories(folder());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        var file = file();
+
+        try {
+            boolean a = file.createNewFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

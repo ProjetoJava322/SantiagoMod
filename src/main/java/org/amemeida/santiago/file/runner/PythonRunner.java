@@ -11,11 +11,16 @@ public class PythonRunner {
 
     private PythonRunner() {}
 
-    public String run(File file) throws RunningException {
+    public String run(File file, String in) throws RunningException {
         var builder = new ProcessBuilder("python", file.getAbsolutePath());
 
         try {
             var proc = builder.start();
+
+            try (var out = proc.outputWriter()) {
+                out.write(in);
+            }
+
             int exit = proc.waitFor();
 
             if (exit != 0) {

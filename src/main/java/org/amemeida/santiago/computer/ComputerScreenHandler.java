@@ -1,22 +1,28 @@
 package org.amemeida.santiago.computer;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.Property;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerListener;
+import net.minecraft.screen.slot.CrafterInputSlot;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import org.amemeida.santiago.registry.blocks.ModScreenHandlers;
 import org.amemeida.santiago.registry.items.ModComponents;
-import org.amemeida.santiago.registry.items.ModItems;
 
 /**
  * @see net.minecraft.screen.AbstractFurnaceScreenHandler
+ * @see net.minecraft.screen.CrafterScreenHandler
+ * @see net.minecraft.screen.BeaconScreenHandler
  */
 
-public class ComputerScreenHandler extends ScreenHandler {
+public class ComputerScreenHandler extends ScreenHandler implements ScreenHandlerListener {
     private final Inventory inventory;
     private final ComputerEntity blockEntity;
 
@@ -31,18 +37,28 @@ public class ComputerScreenHandler extends ScreenHandler {
         this.blockEntity = (ComputerEntity) blockEntity;
 
         addSlots(playerInventory);
+        this.addListener(this);
+    }
+
+    public boolean toggleWrite() {
+        var a = blockEntity.toggleWrite();
+        this.sendContentUpdates();
+        return a;
+    }
+
+    public boolean getWrite() {
+        return blockEntity.getWrite();
     }
 
     private void addSlots(PlayerInventory playerInventory) {
         this.addSlot(new FloppySlot(inventory, 0, 20, 20));
 
         for (int i = 1; i <= ComputerEntity.IO_SLOTS * 2; i += 2) {
-            this.addSlot(new IOSlot(inventory, i, 20, 20 * i + 5));
-            this.addSlot(new IOSlot(inventory, i + 1, 80, 20 * i + 5));
+            this.addSlot(new IOSlot(inventory, i, 60, 20 * i + 5));
+            this.addSlot(new IOSlot(inventory, i + 1, 100, 20 * i + 5));
         }
 
-        addPlayerHotbar(playerInventory);
-        addPlayerInventory(playerInventory);
+        addPlayerSlots(playerInventory, 8, 130);
     }
 
     @Override
@@ -103,17 +119,11 @@ public class ComputerScreenHandler extends ScreenHandler {
         }
     }
 
-    private void addPlayerInventory(PlayerInventory playerInventory) {
-        for (int i = 0; i < 3; ++i) {
-            for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
-            }
-        }
+    @Override
+    public void onSlotUpdate(ScreenHandler handler, int slotId, ItemStack stack) {
     }
 
-    private void addPlayerHotbar(PlayerInventory playerInventory) {
-        for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
-        }
+    @Override
+    public void onPropertyUpdate(ScreenHandler handler, int property, int value) {
     }
 }

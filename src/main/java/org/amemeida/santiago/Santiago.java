@@ -4,8 +4,11 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.MinecraftServer;
+import org.amemeida.santiago.computer.ComputerEntity;
+import org.amemeida.santiago.computer.ComputerScreenHandler;
 import org.amemeida.santiago.file.Script;
 import org.amemeida.santiago.net.OpenScreenS2CPayload;
+import org.amemeida.santiago.net.PCModeC2SPayload;
 import org.amemeida.santiago.net.UpdateStackC2SPayload;
 import org.amemeida.santiago.registry.*;
 import org.amemeida.santiago.registry.blocks.ModBlockEntities;
@@ -42,6 +45,7 @@ public class Santiago implements ModInitializer {
 
         PayloadTypeRegistry.playS2C().register(OpenScreenS2CPayload.ID, OpenScreenS2CPayload.CODEC);
         PayloadTypeRegistry.playC2S().register(UpdateStackC2SPayload.ID, UpdateStackC2SPayload.CODEC);
+        PayloadTypeRegistry.playC2S().register(PCModeC2SPayload.ID, PCModeC2SPayload.CODEC);
 
         ServerPlayNetworking.registerGlobalReceiver(UpdateStackC2SPayload.ID, (payload, context) -> {
             var playerStack = context.player().getInventory().getStack(payload.slot());
@@ -59,6 +63,17 @@ public class Santiago implements ModInitializer {
             Script.setServer(context.server());
 
             component.setComponent(payload.text(), playerStack);
+        });
+
+        ServerPlayNetworking.registerGlobalReceiver(PCModeC2SPayload.ID, (payload, context) -> {
+            if (context.player().isSpectator() || context.player().currentScreenHandler.syncId != payload.screenHandlerId()) {
+                return;
+            }
+
+            System.out.println("RECEIVED!");
+
+            var entity = (ComputerScreenHandler) context.player().currentScreenHandler;
+            entity.toggleWrite();
         });
     }
 }

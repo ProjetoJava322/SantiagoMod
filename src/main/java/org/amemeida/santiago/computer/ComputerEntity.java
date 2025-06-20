@@ -9,13 +9,16 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.screen.Property;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.text.Text;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import org.amemeida.santiago.file.Script;
 import org.amemeida.santiago.file.runner.PythonRunner;
 import org.amemeida.santiago.registry.blocks.ModBlockEntities;
 import org.amemeida.santiago.registry.blocks.ModBlocks;
@@ -23,15 +26,23 @@ import org.amemeida.santiago.registry.items.ModComponents;
 import org.amemeida.santiago.util.ImplementedInventory;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * @see net.minecraft.block.entity.CrafterBlockEntity
+ */
 
 public class ComputerEntity extends BlockEntity implements ImplementedInventory, ExtendedScreenHandlerFactory<BlockPos> {
     public static final int IO_SLOTS = 4;
 
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(IO_SLOTS * 2 + 1, ItemStack.EMPTY);
+    private final Property write;
 
     public ComputerEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.COMPUTER, pos, state);
+        write = Property.create();
     }
 
     @Override
@@ -44,25 +55,76 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
         return this.pos;
     }
 
-    public void trigger(ServerWorld world) {
-        var floppy = this.inventory.get(0);
+    public static interface TestCase {
+        public boolean run() throws PythonRunner.RunningException;
+    }
+
+    public List<TestCase> testCases(ServerWorld world) {
+        var floppy = this.inventory.getFirst();
 
         if (floppy.isEmpty()) {
-            return;
+            return List.of();
         }
 
         var comp = floppy.get(ModComponents.SCRIPT);
         assert comp != null;
 
-        try {
-            var text = comp.getScript().runScript();
+        Script.setServer(world.getServer());
+        List<TestCase> testCases = new ArrayList<>();
 
-            for (PlayerEntity player : world.getPlayers()) {
-                player.sendMessage(Text.literal(text), true);
+        var hasIO = hasIO();
+
+        var write = this.write.get() == 1;
+
+        for (int i = 1; i < IO_SLOTS * 2; i += 2) {
+            var slot = i;
+
+            if ((hasIO || i != 0) && this.inventory.get(slot).isEmpty() &&
+                this.inventory.get(slot + 1).isEmpty()) {
+                continue;
             }
-        } catch (PythonRunner.RunningException e) {
-            System.err.println(e.getMessage());
+
+            testCases.add(() -> {
+                var in = getIO(this.inventory.get(slot));
+                var out = this.inventory.get(slot + 1);
+
+                var text = comp.getScript().runScript(in);
+                System.out.println(text);
+
+                if (!write && !out.isEmpty()) {
+                    return getIO(out).equals(text);
+                }
+
+                if (write && !out.isEmpty()) {
+                    var outIO = out.get(ModComponents.IO);
+                    assert outIO != null;
+                    outIO.setComponent(text, out);
+                }
+
+                return true;
+            });
+
+            if (slot == 1 && !hasIO) {
+                break;
+            }
         }
+
+        assert hasIO || testCases.size() == 1;
+        return Collections.unmodifiableList(testCases);
+    }
+
+    private static String getIO(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) {
+            return "";
+        }
+
+        var io = stack.get(ModComponents.IO);
+
+        if (io == null) {
+            return "";
+        }
+
+        return io.text();
     }
 
     @Override
@@ -76,16 +138,37 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
         super.onBlockReplaced(pos, oldState);
     }
 
+    public boolean toggleWrite() {
+        write.set(write.get() == 1 ? 0 : 1);
+        return getWrite();
+    }
+
+    public boolean hasIO() {
+        return !inventory.stream().skip(1)
+                .allMatch(ItemStack::isEmpty);
+    }
+
+    public boolean getWrite() {
+        return write.get() == 1;
+    }
+
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.writeNbt(nbt, registryLookup);
+        nbt.putBoolean("write", this.write.get() == 1);
+
         Inventories.writeNbt(nbt, inventory, registryLookup);
     }
 
     @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        Inventories.readNbt(nbt, inventory, registryLookup);
         super.readNbt(nbt, registryLookup);
+
+        nbt.getBoolean("write").ifPresent((nbtBoolean) -> {
+            this.write.set(nbtBoolean ? 1 : 0);
+        });
+
+        Inventories.readNbt(nbt, inventory, registryLookup);
     }
 
     @Override
