@@ -1,7 +1,7 @@
 {
   "type": "santiago:revolution_table",
   "key": {
-    "s": "santiago:hamster"
+    "s": "santiago:santiaguita_ingot"
   },
   "pattern": [
     "ss",
@@ -11,6 +11,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "santiago:santiagos_anthem_music_disc"
+    "id": "santiago:creature_block"
   }
 }
