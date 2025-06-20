@@ -1,6 +1,5 @@
 package org.amemeida.santiago.components;
 
-import com.mojang.serialization.Codec;
 import net.minecraft.item.ItemStack;
 import org.amemeida.santiago.registry.items.ModComponents;
 

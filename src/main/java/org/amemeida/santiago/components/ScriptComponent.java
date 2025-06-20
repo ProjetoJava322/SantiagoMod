@@ -6,7 +6,10 @@ import net.minecraft.item.ItemStack;
 import org.amemeida.santiago.file.Script;
 import org.amemeida.santiago.registry.items.ModComponents;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
+import java.util.Random;
 
 public class ScriptComponent implements TextContent {
     public static final Codec<ScriptComponent> CODEC = RecordCodecBuilder.create(builder -> {
@@ -40,7 +43,23 @@ public class ScriptComponent implements TextContent {
 
     @Override
     public void setComponent(String script, ItemStack stack) {
-        var newScript = this.script.orElse(new Script(stack.getName().toString()));
+        var newScript = this.script.orElseGet(() -> {
+            int leftLimit = 97; // letter 'a'
+            int rightLimit = 122; // letter 'z'
+            int targetStringLength = 10;
+            Random random = new Random();
+            StringBuilder buffer = new StringBuilder(targetStringLength);
+            for (int i = 0; i < targetStringLength; i++) {
+                int randomLimitedInt = leftLimit + (int)
+                        (random.nextFloat() * (rightLimit - leftLimit + 1));
+                buffer.append((char) randomLimitedInt);
+            }
+            String generatedString = buffer.toString();
+
+            System.out.println(generatedString);
+
+            return new Script(generatedString);
+        });
 
         newScript.writeScript(script);
         stack.set(ModComponents.SCRIPT, new ScriptComponent(newScript));
