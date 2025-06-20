@@ -19,12 +19,7 @@ public class SantiagoClient implements ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(OpenScreenS2CPayload.ID, (payload, context) -> {
             ItemStack stack = context.player().getInventory().getStack(payload.slot());
 
-            TextContent comp = stack.get(ModComponents.LOCAL_TEXT);
-
-            if (comp == null) comp = stack.get(ModComponents.ENDER_TEXT);
-            if (comp == null) return;
-
-            var screen = new TextEditScreen(payload.slot(), stack, comp);
+            var screen = new TextEditScreen(payload.slot(), stack, payload.text());
             MinecraftClient.getInstance().setScreen(screen);
         });
     }

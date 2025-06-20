@@ -25,17 +25,15 @@ public class TextEditScreen extends Screen {
     private final ItemStack stack;
 
     private Text text;
-    private final TextContent textContent;
 
     private final SelectionManager selectionManager;
 
-    public TextEditScreen(int slot, ItemStack stack, TextContent textContent) {
+    public TextEditScreen(int slot, ItemStack stack, String text) {
         super(NarratorManager.EMPTY);
         this.slot = slot;
         this.stack = stack;
 
-        this.textContent = textContent;
-        this.text = Text.literal(textContent.text());
+        this.text = Text.literal(text);
 
         this.selectionManager = new SelectionManager(
                 () -> this.text.getString(),
@@ -87,9 +85,8 @@ public class TextEditScreen extends Screen {
 
     private void writeNbtData() {
         var text = this.trim();
-        this.textContent.setComponent(text, this.stack);
-        
-        var payload = new UpdateStackC2SPayload(this.slot, this.stack);
+
+        var payload = new UpdateStackC2SPayload(this.slot, this.stack, text);
         ClientPlayNetworking.send(payload);
     }
 

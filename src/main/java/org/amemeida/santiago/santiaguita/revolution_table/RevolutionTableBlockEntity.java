@@ -46,7 +46,7 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
 
     @Override
     public Text getDisplayName() {
-        return Text.translatable("block.santiago.revolution_table");
+        return Text.translatable(ModBlocks.REVOLUTION_TABLE.getTranslationKey());
     }
 
     @Override

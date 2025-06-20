@@ -16,11 +16,11 @@ import java.util.function.UnaryOperator;
  */
 
 public class ModComponents {
-    public static final ComponentType<TextContent> ENDER_TEXT = register(
+    public static final ComponentType<ScriptComponent> SCRIPT = register(
             "ender_text", builder ->
                     builder.codec(ScriptComponent.CODEC).cache());
 
-    public static final ComponentType<TextContent> LOCAL_TEXT = register(
+    public static final ComponentType<TextContent> IO = register(
             "local_text", builder ->
                     builder.codec(IOComponent.CODEC).cache());
 

@@ -9,6 +9,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.math.BlockPos;
 import org.amemeida.santiago.registry.blocks.ModScreenHandlers;
+import org.amemeida.santiago.registry.items.ModComponents;
 import org.amemeida.santiago.registry.items.ModItems;
 
 /**
@@ -79,7 +80,7 @@ public class ComputerScreenHandler extends ScreenHandler {
 
         @Override
         public boolean canInsert(ItemStack stack) {
-            if (!stack.isOf(ModItems.FLOPPY_DISK)) {
+            if (!stack.contains(ModComponents.SCRIPT)) {
                 return false;
             }
 
@@ -94,7 +95,7 @@ public class ComputerScreenHandler extends ScreenHandler {
 
         @Override
         public boolean canInsert(ItemStack stack) {
-            if (!stack.isOf(ModItems.PUNCH_CARD)) {
+            if (!stack.contains(ModComponents.IO)) {
                 return false;
             }
 

@@ -16,6 +16,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import org.amemeida.santiago.file.runner.PythonRunner;
 import org.amemeida.santiago.registry.blocks.ModBlockEntities;
 import org.amemeida.santiago.registry.blocks.ModBlocks;
 import org.amemeida.santiago.registry.items.ModComponents;
@@ -50,10 +51,17 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
             return;
         }
 
-        var text = Objects.requireNonNull(floppy.get(ModComponents.LOCAL_TEXT)).text();
+        var comp = floppy.get(ModComponents.SCRIPT);
+        assert comp != null;
 
-        for (PlayerEntity player : world.getPlayers()) {
-            player.sendMessage(Text.literal(text), true);
+        try {
+            var text = comp.getScript().runScript();
+
+            for (PlayerEntity player : world.getPlayers()) {
+                player.sendMessage(Text.literal(text), true);
+            }
+        } catch (PythonRunner.RunningException e) {
+            System.err.println(e.getMessage());
         }
     }
 
