@@ -19,10 +19,11 @@ import org.amemeida.santiago.registry.items.ModComponents;
 /**
  * @see net.minecraft.screen.AbstractFurnaceScreenHandler
  * @see net.minecraft.screen.CrafterScreenHandler
+ * @see net.minecraft.screen.GenericContainerScreenHandler
  * @see net.minecraft.screen.BeaconScreenHandler
  */
 
-public class ComputerScreenHandler extends ScreenHandler implements ScreenHandlerListener {
+public class ComputerScreenHandler extends ScreenHandler {
     private final Inventory inventory;
     private final ComputerEntity blockEntity;
 
@@ -36,8 +37,8 @@ public class ComputerScreenHandler extends ScreenHandler implements ScreenHandle
         this.inventory = (Inventory) blockEntity;
         this.blockEntity = (ComputerEntity) blockEntity;
 
-        addSlots(playerInventory);
-        this.addListener(this);
+        addSlots();
+        addPlayerSlots(playerInventory, 8, 130);
     }
 
     public boolean toggleWrite() {
@@ -50,15 +51,13 @@ public class ComputerScreenHandler extends ScreenHandler implements ScreenHandle
         return blockEntity.getWrite();
     }
 
-    private void addSlots(PlayerInventory playerInventory) {
+    private void addSlots() {
         this.addSlot(new FloppySlot(inventory, 0, 20, 20));
 
         for (int i = 1; i <= ComputerEntity.IO_SLOTS * 2; i += 2) {
             this.addSlot(new IOSlot(inventory, i, 60, 20 * i + 5));
             this.addSlot(new IOSlot(inventory, i + 1, 100, 20 * i + 5));
         }
-
-        addPlayerSlots(playerInventory, 8, 130);
     }
 
     @Override
@@ -84,6 +83,7 @@ public class ComputerScreenHandler extends ScreenHandler implements ScreenHandle
         }
         return newStack;
     }
+
     @Override
     public boolean canUse(PlayerEntity player) {
         return true;
@@ -117,13 +117,5 @@ public class ComputerScreenHandler extends ScreenHandler implements ScreenHandle
 
             return super.canInsert(stack);
         }
-    }
-
-    @Override
-    public void onSlotUpdate(ScreenHandler handler, int slotId, ItemStack stack) {
-    }
-
-    @Override
-    public void onPropertyUpdate(ScreenHandler handler, int property, int value) {
     }
 }

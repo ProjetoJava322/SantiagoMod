@@ -79,8 +79,8 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
         for (int i = 1; i < IO_SLOTS * 2; i += 2) {
             var slot = i;
 
-            if ((hasIO || i != 0) && this.inventory.get(slot).isEmpty() &&
-                this.inventory.get(slot + 1).isEmpty()) {
+            if (hasIO && (this.inventory.get(slot).isEmpty() &&
+                this.inventory.get(slot + 1).isEmpty())) {
                 continue;
             }
 
@@ -139,6 +139,8 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
     }
 
     public boolean toggleWrite() {
+        this.markDirty();
+        System.out.println("DIRTY");
         write.set(write.get() == 1 ? 0 : 1);
         return getWrite();
     }
@@ -149,6 +151,7 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
     }
 
     public boolean getWrite() {
+        System.out.println("GETTING " + write.get());
         return write.get() == 1;
     }
 
@@ -156,6 +159,8 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.writeNbt(nbt, registryLookup);
         nbt.putBoolean("write", this.write.get() == 1);
+
+        System.out.println("GOODBYE. " + nbt.getBoolean("write").get());
 
         Inventories.writeNbt(nbt, inventory, registryLookup);
     }
@@ -166,6 +171,7 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
 
         nbt.getBoolean("write").ifPresent((nbtBoolean) -> {
             this.write.set(nbtBoolean ? 1 : 0);
+            System.out.println("FOUND YOU " + nbtBoolean);
         });
 
         Inventories.readNbt(nbt, inventory, registryLookup);
