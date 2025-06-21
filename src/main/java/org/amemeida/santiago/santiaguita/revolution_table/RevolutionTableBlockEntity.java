@@ -63,6 +63,7 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
 
     @Override
     public void onBlockReplaced(BlockPos pos, BlockState oldState){
+        this.removeStack(OUTPUT_SLOT);
         ItemScatterer.spawn(world, pos, (this));
         super.onBlockReplaced(pos, oldState);
     }
