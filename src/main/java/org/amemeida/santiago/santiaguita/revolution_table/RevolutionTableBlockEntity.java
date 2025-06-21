@@ -151,17 +151,6 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
         return world.getServer().getRecipeManager().getFirstMatch(ModRecipeTypes.REVOLUTION_TABLE_RECIPE_TYPE, recipeInput, world);
     }
 
-    private boolean canInsertAmountIntoOutputSlot(int count) {
-        int maxCount = this.getStack(OUTPUT_SLOT).isEmpty() ? 64 : this.getStack(OUTPUT_SLOT).getMaxCount();
-        int currentCount = this.getStack(OUTPUT_SLOT).getCount();
-
-        return maxCount >= currentCount + count;
-    }
-
-    private boolean canInsertItemIntoOutputSlot(ItemStack output) {
-        return this.getStack(OUTPUT_SLOT).isEmpty() || this.getStack(OUTPUT_SLOT).getItem() == output.getItem();
-    }
-
     private void clearGrid(int amnt){
         for (int i = INPUT_GRID_START; i <= INPUT_GRID_END; i++) {
             this.removeStack(i, amnt);

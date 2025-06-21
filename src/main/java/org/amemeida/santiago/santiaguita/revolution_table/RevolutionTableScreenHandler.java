@@ -17,6 +17,8 @@ import org.jetbrains.annotations.Nullable;
 public class RevolutionTableScreenHandler extends ScreenHandler {
     private final Inventory inventory;
     public final RevolutionTableBlockEntity blockEntity;
+    private final Slot[] INPUT_SLOTS;
+    private final Slot OUTPUT_SLOT;
 
     public RevolutionTableScreenHandler(int syncId, PlayerInventory inventory, BlockPos pos) {
         this(syncId, inventory, inventory.player.getWorld().getBlockEntity(pos));
@@ -27,20 +29,24 @@ public class RevolutionTableScreenHandler extends ScreenHandler {
         super(ModScreenHandlers.REVOLUTION_TABLE_SCREEN_HANDLER, syncId);
         this.inventory = ((Inventory) blockEntity);
         this.blockEntity = ((RevolutionTableBlockEntity) blockEntity);
+        INPUT_SLOTS = new Slot[]{
+            this.addSlot(new Slot(inventory, 0, 52, 17)),
+            this.addSlot(new Slot(inventory, 1, 70, 17)),
+            this.addSlot(new Slot(inventory, 2, 34, 35)),
+            this.addSlot(new Slot(inventory, 3, 52, 35)),
+            this.addSlot(new Slot(inventory, 4, 70, 35)),
+            this.addSlot(new Slot(inventory, 5, 88, 35)),
+            this.addSlot(new Slot(inventory, 6, 34, 53)),
+            this.addSlot(new Slot(inventory, 7, 52, 53)),
+            this.addSlot(new Slot(inventory, 8, 70, 53)),
+            this.addSlot(new Slot(inventory, 9, 88, 53)),
+            this.addSlot(new Slot(inventory, 10, 52, 71)),
+            this.addSlot(new Slot(inventory, 11, 70, 71))
+        };
 
-        this.addSlot(new Slot(inventory, 0, 52, 17));
-        this.addSlot(new Slot(inventory, 1, 70, 17));
-        this.addSlot(new Slot(inventory, 2, 34, 35));
-        this.addSlot(new Slot(inventory, 3, 52, 35));
-        this.addSlot(new Slot(inventory, 4, 70, 35));
-        this.addSlot(new Slot(inventory, 5, 88, 35));
-        this.addSlot(new Slot(inventory, 6, 34, 53));
-        this.addSlot(new Slot(inventory, 7, 52, 53));
-        this.addSlot(new Slot(inventory, 8, 70, 53));
-        this.addSlot(new Slot(inventory, 9, 88, 53));
-        this.addSlot(new Slot(inventory, 10, 52, 71));
-        this.addSlot(new Slot(inventory, 11, 70, 71));
-        this.addSlot(new Slot(inventory, 12, 147, 44));
+        OUTPUT_SLOT = this.addSlot(new OutputSlot(inventory, 12, 147, 44));
+
+
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
@@ -88,5 +94,14 @@ public class RevolutionTableScreenHandler extends ScreenHandler {
         for (int i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 23 + i * 18, 161));
         }
+    }
+
+    private class OutputSlot extends Slot {
+        public OutputSlot(Inventory inventory, int index, int x, int y) {
+            super(inventory, index, x, y);
+        }
+
+        @Override
+        public boolean canInsert(ItemStack stack) {return false;}
     }
 }
