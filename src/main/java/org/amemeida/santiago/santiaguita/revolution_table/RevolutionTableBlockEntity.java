@@ -34,8 +34,9 @@ import org.amemeida.santiago.santiaguita.revolution_table.recipes.RevolutionTabl
 import org.amemeida.santiago.util.ImplementedInventory;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Optional;
+
+//PENDÊNCIA: SETAR O CRAFTING BASEADO NO MAXCOUNT DOS ITENS
 
 public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPos>, ImplementedInventory {
 
@@ -77,27 +78,41 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
     }
 
      public void tick(World world, BlockPos pos, BlockState state) {
-        int recipe_amnt = checkRecipeAmount();
+        //se tem ao menos uma receita
         if (hasRecipe()) {
-            System.out.println("Recipe found!");
-            if (this.getStack(OUTPUT_SLOT).getCount() >= 64) {return;}
+            //conta quantas receitas tem, dando cap no máximo
+            int recipe_amnt = checkRecipeAmount();
+            int max_craft_amnt = getMaxCount(getOutput());
+            final int amnt = Math.min(recipe_amnt, max_craft_amnt);
 
+            //se o output passa do máximo, para o crafting
+            if (this.getStack(OUTPUT_SLOT).getCount() >= max_craft_amnt) {return;}
+
+            //se não tem receita em standby, liga o standby e crafta o item
             if (!getRecipeStandby()){
                 toggleRecipeStandby(); //seta como true
-                craftItem(recipe_amnt);
+                craftItem(amnt);
             }
 
-            if (getRecipeStandby() && !this.getStack(OUTPUT_SLOT).isEmpty() && this.getStack(OUTPUT_SLOT).getCount() != recipe_amnt) {craftItem(recipe_amnt);}
+            //se tem uma receita em standby, o output não é vazio e os itens do output não batem com o número de receitas, corrige o output
+            if (getRecipeStandby() && !this.getStack(OUTPUT_SLOT).isEmpty() && this.getStack(OUTPUT_SLOT).getCount() != amnt) {craftItem(amnt);}
 
+            //se tem uma receita em standby, mas o output é vazio, então o player coletou o item
             if (getRecipeStandby() && this.getStack(OUTPUT_SLOT).isEmpty()){
+                recipe_amnt = checkRecipeAmount();
                 toggleRecipeStandby(); //seta como false
+
+                //"usa" os itens da grid
                 clearGrid(recipe_amnt);
             }
+
+        //não tem receita
         } else {
-            System.out.println("No recipe found");
+            //apaga oq tiver no output e, se estava em standby, desliga o standby
             this.removeStack(OUTPUT_SLOT);
             if (getRecipeStandby()){toggleRecipeStandby();} //seta como false
         }
+        //atualiza a tela
          markDirty(world, pos, state);
      }
 
@@ -151,6 +166,12 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
         for (int i = INPUT_GRID_START; i <= INPUT_GRID_END; i++) {
             this.removeStack(i, amnt);
         }
+    }
+
+    private ItemStack getOutput(){
+        Optional<RecipeEntry<RevolutionTableRecipe>> recipe = getCurrentRecipe();
+        ItemStack output = recipe.get().value().result();
+        return output;
     }
 
     private void craftItem(int recipe_amnt) {
