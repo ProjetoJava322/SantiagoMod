@@ -79,19 +79,22 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
      public void tick(World world, BlockPos pos, BlockState state) {
         int recipe_amnt = checkRecipeAmount();
         if (hasRecipe()) {
+            System.out.println("Recipe found!");
             if (this.getStack(OUTPUT_SLOT).getCount() >= 64) {return;}
+
             if (!getRecipeStandby()){
                 toggleRecipeStandby(); //seta como true
-                craftItem();
+                craftItem(recipe_amnt);
             }
 
-            if (getRecipeStandby() && !this.getStack(OUTPUT_SLOT).isEmpty() && this.getStack(OUTPUT_SLOT).getCount() != recipe_amnt) {craftItem();}
+            if (getRecipeStandby() && !this.getStack(OUTPUT_SLOT).isEmpty() && this.getStack(OUTPUT_SLOT).getCount() != recipe_amnt) {craftItem(recipe_amnt);}
 
             if (getRecipeStandby() && this.getStack(OUTPUT_SLOT).isEmpty()){
                 toggleRecipeStandby(); //seta como false
-                clearGrid(1);
+                clearGrid(recipe_amnt);
             }
         } else {
+            System.out.println("No recipe found");
             this.removeStack(OUTPUT_SLOT);
             if (getRecipeStandby()){toggleRecipeStandby();} //seta como false
         }
@@ -125,11 +128,6 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
         if (recipe.isEmpty()){
             return false;
         }
-        ItemStack output = recipe.get().value().result();
-
-        if (!canInsertItemIntoOutputSlot(output)) {
-            return false;
-        }
         return true;
     }
 
@@ -155,21 +153,22 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
         }
     }
 
-    private void craftItem() {
+    private void craftItem(int recipe_amnt) {
         Optional<RecipeEntry<RevolutionTableRecipe>> recipe = getCurrentRecipe();
         ItemStack output = recipe.get().value().result();
+        output.setCount(recipe_amnt);
         this.setStack(OUTPUT_SLOT, output);
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.writeNbt(nbt, registryLookup);
-        Inventories.writeNbt(nbt, INVENTORY, registryLookup);
+        Inventories.writeNbt(nbt, INVENTORY,  registryLookup);
     }
 
     @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        Inventories.readNbt(nbt, INVENTORY, registryLookup);
+        Inventories.writeNbt(nbt, INVENTORY,  registryLookup);
         super.readNbt(nbt, registryLookup);
     }
 

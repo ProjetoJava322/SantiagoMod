@@ -7,23 +7,24 @@ import net.minecraft.recipe.input.RecipeInput;
 import java.util.List;
 
 public class RevolutionTableRecipeInput implements RecipeInput {
-    private static final int MAX_WIDTH_AND_HEIGHT = 4;
+    private static final int INPUT_SLOTS = 12;
     private final List<ItemStack> stacks;
     private final RecipeFinder matcher = new RecipeFinder();
     private final int stackCount;
 
     private RevolutionTableRecipeInput(List<ItemStack> stacks) {
         this.stacks = stacks;
-        int i = 0;
+        int count = 0;
 
-        for (ItemStack itemStack : stacks) {
+        for (int i = 0; i < INPUT_SLOTS; i++) {
+            ItemStack itemStack = this.stacks.get(i);
             if (!itemStack.isEmpty()) {
-                i++;
+                count++;
                 this.matcher.addInput(itemStack, 1);
             }
         }
 
-        this.stackCount = i;
+        this.stackCount = count;
     }
 
     public static RevolutionTableRecipeInput create(List<ItemStack> stacks) {
