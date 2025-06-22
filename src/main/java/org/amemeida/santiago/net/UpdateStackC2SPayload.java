@@ -13,8 +13,9 @@ public record UpdateStackC2SPayload(int slot, ItemStack stack, String text) impl
     public static final CustomPayload.Id<UpdateStackC2SPayload> ID = new CustomPayload.Id<>(UPDATE_TEXT_ID);
     public static final PacketCodec<RegistryByteBuf, UpdateStackC2SPayload> CODEC =
             PacketCodec.tuple(PacketCodecs.INTEGER, UpdateStackC2SPayload::slot,
-                    ItemStack.PACKET_CODEC, UpdateStackC2SPayload::stack, PacketCodecs.STRING,
-                    UpdateStackC2SPayload::text, UpdateStackC2SPayload::new);
+                    ItemStack.PACKET_CODEC, UpdateStackC2SPayload::stack,
+                    PacketCodecs.STRING, UpdateStackC2SPayload::text,
+                    UpdateStackC2SPayload::new);
 
     @Override
     public Id<? extends CustomPayload> getId() {

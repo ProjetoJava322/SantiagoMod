@@ -15,6 +15,8 @@ import org.amemeida.santiago.net.PCModeC2SPayload;
 /**
  * @see net.minecraft.client.gui.screen.ingame.CrafterScreen
  * @see net.minecraft.client.gui.screen.ingame.BeaconScreen
+ * @see net.minecraft.client.gui.screen.ingame.HopperScreen
+ * @see net.minecraft.client.gui.screen.ingame.AbstractFurnaceScreen
  * @see net.minecraft.client.gui.screen.TitleScreen
  * @see net.minecraft.client.gui.screen.TitleScreen
  */
@@ -29,21 +31,24 @@ public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
         this.playerInventoryTitleY = this.backgroundHeight - 94;
     }
 
-    private boolean test = false;
-
     @Override
     protected void init() {
         super.init();
 
-        var btn = ButtonWidget.builder(Text.literal(handler.getWrite() ? "Write" : "Compare"), (button) -> {
-            if (handler.toggleWrite()) {
+        var btn = ButtonWidget.builder(Text.literal(handler.getData().write() ? "Write" : "Compare"),
+                (button) -> {
+            System.out.println("click: " + handler.getWrite());
+            var newWrite = !handler.getWrite();
+            handler.setWrite(newWrite);
+
+            var payload = new PCModeC2SPayload(this.getScreenHandler().syncId,  newWrite);
+            ClientPlayNetworking.send(payload);
+
+            if (handler.getWrite()) {
                 button.setMessage(Text.literal("Write"));
             } else {
                 button.setMessage(Text.literal("Compare"));
             }
-
-            var payload = new PCModeC2SPayload(this.getScreenHandler().syncId);
-            ClientPlayNetworking.send(payload);
         }).position(width/2 + 20, height/2 - 120).size(60, 15).build();
 
         addDrawableChild(btn);

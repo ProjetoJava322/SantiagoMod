@@ -5,7 +5,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.math.BlockPos;
 import org.amemeida.santiago.registry.blocks.ModScreenHandlers;
@@ -21,36 +24,56 @@ import org.amemeida.santiago.registry.items.ModComponents;
 public class ComputerScreenHandler extends ScreenHandler {
     private final Inventory inventory;
     private final ComputerEntity blockEntity;
-    private boolean toggle;
+    private final PropertyDelegate propertyDelegate;
+    private final ComputerData data;
 
-    public ComputerScreenHandler(int syncId, PlayerInventory playerInventory, BlockPos pos) {
-        this(syncId, playerInventory, playerInventory.player.getWorld().getBlockEntity(pos));
+    public ComputerScreenHandler(int syncId, PlayerInventory playerInventory, ComputerData data) {
+        this(syncId, playerInventory, playerInventory.player.getWorld().getBlockEntity(data.pos()),
+                new ArrayPropertyDelegate(2), data);
     }
 
-    public ComputerScreenHandler(int syncId, PlayerInventory playerInventory, BlockEntity blockEntity) {
-        super(ModScreenHandlers.COMPUTER_SCREEN_SCREEN_HANDLER, syncId);
+    public ComputerScreenHandler(int syncId, PlayerInventory playerInventory, BlockEntity blockEntity,
+                                 PropertyDelegate propertyDelegate, ComputerData data) {
+        super(ModScreenHandlers.COMPUTER_SCREEN_HANDLER, syncId);
 
         this.inventory = (Inventory) blockEntity;
         this.blockEntity = (ComputerEntity) blockEntity;
-        toggle = false;
+        this.data = data;
+        this.propertyDelegate = propertyDelegate;
+
+        this.addProperties(propertyDelegate);
 
         addSlots();
         addPlayerSlots(playerInventory, 8, 170);
     }
 
-    public boolean toggleWrite() {
-        var a = blockEntity.toggleWrite();
-        this.sendContentUpdates();
-        toggle = a;
-        return a;
+    public ComputerData getData() {
+        return data;
     }
 
-    public boolean getToggle(){
-        return this.toggle;
+    public static record ComputerData(BlockPos pos, boolean write, boolean and) {
+            public static final PacketCodec<RegistryByteBuf, ComputerData> PACKET_CODEC = PacketCodec.tuple(
+                    BlockPos.PACKET_CODEC, ComputerData::pos,
+                    PacketCodecs.BOOLEAN, ComputerData::write,
+                    PacketCodecs.BOOLEAN, ComputerData::and,
+                    ComputerData::new
+            );
     }
 
     public boolean getWrite() {
-        return blockEntity.getWrite();
+        return propertyDelegate.get(0) == 1;
+    }
+
+    public void setWrite(boolean write) {
+        propertyDelegate.set(0, write ? 1 : 0);
+    }
+
+    public boolean getAnd() {
+        return propertyDelegate.get(1) == 1;
+    }
+
+    public void setAnd(boolean and) {
+        propertyDelegate.set(1, and ? 1 : 0);
     }
 
     private void addSlots() {

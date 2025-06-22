@@ -20,19 +20,21 @@ public class ModScreenHandlers {
             IncubatorScreenHandler::new);
     public static final ScreenHandlerType<RevolutionTableScreenHandler> REVOLUTION_TABLE_SCREEN_HANDLER = register("revolution_table",
             RevolutionTableScreenHandler::new, BlockPos.PACKET_CODEC);
-    public static final ScreenHandlerType<ComputerScreenHandler> COMPUTER_SCREEN_SCREEN_HANDLER = register("computer",
-            ComputerScreenHandler::new, BlockPos.PACKET_CODEC);
+    public static final ScreenHandlerType<ComputerScreenHandler> COMPUTER_SCREEN_HANDLER = register("computer",
+            ComputerScreenHandler::new, ComputerScreenHandler.ComputerData.PACKET_CODEC);
 
     public static <T extends ScreenHandler> ScreenHandlerType<T> register(String name, ScreenHandlerType.Factory<T> factory) {
         return Registry.register(Registries.SCREEN_HANDLER, Identifier.of(Santiago.MOD_ID, name),
                 new ScreenHandlerType<>(factory, FeatureFlags.VANILLA_FEATURES));
     }
 
-    public static <T extends ScreenHandler, D> ScreenHandlerType<T>
+    public static <T extends ScreenHandler, D> ExtendedScreenHandlerType<T, D>
     register(String name, ExtendedScreenHandlerType.ExtendedFactory<T, D> factory, PacketCodec<? super RegistryByteBuf, D> codec) {
         return Registry.register(Registries.SCREEN_HANDLER, Identifier.of(Santiago.MOD_ID, name),
                 new ExtendedScreenHandlerType<>(factory, codec));
     }
 
-    public static void initialize() {}
+    public static void initialize() {
+
+    }
 }

@@ -4,6 +4,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.MinecraftServer;
+import org.amemeida.santiago.components.TextContent;
 import org.amemeida.santiago.computer.ComputerEntity;
 import org.amemeida.santiago.computer.ComputerScreenHandler;
 import org.amemeida.santiago.file.Script;
@@ -20,6 +21,8 @@ import org.amemeida.santiago.registry.items.ModItems;
 import org.amemeida.santiago.registry.recipes.ModRecipeBooks;
 import org.amemeida.santiago.registry.recipes.ModRecipeSerializers;
 import org.amemeida.santiago.registry.recipes.ModRecipeTypes;
+
+import java.awt.*;
 
 public class Santiago implements ModInitializer {
     public static final String MOD_ID = "santiago";
@@ -51,17 +54,10 @@ public class Santiago implements ModInitializer {
             var playerStack = context.player().getInventory().getStack(payload.slot());
             playerStack.applyComponentsFrom(payload.stack().getComponents());
 
-            var component = playerStack.get(ModComponents.IO);
-            if (component == null) {
-                component = playerStack.get(ModComponents.SCRIPT);
-            }
-
-            if (component == null) {
-                return;
-            }
+            var component = TextContent.get(playerStack);
+            assert component != null;
 
             Script.setServer(context.server());
-
             component.setComponent(payload.text(), playerStack);
         });
 
@@ -73,7 +69,7 @@ public class Santiago implements ModInitializer {
             System.out.println("RECEIVED!");
 
             var entity = (ComputerScreenHandler) context.player().currentScreenHandler;
-            entity.toggleWrite();
+            entity.setWrite(payload.write());
         });
     }
 }
