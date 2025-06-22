@@ -34,6 +34,7 @@ public class Computer extends BlockWithEntity {
 
     public static enum ComputerState implements StringIdentifiable {
         IDLE(0),
+        LOCKED(0),
         RUNNING(2),
         SUCCESS(15),
         FAILURE(10),
@@ -83,18 +84,22 @@ public class Computer extends BlockWithEntity {
     @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
         boolean has_redstone = world.isReceivingRedstonePower(pos);
-        boolean is_idle = state.get(STATE) == ComputerState.IDLE;
+        var curr_state = state.get(STATE);
 
-        if (has_redstone && is_idle) {
+        if (has_redstone && curr_state == ComputerState.IDLE) {
             world.setBlockState(pos, state.with(STATE, ComputerState.RUNNING), Block.NOTIFY_LISTENERS);
             world.scheduleBlockTick(pos, this, 2);
+        }
+
+        if (!has_redstone && curr_state == ComputerState.LOCKED) {
+            world.setBlockState(pos, state.with(STATE, ComputerState.IDLE), Block.NOTIFY_LISTENERS);
         }
     }
 
     @Override
     protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (state.get(STATE) != ComputerState.RUNNING && state.get(STATE) != ComputerState.IDLE) {
-            world.setBlockState(pos, state.with(STATE, ComputerState.IDLE), Block.NOTIFY_LISTENERS);
+            world.setBlockState(pos, state.with(STATE, ComputerState.LOCKED), Block.NOTIFY_LISTENERS);
             world.updateNeighbors(pos, state.getBlock());
             return;
         }

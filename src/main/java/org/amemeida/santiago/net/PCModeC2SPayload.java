@@ -12,9 +12,10 @@ import org.amemeida.santiago.Santiago;
  * @see net.minecraft.network.packet.c2s.play.SlotChangedStateC2SPacket
  */
 
-public record PCModeC2SPayload(int screenHandlerId) implements CustomPayload {
+public record PCModeC2SPayload(int screenHandlerId, boolean write) implements CustomPayload {
     public static final PacketCodec<PacketByteBuf, PCModeC2SPayload> CODEC = PacketCodec.tuple(
-            PacketCodecs.SYNC_ID, PCModeC2SPayload::screenHandlerId, PCModeC2SPayload::new
+            PacketCodecs.SYNC_ID, PCModeC2SPayload::screenHandlerId,
+            PacketCodecs.BOOLEAN, PCModeC2SPayload::write, PCModeC2SPayload::new
     );
 
     public static final Identifier PC_MODE_TOGGLE = Identifier.of(Santiago.MOD_ID, "pc_mode_toggle");

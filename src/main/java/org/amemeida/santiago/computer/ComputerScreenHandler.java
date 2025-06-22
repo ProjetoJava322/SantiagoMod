@@ -1,17 +1,15 @@
 package org.amemeida.santiago.computer;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.screen.Property;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerListener;
-import net.minecraft.screen.slot.CrafterInputSlot;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import org.amemeida.santiago.registry.blocks.ModScreenHandlers;
 import org.amemeida.santiago.registry.items.ModComponents;
@@ -26,29 +24,56 @@ import org.amemeida.santiago.registry.items.ModComponents;
 public class ComputerScreenHandler extends ScreenHandler {
     private final Inventory inventory;
     private final ComputerEntity blockEntity;
+    private final PropertyDelegate propertyDelegate;
+    private final ComputerData data;
 
-    public ComputerScreenHandler(int syncId, PlayerInventory playerInventory, BlockPos pos) {
-        this(syncId, playerInventory, playerInventory.player.getWorld().getBlockEntity(pos));
+    public ComputerScreenHandler(int syncId, PlayerInventory playerInventory, ComputerData data) {
+        this(syncId, playerInventory, playerInventory.player.getWorld().getBlockEntity(data.pos()),
+                new ArrayPropertyDelegate(2), data);
     }
 
-    public ComputerScreenHandler(int syncId, PlayerInventory playerInventory, BlockEntity blockEntity) {
-        super(ModScreenHandlers.COMPUTER_SCREEN_SCREEN_HANDLER, syncId);
+    public ComputerScreenHandler(int syncId, PlayerInventory playerInventory, BlockEntity blockEntity,
+                                 PropertyDelegate propertyDelegate, ComputerData data) {
+        super(ModScreenHandlers.COMPUTER_SCREEN_HANDLER, syncId);
 
         this.inventory = (Inventory) blockEntity;
         this.blockEntity = (ComputerEntity) blockEntity;
+        this.data = data;
+        this.propertyDelegate = propertyDelegate;
+
+        this.addProperties(propertyDelegate);
 
         addSlots();
         addPlayerSlots(playerInventory, 8, 130);
     }
 
-    public boolean toggleWrite() {
-        var a = blockEntity.toggleWrite();
-        this.sendContentUpdates();
-        return a;
+    public ComputerData getData() {
+        return data;
+    }
+
+    public static record ComputerData(BlockPos pos, boolean write, boolean and) {
+            public static final PacketCodec<RegistryByteBuf, ComputerData> PACKET_CODEC = PacketCodec.tuple(
+                    BlockPos.PACKET_CODEC, ComputerData::pos,
+                    PacketCodecs.BOOLEAN, ComputerData::write,
+                    PacketCodecs.BOOLEAN, ComputerData::and,
+                    ComputerData::new
+            );
     }
 
     public boolean getWrite() {
-        return blockEntity.getWrite();
+        return propertyDelegate.get(0) == 1;
+    }
+
+    public void setWrite(boolean write) {
+        propertyDelegate.set(0, write ? 1 : 0);
+    }
+
+    public boolean getAnd() {
+        return propertyDelegate.get(1) == 1;
+    }
+
+    public void setAnd(boolean and) {
+        propertyDelegate.set(1, and ? 1 : 0);
     }
 
     private void addSlots() {
@@ -61,27 +86,35 @@ public class ComputerScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int invSlot) {
-        ItemStack newStack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(invSlot);
-        if (slot != null && slot.hasStack()) {
-            ItemStack originalStack = slot.getStack();
-            newStack = originalStack.copy();
-            if (invSlot < this.inventory.size()) {
-                if (!this.insertItem(originalStack, this.inventory.size(), this.slots.size(), true)) {
+    public ItemStack quickMove(PlayerEntity player, int slot) {
+        ItemStack itemStack = ItemStack.EMPTY;
+        Slot slot2 = this.slots.get(slot);
+        if (slot2.hasStack()) {
+            ItemStack itemStack2 = slot2.getStack();
+
+            itemStack = itemStack2.copy();
+            if (slot < this.inventory.size()) {
+                if (!this.insertItem(itemStack2, this.inventory.size(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.insertItem(originalStack, 0, this.inventory.size(), false)) {
+            } else if (!this.insertItem(itemStack2, 0, this.inventory.size(), false)) {
                 return ItemStack.EMPTY;
             }
 
-            if (originalStack.isEmpty()) {
-                slot.setStack(ItemStack.EMPTY);
+            if (itemStack2.isEmpty()) {
+                slot2.setStackNoCallbacks(ItemStack.EMPTY);
             } else {
-                slot.markDirty();
+                slot2.markDirty();
             }
+
+            if (itemStack2.getCount() == itemStack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+
+            slot2.onTakeItem(player, itemStack2);
         }
-        return newStack;
+
+        return itemStack;
     }
 
     @Override

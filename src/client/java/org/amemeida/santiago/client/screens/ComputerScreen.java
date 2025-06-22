@@ -4,46 +4,64 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+import org.amemeida.santiago.Santiago;
 import org.amemeida.santiago.computer.ComputerScreenHandler;
 import org.amemeida.santiago.net.PCModeC2SPayload;
 
 /**
  * @see net.minecraft.client.gui.screen.ingame.CrafterScreen
  * @see net.minecraft.client.gui.screen.ingame.BeaconScreen
+ * @see net.minecraft.client.gui.screen.ingame.HopperScreen
+ * @see net.minecraft.client.gui.screen.ingame.AbstractFurnaceScreen
  * @see net.minecraft.client.gui.screen.TitleScreen
  * @see net.minecraft.client.gui.screen.TitleScreen
  */
 
 public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
+    public static final Identifier TEXTURE = Identifier.of(Santiago.MOD_ID, "textures/gui/revolution_table_gui.png");
+
     public ComputerScreen(ComputerScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
+
+        this.backgroundWidth = 499;
+        this.backgroundHeight = 792;
+        this.playerInventoryTitleX = 23;
+        this.playerInventoryTitleY = this.backgroundHeight - 94;
     }
 
-    private boolean test = false;
+    ButtonWidget writeBtn;
 
     @Override
     protected void init() {
         super.init();
 
-        var btn = ButtonWidget.builder(Text.literal(handler.getWrite() ? "Write" : "Compare"), (button) -> {
-            if (handler.toggleWrite()) {
-                button.setMessage(Text.literal("Write"));
-            } else {
-                button.setMessage(Text.literal("Compare"));
-            }
+        this.writeBtn = ButtonWidget.builder(Text.literal(handler.getData().write() ? "Write" : "Compare"),
+                (button) -> {
+            System.out.println("click: " + handler.getWrite());
+            var newWrite = !handler.getWrite();
+            handler.setWrite(newWrite);
 
-            var payload = new PCModeC2SPayload(this.getScreenHandler().syncId);
+            var payload = new PCModeC2SPayload(this.getScreenHandler().syncId,  newWrite);
             ClientPlayNetworking.send(payload);
+
+            if (handler.getWrite()) {
+                writeBtn.setMessage(Text.literal("Write"));
+            } else {
+                writeBtn.setMessage(Text.literal("Compare"));
+            }
         }).position(50, 50).build();
 
-        addDrawableChild(btn);
+        addDrawableChild(this.writeBtn);
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
+
         drawMouseoverTooltip(context, mouseX, mouseY);
     }
 
@@ -51,6 +69,8 @@ public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         int x = (width - backgroundWidth) / 2;
         int y = (height - backgroundHeight) / 2;
-//        context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight, 256,256);
+
+        context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight,
+                499, 792);
     }
 }

@@ -3,17 +3,17 @@ package org.amemeida.santiago.computer;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.CrafterBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.screen.Property;
+import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.text.Text;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
@@ -31,18 +31,46 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @see net.minecraft.block.entity.CrafterBlockEntity
+ * @see CrafterBlockEntity
  */
 
-public class ComputerEntity extends BlockEntity implements ImplementedInventory, ExtendedScreenHandlerFactory<BlockPos> {
+public class ComputerEntity extends BlockEntity implements ImplementedInventory, ExtendedScreenHandlerFactory<ComputerScreenHandler.ComputerData> {
     public static final int IO_SLOTS = 4;
 
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(IO_SLOTS * 2 + 1, ItemStack.EMPTY);
-    private final Property write;
+    private boolean write;
+    private boolean and;
+    private final PropertyDelegate propertyDelegate;
 
     public ComputerEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.COMPUTER, pos, state);
-        write = Property.create();
+
+        propertyDelegate = new PropertyDelegate() {
+            @Override
+            public int get(int index) {
+                return switch (index) {
+                    case 0 -> write ? 1 : 0;
+                    case 1 -> and ? 1 : 0;
+                    default -> throw new IndexOutOfBoundsException(index);
+                };
+            }
+
+            @Override
+            public void set(int index, int value) {
+                markDirty();
+
+                switch (index) {
+                    case 0 -> write = value == 1;
+                    case 1 -> and = value == 1;
+                    default -> throw new IndexOutOfBoundsException(index);
+                }
+            }
+
+            @Override
+            public int size() {
+                return 2;
+            }
+        };
     }
 
     @Override
@@ -51,18 +79,18 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
     }
 
     @Override
-    public BlockPos getScreenOpeningData(ServerPlayerEntity serverPlayerEntity) {
-        return this.pos;
+    public ComputerScreenHandler.ComputerData getScreenOpeningData(ServerPlayerEntity serverPlayerEntity) {
+        return new ComputerScreenHandler.ComputerData(this.getPos(), write, and);
     }
 
-    public static interface TestCase {
-        public boolean run() throws PythonRunner.RunningException;
+    public interface TestCase {
+        boolean run() throws PythonRunner.RunningException;
     }
 
     public List<TestCase> testCases(ServerWorld world) {
         var floppy = this.inventory.getFirst();
 
-        if (floppy.isEmpty()) {
+        if (floppy.isEmpty() || !floppy.contains(ModComponents.SCRIPT)) {
             return List.of();
         }
 
@@ -73,8 +101,6 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
         List<TestCase> testCases = new ArrayList<>();
 
         var hasIO = hasIO();
-
-        var write = this.write.get() == 1;
 
         for (int i = 1; i < IO_SLOTS * 2; i += 2) {
             var slot = i;
@@ -138,27 +164,16 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
         super.onBlockReplaced(pos, oldState);
     }
 
-    public boolean toggleWrite() {
-        this.markDirty();
-        System.out.println("DIRTY");
-        write.set(write.get() == 1 ? 0 : 1);
-        return getWrite();
-    }
-
     public boolean hasIO() {
         return !inventory.stream().skip(1)
                 .allMatch(ItemStack::isEmpty);
     }
 
-    public boolean getWrite() {
-        System.out.println("GETTING " + write.get());
-        return write.get() == 1;
-    }
-
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.writeNbt(nbt, registryLookup);
-        nbt.putBoolean("write", this.write.get() == 1);
+        nbt.putBoolean("write", this.write);
+        nbt.putBoolean("and", this.and);
 
         System.out.println("GOODBYE. " + nbt.getBoolean("write").get());
 
@@ -170,8 +185,12 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
         super.readNbt(nbt, registryLookup);
 
         nbt.getBoolean("write").ifPresent((nbtBoolean) -> {
-            this.write.set(nbtBoolean ? 1 : 0);
+            this.write = nbtBoolean;
             System.out.println("FOUND YOU " + nbtBoolean);
+        });
+
+        nbt.getBoolean("and").ifPresent((nbtBoolean) -> {
+            this.and = nbtBoolean;
         });
 
         Inventories.readNbt(nbt, inventory, registryLookup);
@@ -179,6 +198,7 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
 
     @Override
     public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
-        return new ComputerScreenHandler(syncId, playerInventory, this);
+        return new ComputerScreenHandler(syncId, playerInventory, this, propertyDelegate,
+                this.getScreenOpeningData((ServerPlayerEntity) player));
     }
 }

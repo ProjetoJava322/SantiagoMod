@@ -46,8 +46,6 @@ public class RevolutionTableScreenHandler extends ScreenHandler {
 
         OUTPUT_SLOT = this.addSlot(new OutputSlot(inventory, 12, 147, 44));
 
-
-
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
 
