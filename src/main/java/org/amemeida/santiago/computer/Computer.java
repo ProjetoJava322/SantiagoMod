@@ -35,7 +35,7 @@ public class Computer extends BlockWithEntity {
     public static enum ComputerState implements StringIdentifiable {
         IDLE(0),
         LOCKED(0),
-        RUNNING(2),
+        RUNNING(5),
         SUCCESS(15),
         FAILURE(10),
         ERROR(1);
