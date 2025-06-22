@@ -9,6 +9,9 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
@@ -34,23 +37,26 @@ import java.util.List;
  * @see CrafterBlockEntity
  */
 
-public class ComputerEntity extends BlockEntity implements ImplementedInventory, ExtendedScreenHandlerFactory<ComputerScreenHandler.ComputerData> {
+public class ComputerEntity extends BlockEntity implements ImplementedInventory, ExtendedScreenHandlerFactory<ComputerEntity.ComputerData> {
     public static final int IO_SLOTS = 4;
 
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(IO_SLOTS * 2 + 1, ItemStack.EMPTY);
-    private boolean write;
-    private boolean and;
+    private OutputMode output;
+    private ResultMode result;
     private final PropertyDelegate propertyDelegate;
 
     public ComputerEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.COMPUTER, pos, state);
 
+        this.output = OutputMode.COMPARE;
+        this.result = ResultMode.AND;
+
         propertyDelegate = new PropertyDelegate() {
             @Override
             public int get(int index) {
                 return switch (index) {
-                    case 0 -> write ? 1 : 0;
-                    case 1 -> and ? 1 : 0;
+                    case 0 -> output.ordinal();
+                    case 1 -> result.ordinal();
                     default -> throw new IndexOutOfBoundsException(index);
                 };
             }
@@ -60,8 +66,8 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
                 markDirty();
 
                 switch (index) {
-                    case 0 -> write = value == 1;
-                    case 1 -> and = value == 1;
+                    case 0 -> output = OutputMode.values()[value];
+                    case 1 -> result = ResultMode.values()[value];
                     default -> throw new IndexOutOfBoundsException(index);
                 }
             }
@@ -73,14 +79,49 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
         };
     }
 
+    public enum OutputMode {
+        WRITE,
+        COMPARE;
+
+        public OutputMode cycleNext() {
+            return OutputMode.values()[(this.ordinal() + 1) % OutputMode.values().length];
+        }
+
+        public static final PacketCodec<PacketByteBuf, OutputMode> PACKET_CODEC = PacketCodec.tuple(
+                PacketCodecs.INTEGER, Enum::ordinal, (a) -> OutputMode.values()[a]
+        );
+    }
+
+    public enum ResultMode {
+        AND,
+        OR;
+
+        public ResultMode cycleNext() {
+            return ResultMode.values()[(this.ordinal() + 1) % ResultMode.values().length];
+        }
+
+        public static final PacketCodec<PacketByteBuf, ResultMode> PACKET_CODEC = PacketCodec.tuple(
+                PacketCodecs.INTEGER, Enum::ordinal, (a) -> ResultMode.values()[a]
+        );
+    }
+
+    public record ComputerData(BlockPos pos, ComputerEntity.OutputMode output, ComputerEntity.ResultMode result) {
+        public static final PacketCodec<? super PacketByteBuf, ComputerData> PACKET_CODEC = PacketCodec.tuple(
+                BlockPos.PACKET_CODEC, ComputerData::pos,
+                OutputMode.PACKET_CODEC, ComputerData::output,
+                ResultMode.PACKET_CODEC, ComputerData::result,
+                ComputerData::new
+        );
+    }
+
     @Override
     public DefaultedList<ItemStack> getItems() {
         return inventory;
     }
 
     @Override
-    public ComputerScreenHandler.ComputerData getScreenOpeningData(ServerPlayerEntity serverPlayerEntity) {
-        return new ComputerScreenHandler.ComputerData(this.getPos(), write, and);
+    public ComputerData getScreenOpeningData(ServerPlayerEntity serverPlayerEntity) {
+        return new ComputerData(this.getPos(), output, result);
     }
 
     public interface TestCase {
@@ -117,11 +158,11 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
                 var text = comp.getScript().runScript(in);
                 System.out.println(text);
 
-                if (!write && !out.isEmpty()) {
+                if (output == OutputMode.COMPARE && !out.isEmpty()) {
                     return getIO(out).equals(text);
                 }
 
-                if (write && !out.isEmpty()) {
+                if (output == OutputMode.WRITE && !out.isEmpty()) {
                     var outIO = out.get(ModComponents.IO);
                     assert outIO != null;
                     outIO.setComponent(text, out);
@@ -172,10 +213,8 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.writeNbt(nbt, registryLookup);
-        nbt.putBoolean("write", this.write);
-        nbt.putBoolean("and", this.and);
-
-        System.out.println("GOODBYE. " + nbt.getBoolean("write").get());
+        nbt.putInt("output", this.output.ordinal());
+        nbt.putInt("result", this.output.ordinal());
 
         Inventories.writeNbt(nbt, inventory, registryLookup);
     }
@@ -184,13 +223,12 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.readNbt(nbt, registryLookup);
 
-        nbt.getBoolean("write").ifPresent((nbtBoolean) -> {
-            this.write = nbtBoolean;
-            System.out.println("FOUND YOU " + nbtBoolean);
+        nbt.getInt("output").ifPresent((nbtInt) -> {
+            this.output = OutputMode.values()[nbtInt];
         });
 
-        nbt.getBoolean("and").ifPresent((nbtBoolean) -> {
-            this.and = nbtBoolean;
+        nbt.getInt("result").ifPresent((nbtInt) -> {
+            this.result = ResultMode.values()[nbtInt];
         });
 
         Inventories.readNbt(nbt, inventory, registryLookup);

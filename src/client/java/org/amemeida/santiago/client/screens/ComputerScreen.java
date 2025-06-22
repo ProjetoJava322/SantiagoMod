@@ -9,8 +9,9 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
+import org.amemeida.santiago.computer.ComputerEntity;
 import org.amemeida.santiago.computer.ComputerScreenHandler;
-import org.amemeida.santiago.net.PCModeC2SPayload;
+import org.amemeida.santiago.net.PCDataC2SPayload;
 
 /**
  * @see net.minecraft.client.gui.screen.ingame.CrafterScreen
@@ -35,23 +36,23 @@ public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
     protected void init() {
         super.init();
 
-        var btn = ButtonWidget.builder(Text.literal(handler.getData().write() ? "Write" : "Compare"),
+        addDrawableChild(ButtonWidget.builder(Text.literal(handler.getData().output().toString()),
                 (button) -> {
-            System.out.println("click: " + handler.getWrite());
-            var newWrite = !handler.getWrite();
-            handler.setWrite(newWrite);
+            System.out.println("click: " + handler.getOutputMode());
+            var newWrite = handler.getOutputMode().cycleNext();
+            handler.setOutputMode(newWrite);
 
-            var payload = new PCModeC2SPayload(this.getScreenHandler().syncId,  newWrite);
-            ClientPlayNetworking.send(payload);
+            this.sendPayload();
+            button.setMessage(Text.literal(handler.getOutputMode().toString()));
+        }).position(width/2 + 20, height/2 - 120).size(60, 15).build());
+    }
 
-            if (handler.getWrite()) {
-                button.setMessage(Text.literal("Write"));
-            } else {
-                button.setMessage(Text.literal("Compare"));
-            }
-        }).position(width/2 + 20, height/2 - 120).size(60, 15).build();
+    public void sendPayload() {
+        var data = new ComputerEntity.ComputerData(handler.getData().pos(), handler.getOutputMode(),
+                handler.getResultMode());
 
-        addDrawableChild(btn);
+        var payload = new PCDataC2SPayload(this.getScreenHandler().syncId, data);
+        ClientPlayNetworking.send(payload);
     }
 
     @Override
