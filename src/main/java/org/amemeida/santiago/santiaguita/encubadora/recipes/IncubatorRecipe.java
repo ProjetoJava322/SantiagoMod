@@ -19,8 +19,6 @@ public record IncubatorRecipe(Ingredient inputItem, ItemStack output) implements
         return list;
     }
 
-    // read Recipe JSON files --> new IncubatorRecipe
-
     @Override
     public boolean matches(IncubatorRecipeInput input, World world) {
         if(world.isClient()) {
