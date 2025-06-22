@@ -26,7 +26,7 @@ public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
     public static final Identifier TEXTURE = Identifier.of(Santiago.MOD_ID, "textures/gui/computer_in_out_gui.png");
     public ComputerScreen(ComputerScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
-        this.backgroundWidth = 234;
+        this.backgroundWidth = 243;
         this.backgroundHeight = 251;
         this.playerInventoryTitleX = 9;
         this.playerInventoryTitleY = this.backgroundHeight - 94;
@@ -44,7 +44,20 @@ public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
 
             this.sendPayload();
             button.setMessage(Text.literal(handler.getOutputMode().toString()));
-        }).position(width/2 + 20, height/2 - 120).size(60, 15).build());
+        }).position(width/2 + 66, height/2 - 105).size(50, 15).build());
+
+        addDrawableChild(ButtonWidget.builder(Text.literal(handler.getData().and() ? "And" : "Or"),
+                (button) -> {
+                    System.out.println("click: " + handler.getResultMode());
+                    var newAnd = handler.getResultMode().cycleNext();
+                    handler.setResultMode(newAnd);
+
+                    System.out.println(newAnd);
+
+                    this.sendPayload();
+
+                    button.setMessage(Text.literal(handler.getResultMode().toString()));
+                }).position(width/2 + 66, height/2 - 81).size(50, 15).build());
     }
 
     public void sendPayload() {
