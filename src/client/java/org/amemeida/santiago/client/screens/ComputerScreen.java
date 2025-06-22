@@ -23,8 +23,8 @@ public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
     public static final Identifier TEXTURE = Identifier.of(Santiago.MOD_ID, "textures/gui/computer_in_out_gui.png");
     public ComputerScreen(ComputerScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
-        this.backgroundWidth = 176;
-        this.backgroundHeight = 252;
+        this.backgroundWidth = 234;
+        this.backgroundHeight = 251;
         this.playerInventoryTitleX = 9;
         this.playerInventoryTitleY = this.backgroundHeight - 94;
     }
