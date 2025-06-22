@@ -77,11 +77,11 @@ public class ComputerScreenHandler extends ScreenHandler {
     }
 
     private void addSlots() {
-        this.addSlot(new FloppySlot(inventory, 0, 80, 12));
+        this.addSlot(new FloppySlot(inventory, 0, 80, 11));
 
         for (int i = 1; i <= ComputerEntity.IO_SLOTS * 2; i += 2) {
-            this.addSlot(new IOSlot(inventory, i, 26, 17 * i + 14));
-            this.addSlot(new IOSlot(inventory, i + 1, 134, 17 * i + 14));
+            this.addSlot(new IOSlot(inventory, i, 26, 17 * i + 13));
+            this.addSlot(new IOSlot(inventory, i + 1, 134, 17 * i + 13));
         }
     }
 

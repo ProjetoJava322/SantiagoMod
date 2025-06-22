@@ -25,7 +25,7 @@ public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
     public static final Identifier TEXTURE = Identifier.of(Santiago.MOD_ID, "textures/gui/computer_in_out_gui.png");
     public ComputerScreen(ComputerScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
-        this.backgroundWidth = 234;
+        this.backgroundWidth = 243;
         this.backgroundHeight = 251;
         this.playerInventoryTitleX = 9;
         this.playerInventoryTitleY = this.backgroundHeight - 94;
@@ -35,7 +35,7 @@ public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
     protected void init() {
         super.init();
 
-        var btn = ButtonWidget.builder(Text.literal(handler.getData().write() ? "Write" : "Compare"),
+        var btn_oper = ButtonWidget.builder(Text.literal(handler.getData().write() ? "Write" : "Compare"),
                 (button) -> {
             System.out.println("click: " + handler.getWrite());
             var newWrite = !handler.getWrite();
@@ -49,9 +49,28 @@ public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
             } else {
                 button.setMessage(Text.literal("Compare"));
             }
-        }).position(width/2 + 20, height/2 - 120).size(60, 15).build();
+        }).position(width/2 + 66, height/2 - 105).size(50, 15).build();
 
-        addDrawableChild(btn);
+        var btn_and =  ButtonWidget.builder(Text.literal(handler.getData().and() ? "And" : "Or"),
+                (button) -> {
+                    System.out.println("click: " + handler.getAnd());
+                    var newAnd = !handler.getAnd();
+                    handler.setAnd(newAnd);
+
+                    System.out.println(newAnd);
+
+                    var payload = new PCModeC2SPayload(this.getScreenHandler().syncId,  newAnd);
+                    ClientPlayNetworking.send(payload);
+
+                    if (handler.getAnd()) {
+                        button.setMessage(Text.literal("And"));
+                    } else {
+                        button.setMessage(Text.literal("Or"));
+                    }
+                }).position(width/2 + 66, height/2 - 81).size(50, 15).build();
+
+        addDrawableChild(btn_oper);
+        addDrawableChild(btn_and);
     }
 
     @Override
