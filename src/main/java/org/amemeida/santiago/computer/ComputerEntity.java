@@ -87,6 +87,12 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
             return OutputMode.values()[(this.ordinal() + 1) % OutputMode.values().length];
         }
 
+        @Override
+        public String toString() {
+            var name = super.toString();
+            return name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
+        }
+
         public static final PacketCodec<PacketByteBuf, OutputMode> PACKET_CODEC = PacketCodec.tuple(
                 PacketCodecs.INTEGER, Enum::ordinal, (a) -> OutputMode.values()[a]
         );
@@ -98,6 +104,12 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
 
         public ResultMode cycleNext() {
             return ResultMode.values()[(this.ordinal() + 1) % ResultMode.values().length];
+        }
+
+        @Override
+        public String toString() {
+            var name = super.toString();
+            return name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
         }
 
         public static final PacketCodec<PacketByteBuf, ResultMode> PACKET_CODEC = PacketCodec.tuple(
@@ -203,6 +215,10 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
     public void onBlockReplaced(BlockPos pos, BlockState oldState){
         ItemScatterer.spawn(world, pos, (this));
         super.onBlockReplaced(pos, oldState);
+    }
+
+    public boolean hasDisk() {
+        return inventory.getFirst().contains(ModComponents.SCRIPT);
     }
 
     public boolean hasIO() {

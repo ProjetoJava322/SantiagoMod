@@ -86,6 +86,12 @@ public class Computer extends BlockWithEntity {
             return;
         }
 
+        var entity = (ComputerEntity) world.getBlockEntity(pos);
+
+        if (entity == null || !entity.hasDisk()) {
+            return;
+        }
+
         world.setBlockState(pos, state.with(STATE, ComputerState.RUNNING), Block.NOTIFY_LISTENERS);
         world.scheduleBlockTick(pos, this, 4);
     }
