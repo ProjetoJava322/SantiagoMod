@@ -44,7 +44,7 @@ public class ComputerScreenHandler extends ScreenHandler {
         this.addProperties(propertyDelegate);
 
         addSlots();
-        addPlayerSlots(playerInventory, 8, 130);
+        addPlayerSlots(playerInventory, 8, 170);
     }
 
     public ComputerData getData() {
@@ -77,44 +77,36 @@ public class ComputerScreenHandler extends ScreenHandler {
     }
 
     private void addSlots() {
-        this.addSlot(new FloppySlot(inventory, 0, 20, 20));
+        this.addSlot(new FloppySlot(inventory, 0, 80, 12));
 
         for (int i = 1; i <= ComputerEntity.IO_SLOTS * 2; i += 2) {
-            this.addSlot(new IOSlot(inventory, i, 60, 20 * i + 5));
-            this.addSlot(new IOSlot(inventory, i + 1, 100, 20 * i + 5));
+            this.addSlot(new IOSlot(inventory, i, 26, 17 * i + 14));
+            this.addSlot(new IOSlot(inventory, i + 1, 134, 17 * i + 14));
         }
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int slot) {
-        ItemStack itemStack = ItemStack.EMPTY;
-        Slot slot2 = this.slots.get(slot);
-        if (slot2.hasStack()) {
-            ItemStack itemStack2 = slot2.getStack();
-
-            itemStack = itemStack2.copy();
-            if (slot < this.inventory.size()) {
-                if (!this.insertItem(itemStack2, this.inventory.size(), this.slots.size(), true)) {
+    public ItemStack quickMove(PlayerEntity player, int invSlot) {
+        ItemStack newStack = ItemStack.EMPTY;
+        Slot slot = this.slots.get(invSlot);
+        if (slot != null && slot.hasStack()) {
+            ItemStack originalStack = slot.getStack();
+            newStack = originalStack.copy();
+            if (invSlot < this.inventory.size()) {
+                if (!this.insertItem(originalStack, this.inventory.size(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.insertItem(itemStack2, 0, this.inventory.size(), false)) {
+            } else if (!this.insertItem(originalStack, 0, this.inventory.size(), false)) {
                 return ItemStack.EMPTY;
             }
 
-            if (itemStack2.isEmpty()) {
-                slot2.setStackNoCallbacks(ItemStack.EMPTY);
+            if (originalStack.isEmpty()) {
+                slot.setStack(ItemStack.EMPTY);
             } else {
-                slot2.markDirty();
+                slot.markDirty();
             }
-
-            if (itemStack2.getCount() == itemStack.getCount()) {
-                return ItemStack.EMPTY;
-            }
-
-            slot2.onTakeItem(player, itemStack2);
         }
-
-        return itemStack;
+        return newStack;
     }
 
     @Override

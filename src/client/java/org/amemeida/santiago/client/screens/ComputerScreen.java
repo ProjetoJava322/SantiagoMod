@@ -22,24 +22,20 @@ import org.amemeida.santiago.net.PCModeC2SPayload;
  */
 
 public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
-    public static final Identifier TEXTURE = Identifier.of(Santiago.MOD_ID, "textures/gui/revolution_table_gui.png");
-
+    public static final Identifier TEXTURE = Identifier.of(Santiago.MOD_ID, "textures/gui/computer_in_out_gui.png");
     public ComputerScreen(ComputerScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
-
-        this.backgroundWidth = 499;
-        this.backgroundHeight = 792;
-        this.playerInventoryTitleX = 23;
+        this.backgroundWidth = 176;
+        this.backgroundHeight = 252;
+        this.playerInventoryTitleX = 9;
         this.playerInventoryTitleY = this.backgroundHeight - 94;
     }
-
-    ButtonWidget writeBtn;
 
     @Override
     protected void init() {
         super.init();
 
-        this.writeBtn = ButtonWidget.builder(Text.literal(handler.getData().write() ? "Write" : "Compare"),
+        var btn = ButtonWidget.builder(Text.literal(handler.getData().write() ? "Write" : "Compare"),
                 (button) -> {
             System.out.println("click: " + handler.getWrite());
             var newWrite = !handler.getWrite();
@@ -49,19 +45,18 @@ public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
             ClientPlayNetworking.send(payload);
 
             if (handler.getWrite()) {
-                writeBtn.setMessage(Text.literal("Write"));
+                button.setMessage(Text.literal("Write"));
             } else {
-                writeBtn.setMessage(Text.literal("Compare"));
+                button.setMessage(Text.literal("Compare"));
             }
-        }).position(50, 50).build();
+        }).position(width/2 + 20, height/2 - 120).size(60, 15).build();
 
-        addDrawableChild(this.writeBtn);
+        addDrawableChild(btn);
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
-
         drawMouseoverTooltip(context, mouseX, mouseY);
     }
 
@@ -69,8 +64,6 @@ public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         int x = (width - backgroundWidth) / 2;
         int y = (height - backgroundHeight) / 2;
-
-        context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight,
-                499, 792);
+        context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight, 256,256);
     }
 }

@@ -88,7 +88,7 @@ public class Computer extends BlockWithEntity {
 
         if (has_redstone && curr_state == ComputerState.IDLE) {
             world.setBlockState(pos, state.with(STATE, ComputerState.RUNNING), Block.NOTIFY_LISTENERS);
-            world.scheduleBlockTick(pos, this, 2);
+            world.scheduleBlockTick(pos, this, 4);
         }
 
         if (!has_redstone && curr_state == ComputerState.LOCKED) {
@@ -123,9 +123,10 @@ public class Computer extends BlockWithEntity {
                     world.setBlockState(pos, state.with(STATE, ComputerState.FAILURE), Block.NOTIFY_LISTENERS);
                 }
             } catch (PythonRunner.RunningException e) {
+                System.err.println(e.getMessage());
                 world.setBlockState(pos, state.with(STATE, ComputerState.ERROR), Block.NOTIFY_LISTENERS);
             } finally {
-                world.scheduleBlockTick(pos, this, 100);
+                world.scheduleBlockTick(pos, this, 4);
                 world.updateNeighbors(pos, state.getBlock());
             }
         }).start();
