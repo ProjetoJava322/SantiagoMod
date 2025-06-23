@@ -1,0 +1,19 @@
+{
+  "type": "santiago:revolution_table",
+  "key": {
+    "s": "santiago:santiaguita_ingot",
+    "b": "santiago:santiaguita_block",
+    "g": "minecraft:gold_ingot",
+    "_": "minecraft:air"
+  },
+  "pattern": [
+    "__",
+    "s__s",
+    "gbbg",
+    "gg"
+  ],
+  "result": {
+    "count": 1,
+    "id": "santiago:floppy_disk"
+  }
+}
