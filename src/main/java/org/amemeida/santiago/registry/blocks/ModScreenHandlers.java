@@ -1,6 +1,6 @@
 package org.amemeida.santiago.registry.blocks;
 
-import org.amemeida.santiago.santiaguita.encubadora.IncubatorScreenHandler;
+import org.amemeida.santiago.incubator.IncubatorScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -14,8 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import org.amemeida.santiago.Santiago;
 import org.amemeida.santiago.computer.ComputerEntity;
 import org.amemeida.santiago.computer.ComputerScreenHandler;
-import org.amemeida.santiago.santiaguita.encubadora.IncubatorScreenHandler;
-import org.amemeida.santiago.santiaguita.revolution_table.RevolutionTableScreenHandler;
+import org.amemeida.santiago.revolution_table.RevolutionTableScreenHandler;
 
 public class ModScreenHandlers {
     public static final ScreenHandlerType<IncubatorScreenHandler> INCUBATOR_SCREEN_HANDLER = register("incubator",

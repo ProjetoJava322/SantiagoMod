@@ -1,4 +1,4 @@
-package org.amemeida.santiago.santiaguita.encubadora.recipes;
+package org.amemeida.santiago.incubator.recipes;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

@@ -1,4 +1,4 @@
-package org.amemeida.santiago.santiaguita.encubadora.recipes;
+package org.amemeida.santiago.incubator.recipes;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.input.RecipeInput;

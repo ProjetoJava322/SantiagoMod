@@ -1,14 +1,11 @@
-package org.amemeida.santiago.santiaguita.revolution_table;
+package org.amemeida.santiago.revolution_table;
 
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
@@ -17,9 +14,7 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
@@ -27,10 +22,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.amemeida.santiago.registry.blocks.ModBlockEntities;
 import org.amemeida.santiago.registry.blocks.ModBlocks;
-import org.amemeida.santiago.registry.items.ModItems;
 import org.amemeida.santiago.registry.recipes.ModRecipeTypes;
-import org.amemeida.santiago.santiaguita.revolution_table.recipes.RevolutionTableRecipe;
-import org.amemeida.santiago.santiaguita.revolution_table.recipes.RevolutionTableRecipeInput;
+import org.amemeida.santiago.revolution_table.recipes.RevolutionTableRecipe;
+import org.amemeida.santiago.revolution_table.recipes.RevolutionTableRecipeInput;
 import org.amemeida.santiago.util.ImplementedInventory;
 import org.jetbrains.annotations.Nullable;
 

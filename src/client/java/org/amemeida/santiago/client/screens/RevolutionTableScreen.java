@@ -1,22 +1,13 @@
 package org.amemeida.santiago.client.screens;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.gui.screen.ingame.RecipeBookScreen;
-import net.minecraft.client.gui.screen.recipebook.AbstractCraftingRecipeBookWidget;
-import net.minecraft.client.gui.screen.recipebook.RecipeBookWidget;
-import net.minecraft.client.recipebook.RecipeBookType;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
-import org.amemeida.santiago.registry.items.ModItems;
-import org.amemeida.santiago.registry.recipes.ModRecipeBooks;
-import org.amemeida.santiago.santiaguita.revolution_table.RevolutionTableScreenHandler;
-
-import java.util.List;
+import org.amemeida.santiago.revolution_table.RevolutionTableScreenHandler;
 
 //206x185
 

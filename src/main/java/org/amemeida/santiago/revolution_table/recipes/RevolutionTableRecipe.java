@@ -1,4 +1,4 @@
-package org.amemeida.santiago.santiaguita.revolution_table.recipes;
+package org.amemeida.santiago.revolution_table.recipes;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;

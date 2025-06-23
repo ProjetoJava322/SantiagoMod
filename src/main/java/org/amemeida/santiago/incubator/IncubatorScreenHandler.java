@@ -1,4 +1,4 @@
-package org.amemeida.santiago.santiaguita.encubadora;
+package org.amemeida.santiago.incubator;
 
 import org.amemeida.santiago.registry.blocks.ModScreenHandlers;
 import net.minecraft.block.entity.BlockEntity;

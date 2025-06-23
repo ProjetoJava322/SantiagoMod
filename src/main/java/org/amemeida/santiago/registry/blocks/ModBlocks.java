@@ -15,8 +15,8 @@ import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
 import org.amemeida.santiago.computer.Computer;
 import org.amemeida.santiago.registry.items.ModGroups;
-import org.amemeida.santiago.santiaguita.encubadora.IncubatorBlock;
-import org.amemeida.santiago.santiaguita.revolution_table.RevolutionTableBlock;
+import org.amemeida.santiago.incubator.IncubatorBlock;
+import org.amemeida.santiago.revolution_table.RevolutionTableBlock;
 
 import java.util.function.Function;
 

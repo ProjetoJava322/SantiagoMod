@@ -1,4 +1,4 @@
-package org.amemeida.santiago.santiaguita.encubadora;
+package org.amemeida.santiago.incubator;
 
 import com.mojang.serialization.MapCodec;
 
@@ -6,7 +6,6 @@ import net.minecraft.block.*;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
-import org.amemeida.santiago.santiaguita.encubadora.IncubatorBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;

@@ -7,8 +7,8 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
 import org.amemeida.santiago.computer.ComputerEntity;
-import org.amemeida.santiago.santiaguita.encubadora.IncubatorBlockEntity;
-import org.amemeida.santiago.santiaguita.revolution_table.RevolutionTableBlockEntity;
+import org.amemeida.santiago.incubator.IncubatorBlockEntity;
+import org.amemeida.santiago.revolution_table.RevolutionTableBlockEntity;
 
 public class ModBlockEntities {
 

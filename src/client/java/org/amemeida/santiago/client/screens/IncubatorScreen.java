@@ -7,7 +7,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
-import org.amemeida.santiago.santiaguita.encubadora.IncubatorScreenHandler;
+import org.amemeida.santiago.incubator.IncubatorScreenHandler;
 
 public class IncubatorScreen extends HandledScreen<IncubatorScreenHandler> {
     private static final Identifier GUI_TEXTURE =
