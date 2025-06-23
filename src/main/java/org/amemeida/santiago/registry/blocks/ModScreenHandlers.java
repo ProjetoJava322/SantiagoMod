@@ -1,5 +1,6 @@
 package org.amemeida.santiago.registry.blocks;
 
+import org.amemeida.santiago.santiaguita.encubadora.IncubatorScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;

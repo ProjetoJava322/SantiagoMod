@@ -11,7 +11,8 @@ import org.amemeida.santiago.santiaguita.encubadora.IncubatorBlockEntity;
 import org.amemeida.santiago.santiaguita.revolution_table.RevolutionTableBlockEntity;
 
 public class ModBlockEntities {
-    public static final BlockEntityType<IncubatorBlockEntity> INCUBATOR = register("incubator",
+
+    public static final BlockEntityType<IncubatorBlockEntity> INCUBATOR = register( "incubator",
             FabricBlockEntityTypeBuilder.create(IncubatorBlockEntity::new, ModBlocks.INCUBATOR).build());
 
     public static final BlockEntityType<RevolutionTableBlockEntity> REVOLUTION_TABLE = register("revolution_table",
