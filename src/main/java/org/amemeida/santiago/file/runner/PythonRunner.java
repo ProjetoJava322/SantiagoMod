@@ -2,7 +2,6 @@ package org.amemeida.santiago.file.runner;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
@@ -24,15 +23,20 @@ public class PythonRunner {
             int exit = proc.waitFor();
 
             if (exit != 0) {
-                throw new RunningException(new BufferedReader(new InputStreamReader(proc.getErrorStream()))
-                        .lines().collect(Collectors.joining()));
+                var buff = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+                var text = buff.lines().collect(Collectors.joining());
+                buff.close();
+                throw new RunningException(text);
             }
 
-            return new BufferedReader(new InputStreamReader(proc.getInputStream()))
-                    .lines().collect(Collectors.joining());
+            var buff = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+            var text = buff.lines().collect(Collectors.joining());
+            buff.close();
+
+            return text;
         } catch (Exception e) {
             throw new RunningException(e.getMessage());
-        }
+        } 
     }
 
     public static PythonRunner getInstance() {

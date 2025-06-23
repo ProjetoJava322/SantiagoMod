@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 import org.amemeida.santiago.registry.blocks.ModBlockEntities;
 import org.jetbrains.annotations.Nullable;
 
-public class RevolutionTableBlock extends BlockWithEntity implements BlockEntityProvider {
+public class RevolutionTableBlock extends BlockWithEntity {
     public static final MapCodec<RevolutionTableBlock> CODEC = createCodec(RevolutionTableBlock::new);
 
     public MapCodec<RevolutionTableBlock> getCodec() {

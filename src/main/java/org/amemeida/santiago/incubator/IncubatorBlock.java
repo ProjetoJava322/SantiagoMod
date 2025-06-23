@@ -20,8 +20,9 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 
-public class IncubatorBlock extends BlockWithEntity implements BlockEntityProvider {
-    public static final MapCodec<IncubatorBlock> CODEC = IncubatorBlock.createCodec(IncubatorBlock::new);
+public class IncubatorBlock extends BlockWithEntity {
+    public static final MapCodec<IncubatorBlock> CODEC = 
+            IncubatorBlock.createCodec(IncubatorBlock::new);
 
     public IncubatorBlock(Settings settings) {
         super(settings);

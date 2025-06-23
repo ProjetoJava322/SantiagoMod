@@ -12,7 +12,6 @@ import org.amemeida.santiago.file.runner.PythonRunner;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -113,7 +112,8 @@ public class Script {
         var file = file();
 
         try {
-            boolean a = file.createNewFile();
+            /// SIDE EFFECT
+            file.createNewFile();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

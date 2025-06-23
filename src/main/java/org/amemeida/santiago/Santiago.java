@@ -21,7 +21,6 @@ import org.amemeida.santiago.registry.items.ModItems;
 import org.amemeida.santiago.registry.recipes.ModRecipeBooks;
 import org.amemeida.santiago.registry.recipes.ModRecipeSerializers;
 import org.amemeida.santiago.registry.recipes.ModRecipeTypes;
-import org.apache.commons.logging.Log;
 
 public class Santiago implements ModInitializer {
     public static final String MOD_ID = "santiago";
