@@ -123,7 +123,7 @@ public class ComputerScreenHandler extends ScreenHandler {
 
         @Override
         public boolean canInsert(ItemStack stack) {
-            if (!stack.contains(ModComponents.IO)) {
+            if (!stack.contains(ModComponents.IO) && !stack.contains(ModComponents.ENDER)) {
                 return false;
             }
 

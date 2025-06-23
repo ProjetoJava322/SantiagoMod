@@ -17,6 +17,8 @@ public interface TextContent {
             return stack.get(ModComponents.IO);
         } else if (stack.contains(ModComponents.SCRIPT)) {
             return stack.get(ModComponents.SCRIPT);
+        } else if (stack.contains(ModComponents.ENDER)) {
+            return stack.get(ModComponents.ENDER);
         }
 
         return null;

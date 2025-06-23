@@ -1,6 +1,7 @@
 package org.amemeida.santiago;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import org.amemeida.santiago.components.TextContent;
@@ -47,6 +48,8 @@ public class Santiago implements ModInitializer {
         PayloadTypeRegistry.playC2S().register(UpdateStackC2SPayload.ID, UpdateStackC2SPayload.CODEC);
         PayloadTypeRegistry.playC2S().register(PCDataC2SPayload.ID, PCDataC2SPayload.CODEC);
         PayloadTypeRegistry.playC2S().register(TriggerPCC2SPayload.ID, TriggerPCC2SPayload.CODEC);
+
+        ServerLifecycleEvents.SERVER_STARTED.register(Script::setServer);
 
         ServerPlayNetworking.registerGlobalReceiver(UpdateStackC2SPayload.ID, (payload, context) -> {
             var playerStack = context.player().getInventory().getStack(payload.slot());

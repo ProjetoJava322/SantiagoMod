@@ -21,6 +21,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import org.amemeida.santiago.components.TextContent;
 import org.amemeida.santiago.file.Script;
 import org.amemeida.santiago.file.runner.PythonRunner;
 import org.amemeida.santiago.registry.blocks.ModBlockEntities;
@@ -150,7 +151,6 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
         var comp = floppy.get(ModComponents.SCRIPT);
         assert comp != null;
 
-        Script.setServer(world.getServer());
         List<TestCase> testCases = new ArrayList<>();
 
         var hasIO = hasIO();
@@ -175,7 +175,7 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
                 }
 
                 if (output == OutputMode.WRITE && !out.isEmpty()) {
-                    var outIO = out.get(ModComponents.IO);
+                    var outIO = TextContent.get(out);
                     assert outIO != null;
                     outIO.setComponent(text, out);
                 }
@@ -197,12 +197,8 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
             return "";
         }
 
-        var io = stack.get(ModComponents.IO);
-
-        if (io == null) {
-            return "";
-        }
-
+        var io = TextContent.get(stack);
+        assert io != null;
         return io.text();
     }
 

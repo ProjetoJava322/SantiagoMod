@@ -14,6 +14,7 @@ import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
 import org.amemeida.santiago.components.IOComponent;
 import org.amemeida.santiago.components.ScriptComponent;
+import org.amemeida.santiago.items.EnderCard;
 import org.amemeida.santiago.items.FloppyDisk;
 import org.amemeida.santiago.items.PunchCard;
 import org.amemeida.santiago.items.SuperSnowball;
@@ -43,6 +44,9 @@ public class ModItems {
 
     public static final Item PUNCH_CARD = register("punch_card", PunchCard::new, new Item.Settings()
             .maxCount(1).component(ModComponents.IO, new IOComponent("")));
+    public static final Item ENDER_CARD = register("ender_card", EnderCard::new, new Item.Settings()
+            .maxCount(1));
+
     public static final Item FLOPPY_DISK = register("floppy_disk", FloppyDisk::new, new Item.Settings()
             .maxCount(1).component(ModComponents.SCRIPT, new ScriptComponent()));
 
