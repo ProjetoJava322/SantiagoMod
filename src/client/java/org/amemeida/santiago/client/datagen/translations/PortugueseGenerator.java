@@ -45,6 +45,7 @@ public class PortugueseGenerator extends Translator {
         add(ModItems.UNDERLINE, "Guião Baixo");
         add(ModItems.SANTIAGOS_ANTHEM_MUSIC_DISC, "Disco Musical");
         addDesc(ModItems.SANTIAGOS_ANTHEM_MUSIC_DISC, "Hino do Santiago");
+        add(ModItems.STRIKE_TOTEM, "Totem do Sindicalizado");
 
         add(ModItems.SUPER_SNOWBALL, "Bolinha");
         add(ModItems.PUNCH_CARD, "Cartão Perfurado");

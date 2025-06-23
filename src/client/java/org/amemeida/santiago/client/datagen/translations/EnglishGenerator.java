@@ -52,6 +52,7 @@ public class EnglishGenerator extends Translator {
         add(ModItems.ENDER_CARD, "Ender Card");
         add(ModItems.FLOPPY_DISK, "Floppy Disk");
         add(ModBlocks.COMPUTER, "Computer");
+        add(ModItems.STRIKE_TOTEM, "Strike Totem");
 
         add(ModSounds.TEMMIE, "Temmie Talking");
     }

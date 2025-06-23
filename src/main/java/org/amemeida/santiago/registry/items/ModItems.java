@@ -14,10 +14,7 @@ import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
 import org.amemeida.santiago.components.IOComponent;
 import org.amemeida.santiago.components.ScriptComponent;
-import org.amemeida.santiago.items.EnderCard;
-import org.amemeida.santiago.items.FloppyDisk;
-import org.amemeida.santiago.items.PunchCard;
-import org.amemeida.santiago.items.SuperSnowball;
+import org.amemeida.santiago.items.*;
 import org.amemeida.santiago.santiaguita.SantiaguitaMaterial;
 import org.amemeida.santiago.registry.ModSounds;
 
@@ -55,6 +52,9 @@ public class ModItems {
     public static final Item SANTIAGUITA_INGOT = register("santiaguita_ingot");
     public static final Item SANTIAGUITA_NUGGET = register("santiaguita_nugget");
     public static final Item UNDERLINE = register("underline");
+
+    public static final Item STRIKE_TOTEM = register("strike_totem", StrikeTotem::new, new Item.Settings()
+            .maxCount(1).component(DataComponentTypes.DEATH_PROTECTION, DeathProtectionComponent.TOTEM_OF_UNDYING));
 
     public static final Item SUPER_SNOWBALL = register("super_snowball", SuperSnowball::new);
 

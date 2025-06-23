@@ -109,7 +109,7 @@ public class RecipeGenerator extends FabricRecipeProvider {
                         .criterion(hasItem(ModItems.SANTIAGUITA_INGOT), conditionsFromItem(ModItems.SANTIAGUITA_INGOT))
                         .offerTo(exporter);
 
-                createShapeless(RecipeCategory.MISC, ModItems.SANTIAGUITA_NUGGET)
+                createShapeless(RecipeCategory.MISC, ModItems.SANTIAGUITA_NUGGET, 9)
                         .input(ModItems.SANTIAGUITA_INGOT)
                         .group("santiago")
                         .criterion(hasItem(ModItems.SANTIAGUITA_INGOT), conditionsFromItem(ModItems.SANTIAGUITA_INGOT))
