@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_santiaguita_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "santiago:santiaguita_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "santiago:santiaguita_chestplate"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_santiaguita_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "santiago:santiaguita_chestplate"
+    ]
+  }
+}

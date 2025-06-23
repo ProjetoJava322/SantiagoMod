@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "santiago_computer",
+  "ingredients": [
+    "santiago:punch_card",
+    "minecraft:ender_eye"
+  ],
+  "result": {
+    "count": 1,
+    "id": "santiago:ender_card"
+  }
+}

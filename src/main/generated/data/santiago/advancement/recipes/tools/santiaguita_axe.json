@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_santiaguita_axe": {
+    "has_santiaguita_ingot": {
       "conditions": {
         "items": [
           {
-            "items": "santiago:santiaguita_axe"
+            "items": "santiago:santiaguita_ingot"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_santiaguita_axe"
+      "has_santiaguita_ingot"
     ]
   ],
   "rewards": {

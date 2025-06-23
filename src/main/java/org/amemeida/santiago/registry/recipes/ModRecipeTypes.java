@@ -8,11 +8,23 @@ import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
 import org.amemeida.santiago.santiaguita.encubadora.recipes.IncubatorRecipe;
 
+
+
+public class ModRecipeTypes {
+
+import org.amemeida.santiago.santiaguita.revolution_table.recipes.RevolutionTableRecipe;
+
 public class ModRecipeTypes {
 
     public static final RecipeType<IncubatorRecipe>  INCUBATOR_RECIPE_TYPE = Registry.register(Registries.RECIPE_TYPE, Identifier.of(Santiago.MOD_ID, "incubator"), new RecipeType<IncubatorRecipe>() {
         public String toString() {
             return "incubator";
+        }
+    });
+
+    public static final RecipeType<RevolutionTableRecipe>  REVOLUTION_TABLE_RECIPE_TYPE = Registry.register(Registries.RECIPE_TYPE, Identifier.of(Santiago.MOD_ID, "revolution_table"), new RecipeType<RevolutionTableRecipe>() {
+        public String toString() {
+            return "revolution_table";
         }
     });
 

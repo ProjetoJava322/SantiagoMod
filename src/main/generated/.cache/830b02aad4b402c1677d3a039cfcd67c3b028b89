@@ -1,6 +1,9 @@
 // 1.21.5	-999999999-01-01T00:00:00	Santiago/Block Loot Tables
 baf1b03c73e6650cc88bef66c68a5577836c88aa data/santiago/loot_table/blocks/cat_block.json
+ee5061e15a090e080ae5d902cb394a3f5753b87d data/santiago/loot_table/blocks/computer.json
 33f35a72f7c368aad7670386e034d8ff6f97cc1e data/santiago/loot_table/blocks/creature_block.json
 46a58465bec6c79e862c0425ae5b06c2fdc3d550 data/santiago/loot_table/blocks/deepslate_santiaguita_ore.json
+bd0e1be2b8dd87eda1f091f10f8f77008edc96f0 data/santiago/loot_table/blocks/incubator.json
 1912ed20b464537f2f78cf78ccb69a611248ef55 data/santiago/loot_table/blocks/miku_block.json
+7e937e89b810ead0e5132fe1e0b0a2c08b83e533 data/santiago/loot_table/blocks/revolution_table.json
 4e22ae17fe578408760cbd4eb605bcffb1680d3c data/santiago/loot_table/blocks/santiaguita_ore.json

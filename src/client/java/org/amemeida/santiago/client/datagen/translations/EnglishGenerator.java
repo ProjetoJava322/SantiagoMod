@@ -41,6 +41,7 @@ public class EnglishGenerator extends Translator {
         add(ModItems.SANTIAGUITA_BOOTS, "Santiaguita Boots");
 
         add(ModItems.SANTIAGUITA_INGOT, "Santiaguita Ingot");
+        add(ModItems.SANTIAGUITA_NUGGET, "Santiaguita Nugget");
         add(ModItems.RAW_SANTIAGUITA, "Raw Santiaguita");
         add(ModItems.UNDERLINE, "Downwards Guide");
         add(ModItems.SANTIAGOS_ANTHEM_MUSIC_DISC, "Music Disc");
@@ -48,6 +49,10 @@ public class EnglishGenerator extends Translator {
 
         add(ModItems.SUPER_SNOWBALL, "Super Snowball");
         add(ModItems.PUNCH_CARD, "Punch Card");
+        add(ModItems.ENDER_CARD, "Ender Card");
+        add(ModItems.FLOPPY_DISK, "Floppy Disk");
+        add(ModBlocks.COMPUTER, "Computer");
+        add(ModItems.STRIKE_TOTEM, "Strike Totem");
 
         add(ModSounds.TEMMIE, "Temmie Talking");
     }
