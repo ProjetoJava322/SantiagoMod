@@ -1,7 +1,6 @@
 package org.amemeida.santiago.items;
 
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -9,8 +8,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.amemeida.santiago.components.EnderIOComponent;
 import org.amemeida.santiago.registry.items.ModComponents;
-import org.amemeida.santiago.registry.items.ModItems;
-
 import java.util.Random;
 
 public class EnderCard extends PunchCard {

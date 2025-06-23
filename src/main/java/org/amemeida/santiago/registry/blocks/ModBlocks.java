@@ -2,8 +2,6 @@ package org.amemeida.santiago.registry.blocks;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.FurnaceBlockEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -38,10 +36,6 @@ public class ModBlocks {
 
     public static final Block SANTIAGUITA_BLOCK = register("santiaguita_block",
             AbstractBlock.Settings.create().requiresTool().strength(7f));
-
-    private static Block register(String name) {
-        return register(name, Block::new, AbstractBlock.Settings.create());
-    }
 
     private static Block register(String name, AbstractBlock.Settings settings) {
         return register(name, Block::new, settings);

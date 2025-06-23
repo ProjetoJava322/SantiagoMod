@@ -6,8 +6,6 @@ import net.minecraft.item.ItemStack;
 import org.amemeida.santiago.file.Script;
 import org.amemeida.santiago.registry.items.ModComponents;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.Random;
 

@@ -6,9 +6,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import org.amemeida.santiago.client.screens.ModScreens;
 import org.amemeida.santiago.client.screens.TextEditScreen;
-import org.amemeida.santiago.components.TextContent;
 import org.amemeida.santiago.net.OpenScreenS2CPayload;
-import org.amemeida.santiago.registry.items.ModComponents;
 
 public class SantiagoClient implements ClientModInitializer {
     @Override
