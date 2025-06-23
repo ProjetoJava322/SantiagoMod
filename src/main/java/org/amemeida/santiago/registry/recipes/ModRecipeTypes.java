@@ -12,7 +12,7 @@ public class ModRecipeTypes {
 
     public static final RecipeType<RevolutionTableRecipe>  REVOLUTION_TABLE_RECIPE_TYPE = Registry.register(Registries.RECIPE_TYPE, Identifier.of(Santiago.MOD_ID, "revolution_table"), new RecipeType<RevolutionTableRecipe>() {
         public String toString() {
-            return "effigy_altar";
+            return "revolution_table";
         }
     });
 

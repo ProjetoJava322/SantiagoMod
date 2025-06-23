@@ -107,8 +107,9 @@ public class TextEditScreen extends Screen {
         int width = 0;
         for (int i = 0; i < beforeCursor; i++) {
             char currChar = line.charAt(i);
-            if (currChar == '\n' || ((currChar >= 'A' &&  currChar <= 'Z') && currChar != 'I') || currChar == ' ') {
+            if (currChar == '\n' || ((currChar >= 'A' &&  currChar <= 'Z') && currChar != 'I') || currChar == ' ' || (currChar >= '0' && currChar <= '9')) {
                 width += 6;
+            //eu sei que isso é redundante, eu simplesmente não quis reescrever
             } else if ((currChar >= 'a' && currChar <= 'z') && currChar != 'i' && currChar != 'l' && currChar != 't' && currChar != 'f' && currChar != 'k'|| currChar == '(' || currChar == ')') {
                 width += 6;
             } else if (currChar == ',' || currChar == '.' || currChar == ';' || currChar == '\'' || currChar == 'i') {
