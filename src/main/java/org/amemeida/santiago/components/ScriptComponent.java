@@ -4,51 +4,38 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.ItemStack;
 
-import org.amemeida.santiago.Santiago;
 import org.amemeida.santiago.file.Script;
 import org.amemeida.santiago.registry.items.ModComponents;
-import org.amemeida.santiago.util.RandomId;
-
-import java.util.Optional;
-import java.util.Random;
 
 public class ScriptComponent implements TextContent {
-    public static final Codec<ScriptComponent> CODEC = RecordCodecBuilder.create(builder -> {
-        return builder.group(
-                Script.CODEC.optionalFieldOf("script", null).forGetter(ScriptComponent::getScript)
-        ).apply(builder, ScriptComponent::new);
-    });
+    public static final Codec<ScriptComponent> CODEC = RecordCodecBuilder
+        .create(builder -> builder.group(
+                Script.CODEC.fieldOf("script")
+                    .forGetter(ScriptComponent::getScript)
+        ).apply(builder, ScriptComponent::new));
 
-    private final Optional<Script> script;
+    private final Script script;
 
     public ScriptComponent(Script script) {
-        this.script = script != null ? Optional.of(script) : Optional.empty();
-    }
-
-    public ScriptComponent() {
-        this.script = Optional.empty();
+        this.script = script;
     }
 
     public Script getScript() {
-        return this.script.orElse(null);
+        return this.script;
     }
-
+    
     @Override
     public String text() {
-        if (script.isEmpty()) {
+        if (script == null) {
             return "";
         }
 
-        return script.get().getScript();
+        return script.getScript();
     }
 
     @Override
     public void setComponent(String script, ItemStack stack) {
-        var newScript = this.script.orElseGet(() -> {
-            return new Script(RandomId.genRandom());
-        });
-
-        newScript.writeScript(script);
-        stack.set(ModComponents.SCRIPT, new ScriptComponent(newScript));
+        this.script.writeScript(script);
+        stack.set(ModComponents.SCRIPT, new ScriptComponent(this.script));
     }
 }

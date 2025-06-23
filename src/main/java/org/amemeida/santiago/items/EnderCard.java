@@ -5,13 +5,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Uuids;
 import net.minecraft.world.World;
 import org.amemeida.santiago.components.EnderIOComponent;
 import org.amemeida.santiago.registry.items.ModComponents;
 import org.amemeida.santiago.util.RandomId;
 
-import java.util.Random;
 
 public class EnderCard extends PunchCard {
     public EnderCard(Settings settings) {
@@ -37,7 +35,7 @@ public class EnderCard extends PunchCard {
             ItemStack main = user.getMainHandStack();
             ItemStack off = user.getOffHandStack();
 
-            if (main.getItem() instanceof EnderCard && off.getItem() instanceof EnderCard) {
+            if (main.getItem() == off.getItem()) {
                 if (hand == Hand.MAIN_HAND) {
                     return ActionResult.SUCCESS;
                 } else if (!off.contains(ModComponents.ENDER) && main.contains(ModComponents.ENDER)) {
@@ -50,7 +48,7 @@ public class EnderCard extends PunchCard {
         var stack = user.getStackInHand(hand);
 
         if (!stack.contains(ModComponents.ENDER)) {
-            var text = RandomId.genRandom();
+            var text = RandomId.genRandom(world.getRandom());
             stack.set(ModComponents.ENDER, new EnderIOComponent(text));
         }
 

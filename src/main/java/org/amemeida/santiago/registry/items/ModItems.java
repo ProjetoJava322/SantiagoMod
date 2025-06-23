@@ -41,7 +41,7 @@ public class ModItems {
             .maxCount(1));
 
     public static final Item FLOPPY_DISK = register("floppy_disk", FloppyDisk::new, new Item.Settings()
-            .maxCount(1).component(ModComponents.SCRIPT, new ScriptComponent()));
+            .maxCount(1));
 
     public static final Item RAW_SANTIAGUITA = register("raw_santiaguita");
 
