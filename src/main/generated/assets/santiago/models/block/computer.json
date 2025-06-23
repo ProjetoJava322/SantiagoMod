@@ -8,7 +8,7 @@
 		"3": "santiago:block/blockbench/computer_front_2",
 		"4": "santiago:block/blockbench/computer_front_3",
 		"5": "santiago:block/blockbench/computer_front_4",
-		"particle": "computer_screen"
+		"particle": "santiago:block/blockbench/computer_body"
 	},
 	"elements": [
 		{

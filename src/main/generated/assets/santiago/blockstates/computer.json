@@ -1,6 +1,24 @@
 {
   "variants": {
-    "": {
+    "facing=north": {
+      "model": "santiago:block/computer"
+    },
+    "facing=east": {
+      "model": "santiago:block/computer",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "santiago:block/computer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "santiago:block/computer",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "santiago:block/computer"
+    },
+    "facing=down": {
       "model": "santiago:block/computer"
     }
   }
