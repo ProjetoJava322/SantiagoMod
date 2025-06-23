@@ -33,14 +33,50 @@ public class Computer extends BlockWithEntity {
     public static final EnumProperty<ComputerState> STATE = EnumProperty.of("state", ComputerState.class);
 
     public static enum ComputerState implements StringIdentifiable {
-        IDLE(0),
-        LOCKED(0),
-        RUNNING(5),
-        SUCCESS(15),
-        FAILURE(10),
-        ERROR(1);
+        IDLE(0) {
+            @Override
+            public ComputerState next(BlockState state, World world, BlockPos pos) {
+                world.scheduleBlockTick(pos, state.getBlock(), 4);
+                return RUNNING;
+            }
+        },
+        LOCKED(0) {
+            @Override
+            public ComputerState next(BlockState state, World world, BlockPos pos) {
+                return world.isReceivingRedstonePower(pos) ? LOCKED : IDLE;
+            }
+        },
+        RUNNING(5) {
+            @Override
+            public ComputerState next(BlockState state, World world, BlockPos pos) {
+                throw new IllegalStateException();
+            }
+        },
+        SUCCESS(15) {
+            @Override
+            public ComputerState next(BlockState state, World world, BlockPos pos) {
+                world.scheduleBlockTick(pos, state.getBlock(), 0);
+                return LOCKED;
+            }
+        },
+        FAILURE(10) {
+            @Override
+            public ComputerState next(BlockState state, World world, BlockPos pos) {
+                world.scheduleBlockTick(pos, state.getBlock(), 0);
+                return LOCKED;
+            }
+        },
+        ERROR(1) {
+            @Override
+            public ComputerState next(BlockState state, World world, BlockPos pos) {
+                world.scheduleBlockTick(pos, state.getBlock(), 0);
+                return LOCKED;
+            }
+        };
 
         public final int redstone;
+
+        public abstract ComputerState next(BlockState state, World world, BlockPos pos);
 
         private ComputerState(int redstone) {
             this.redstone = redstone;
@@ -82,7 +118,9 @@ public class Computer extends BlockWithEntity {
     }
 
     public void trigger(BlockState state, World world, BlockPos pos) {
-        if (state.get(STATE) != ComputerState.IDLE) {
+        var currentState = state.get(STATE);
+
+        if (currentState != ComputerState.IDLE) {
             return;
         }
 
@@ -92,28 +130,36 @@ public class Computer extends BlockWithEntity {
             return;
         }
 
-        world.setBlockState(pos, state.with(STATE, ComputerState.RUNNING), Block.NOTIFY_LISTENERS);
-        world.scheduleBlockTick(pos, this, 4);
+        world.setBlockState(pos, state.with(STATE, currentState.next(state, world, pos)), Block.NOTIFY_LISTENERS);
     }
 
     @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
-        boolean has_redstone = world.isReceivingRedstonePower(pos);
-        var curr_state = state.get(STATE);
+        var curr = state.get(STATE);
 
-        if (has_redstone && curr_state == ComputerState.IDLE) {
-            this.trigger(state, world, pos);
-        }
-
-        if (!has_redstone && curr_state == ComputerState.LOCKED) {
-            world.setBlockState(pos, state.with(STATE, ComputerState.IDLE), Block.NOTIFY_LISTENERS);
+        switch (curr) {
+            case RUNNING: return;
+            case IDLE:
+                if (world.isReceivingRedstonePower(pos)) {
+                    world.setBlockState(pos, state.with(STATE, curr.next(state, world, pos)), Block.NOTIFY_LISTENERS);
+                }
+                break;
+            case LOCKED:
+                world.setBlockState(pos, state.with(STATE, curr.next(state, world, pos)), Block.NOTIFY_LISTENERS);
+                break;
         }
     }
 
     @Override
     protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (state.get(STATE) != ComputerState.RUNNING && state.get(STATE) != ComputerState.IDLE) {
-            world.setBlockState(pos, state.with(STATE, ComputerState.LOCKED), Block.NOTIFY_LISTENERS);
+        var curr = state.get(STATE);
+
+        if (curr == ComputerState.IDLE) {
+            return;
+        }
+
+        if (curr != ComputerState.RUNNING) {
+            world.setBlockState(pos, state.with(STATE, curr.next(state, world, pos)), Block.NOTIFY_LISTENERS);
             world.updateNeighbors(pos, state.getBlock());
             return;
         }
