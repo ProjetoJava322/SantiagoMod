@@ -11,6 +11,8 @@ import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
+import org.amemeida.santiago.registry.recipes.ModRecipeSerializers;
+import org.amemeida.santiago.registry.recipes.ModRecipeTypes;
 
 public record IncubatorRecipe(Ingredient inputItem, ItemStack output) implements Recipe<IncubatorRecipeInput> {
     public DefaultedList<Ingredient> getIngredients() {
@@ -35,12 +37,12 @@ public record IncubatorRecipe(Ingredient inputItem, ItemStack output) implements
 
     @Override
     public RecipeSerializer<? extends Recipe<IncubatorRecipeInput>> getSerializer() {
-        return ModRecipes.INCUBATOR_SERIALIZER;
+        return ModRecipeSerializers.INCUBATOR_RECIPE_SERIALIZER;
     }
 
     @Override
     public RecipeType<? extends Recipe<IncubatorRecipeInput>> getType() {
-        return ModRecipes.INCUBATOR_TYPE;
+        return ModRecipeTypes.INCUBATOR_RECIPE_TYPE;
     }
 
     @Override

@@ -109,15 +109,15 @@ public class IncubatorBlockEntity extends BlockEntity implements ExtendedScreenH
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.writeNbt(nbt, registryLookup);
         Inventories.writeNbt(nbt, inventory, registryLookup);
-        nbt.putInt("progress", progress);
-        nbt.putInt("max_progress", maxProgress);
+        nbt.putInt("incubator.progress", progress);
+        nbt.putInt("incubator.max_progress", maxProgress);
     }
 
     @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         Inventories.readNbt(nbt, inventory, registryLookup);
-        progress = nbt.getInt("progress").get();
-        maxProgress = nbt.getInt("max_progress").get();
+        progress = nbt.getInt("incubator.progress").get();
+        maxProgress = nbt.getInt("incubator.max_progress").get();
         super.readNbt(nbt, registryLookup);
     }
 

@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:incubator",
+  "type": "santiago:incubator",
   "ingredient": "minecraft:stick",
   "result": {
     "id": "minecraft:end_rod"
