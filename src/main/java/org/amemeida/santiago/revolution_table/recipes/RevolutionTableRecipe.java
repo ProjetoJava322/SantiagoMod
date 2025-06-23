@@ -160,6 +160,7 @@ public class RevolutionTableRecipe implements Recipe<RevolutionTableRecipeInput>
 
         private static DataResult<RawRecipe> fromData(RawRecipe.Data data) {
             String[] strings = removePadding(data.pattern);
+            System.out.println(data.pattern);
             int i = strings[0].length();
             int j = strings.length;
             List<Optional<Ingredient>> list = new ArrayList<Optional<Ingredient>>(i * j);
@@ -244,14 +245,12 @@ public class RevolutionTableRecipe implements Recipe<RevolutionTableRecipeInput>
             } else {
                 for (int i = 0; i < INPUT_SLOTS; i++) {
                     final int fi = i + 1;
-                    if (fi == INPUT_SLOTS) {
                         Optional<Ingredient> optional = (Optional<Ingredient>)this.ingredients.get(i);
 
                         ItemStack itemStack = input.getStackInSlot(i);
                         if (!Ingredient.matches(optional, itemStack)) {
                             return false;
                         }
-                    }
                 }
                 return true;
             }
