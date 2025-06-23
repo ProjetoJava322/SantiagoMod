@@ -1,0 +1,18 @@
+{
+  "type": "santiago:revolution_table",
+  "key": {
+    "b": "minecraft:iron_block",
+    "g": "minecraft:glass_pane",
+    "f": "santiago:floppy_disk"
+  },
+  "pattern": [
+    "bb",
+    "bffb",
+    "bggb",
+    "bb"
+  ],
+  "result": {
+    "count": 1,
+    "id": "santiago:computer"
+  }
+}
