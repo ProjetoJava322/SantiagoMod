@@ -20,6 +20,7 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.amemeida.santiago.exceptions.RecipeNotFoundException;
 import org.amemeida.santiago.registry.blocks.ModBlockEntities;
 import org.amemeida.santiago.registry.blocks.ModBlocks;
 import org.amemeida.santiago.registry.recipes.ModRecipeTypes;
@@ -74,7 +75,13 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
 
      public void tick(World world, BlockPos pos, BlockState state) {
         //se tem ao menos uma receita
-        if (hasRecipe()) {
+         boolean recipe;
+        try{
+            recipe = hasRecipe();
+        } catch (RecipeNotFoundException e){
+            recipe = false;
+        }
+        if (recipe) {
             //conta quantas receitas tem, dando cap no máximo
             int recipe_amnt = checkRecipeAmount();
             int max_craft_amnt = getMaxCount(getOutput());
@@ -133,10 +140,10 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
     }
 
     //receita hardcoded teste pra ver se o babado funciona
-    private boolean hasRecipe() {
+    private boolean hasRecipe() throws RecipeNotFoundException {
         Optional<RecipeEntry<RevolutionTableRecipe>> recipe = getCurrentRecipe();
         if (recipe.isEmpty()){
-            return false;
+            throw new RecipeNotFoundException("Receita não encontrada");
         }
         return true;
     }

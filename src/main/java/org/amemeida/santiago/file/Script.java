@@ -7,6 +7,7 @@ import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.util.WorldSavePath;
 import org.amemeida.santiago.Santiago;
+import org.amemeida.santiago.exceptions.RunningException;
 import org.amemeida.santiago.file.runner.PythonRunner;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,17 +40,17 @@ public class Script {
         return trimmed.endsWith(".py") ? trimmed : trimmed + ".py";
     }
 
-    public String runScript(String in) throws PythonRunner.RunningException {
+    public String runScript(String in) throws RunningException {
         var file = file();
 
         if (file.length() <= 0) {
-            throw new PythonRunner.RunningException("Empty script");
+            throw new RunningException("Empty script");
         }
 
         return PythonRunner.getInstance().run(file, in);
     }
 
-    public String runScript() throws PythonRunner.RunningException {
+    public String runScript() throws RunningException {
         return runScript("");
     }
 

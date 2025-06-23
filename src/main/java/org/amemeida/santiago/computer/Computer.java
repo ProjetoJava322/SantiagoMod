@@ -16,6 +16,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.block.WireOrientation;
+import org.amemeida.santiago.exceptions.RunningException;
 import org.amemeida.santiago.file.runner.PythonRunner;
 import org.jetbrains.annotations.Nullable;
 
@@ -194,7 +195,7 @@ public class Computer extends BlockWithEntity {
                 } else {
                     world.setBlockState(pos, state.with(STATE, ComputerState.FAILURE), Block.NOTIFY_LISTENERS);
                 }
-            } catch (PythonRunner.RunningException e) {
+            } catch (RunningException e) {
                 System.err.println(e.getMessage());
                 world.setBlockState(pos, state.with(STATE, ComputerState.ERROR), Block.NOTIFY_LISTENERS);
             } finally {

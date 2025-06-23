@@ -1,5 +1,7 @@
 package org.amemeida.santiago.file.runner;
 
+import org.amemeida.santiago.exceptions.RunningException;
+
 import java.io.*;
 import java.util.stream.Collectors;
 
@@ -49,11 +51,5 @@ public class PythonRunner {
         }
 
         return runner;
-    }
-
-    public static class RunningException extends InterruptedException {
-        public RunningException(String msg) {
-            super(msg);
-        }
     }
 }

@@ -22,6 +22,7 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import org.amemeida.santiago.components.TextContent;
+import org.amemeida.santiago.exceptions.RunningException;
 import org.amemeida.santiago.file.runner.PythonRunner;
 import org.amemeida.santiago.registry.blocks.ModBlockEntities;
 import org.amemeida.santiago.registry.blocks.ModBlocks;
@@ -146,7 +147,7 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
     }
 
     public interface TestCase {
-        boolean run() throws PythonRunner.RunningException;
+        boolean run() throws RunningException;
     }
 
     public List<TestCase> testCases(ServerWorld world) {
