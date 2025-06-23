@@ -40,6 +40,7 @@ public class PortugueseGenerator extends Translator {
         add(ModItems.SANTIAGUITA_BOOTS, "Botas de Santiaguita");
 
         add(ModItems.SANTIAGUITA_INGOT, "Barra de Santiaguita");
+        add(ModItems.SANTIAGUITA_NUGGET, "Pepita de Santiaguita");
         add(ModItems.RAW_SANTIAGUITA, "Santiaguita Bruta");
         add(ModItems.UNDERLINE, "Guião Baixo");
         add(ModItems.SANTIAGOS_ANTHEM_MUSIC_DISC, "Disco Musical");

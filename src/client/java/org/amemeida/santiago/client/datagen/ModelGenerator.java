@@ -32,6 +32,7 @@ public class ModelGenerator extends FabricModelProvider {
         gen.register(ModItems.UNDERLINE, Models.HANDHELD_ROD);
 
         gen.register(ModItems.SANTIAGUITA_INGOT, Models.GENERATED);
+        gen.register(ModItems.SANTIAGUITA_NUGGET, Models.GENERATED);
         gen.register(ModItems.RAW_SANTIAGUITA, Models.GENERATED);
 
         gen.register(ModItems.SANTIAGUITA_SHOVEL, Models.HANDHELD);

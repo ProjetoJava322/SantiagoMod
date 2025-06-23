@@ -41,6 +41,7 @@ public class EnglishGenerator extends Translator {
         add(ModItems.SANTIAGUITA_BOOTS, "Santiaguita Boots");
 
         add(ModItems.SANTIAGUITA_INGOT, "Santiaguita Ingot");
+        add(ModItems.SANTIAGUITA_NUGGET, "Santiaguita Nugget");
         add(ModItems.RAW_SANTIAGUITA, "Raw Santiaguita");
         add(ModItems.UNDERLINE, "Downwards Guide");
         add(ModItems.SANTIAGOS_ANTHEM_MUSIC_DISC, "Music Disc");

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "santiago_computer_reset",
+  "ingredients": [
+    "santiago:ender_card"
+  ],
+  "result": {
+    "count": 1,
+    "id": "santiago:ender_card"
+  }
+}

@@ -53,6 +53,7 @@ public class ModItems {
     public static final Item RAW_SANTIAGUITA = register("raw_santiaguita");
 
     public static final Item SANTIAGUITA_INGOT = register("santiaguita_ingot");
+    public static final Item SANTIAGUITA_NUGGET = register("santiaguita_nugget");
     public static final Item UNDERLINE = register("underline");
 
     public static final Item SUPER_SNOWBALL = register("super_snowball", SuperSnowball::new);
