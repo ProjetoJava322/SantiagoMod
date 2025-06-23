@@ -21,9 +21,6 @@ import org.amemeida.santiago.revolution_table.RevolutionTableBlock;
 import java.util.function.Function;
 
 public class ModBlocks {
-    public static final Block CAT_BLOCK = register("cat_block");
-    public static final Block MIKU_BLOCK = register("miku_block");
-    public static final Block CREATURE_BLOCK = register("creature_block");
 
     public static final Block SANTIAGUITA_ORE = register("santiaguita_ore",
             AbstractBlock.Settings.create().requiresTool().strength(5f));

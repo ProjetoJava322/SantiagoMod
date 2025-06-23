@@ -25,9 +25,6 @@ import java.util.function.Function;
  */
 
 public class ModItems {
-    public static final Item HAMSTER = register("hamster",
-            new Item.Settings().food(FoodComponents.APPLE)
-                    .component(DataComponentTypes.DEATH_PROTECTION, DeathProtectionComponent.TOTEM_OF_UNDYING));
     public static final Item SANTIAGUITA_SWORD = register("santiaguita_sword",
             new Item.Settings().sword(SantiaguitaMaterial.TOOL_MATERIAL, 3.0F, -2.4F));
     public static final Item SANTIAGUITA_PICKAXE = register("santiaguita_pickaxe",

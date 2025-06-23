@@ -154,15 +154,6 @@ public class RecipeGenerator extends FabricRecipeProvider {
                         .offerTo(exporter, "floppy_reset");
 
                 offerSmelting(
-                        List.of(Items.SLIME_BALL),
-                        RecipeCategory.FOOD,
-                        ModItems.HAMSTER,
-                        0.1f,
-                        20,
-                        "smelt_slime_to_hamster"
-                );
-
-                offerSmelting(
                         List.of(ModItems.RAW_SANTIAGUITA, ModBlocks.SANTIAGUITA_ORE.asItem(),
                                 ModBlocks.DEEPSLATE_SANTIAGUITA_ORE.asItem()),
                         RecipeCategory.MISC,

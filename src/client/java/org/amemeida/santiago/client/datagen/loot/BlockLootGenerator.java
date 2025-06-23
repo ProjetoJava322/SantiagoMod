@@ -17,9 +17,6 @@ public class BlockLootGenerator extends FabricBlockLootTableProvider {
 
     @Override
     public void generate() {
-        addDrop(ModBlocks.CAT_BLOCK);
-        addDrop(ModBlocks.CREATURE_BLOCK);
-        addDrop(ModBlocks.MIKU_BLOCK);
         addDrop(ModBlocks.COMPUTER);
         addDrop(ModBlocks.INCUBATOR);
         addDrop(ModBlocks.REVOLUTION_TABLE);

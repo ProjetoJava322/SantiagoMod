@@ -17,16 +17,11 @@ public class PortugueseGenerator extends Translator {
     public void translate() {
         add("itemGroup.santiago", "Mod do Santiago");
 
-        add(ModBlocks.CREATURE_BLOCK, "Bloco de Criatura");
-        add(ModBlocks.CAT_BLOCK, "Bloco de Gato");
-        add(ModBlocks.MIKU_BLOCK, "Blocosune Miku");
         add(ModBlocks.INCUBATOR, "Encubadora");
         add(ModBlocks.REVOLUTION_TABLE, "Mesa da Revolução");
 
         add(ModBlocks.SANTIAGUITA_ORE, "Minério de Santiaguita");
         add(ModBlocks.DEEPSLATE_SANTIAGUITA_ORE, "Minério de Santiaguita de Ardosiabissal");
-
-        add(ModItems.HAMSTER, "Hamster");
 
         add(ModItems.SANTIAGUITA_AXE, "Machado de Santiaguita");
         add(ModItems.SANTIAGUITA_HOE, "Enxada de Santiaguita");

@@ -15,9 +15,6 @@ public class ModelGenerator extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator gen) {
-        gen.registerSimpleCubeAll(ModBlocks.CAT_BLOCK);
-        gen.registerSimpleCubeAll(ModBlocks.MIKU_BLOCK);
-        gen.registerSimpleCubeAll(ModBlocks.CREATURE_BLOCK);
         gen.registerSimpleCubeAll(ModBlocks.SANTIAGUITA_ORE);
         gen.registerSimpleCubeAll(ModBlocks.DEEPSLATE_SANTIAGUITA_ORE);
         gen.registerSimpleCubeAll(ModBlocks.INCUBATOR);
@@ -27,7 +24,6 @@ public class ModelGenerator extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerator gen) {
-        gen.register(ModItems.HAMSTER, Models.GENERATED);
 
         gen.register(ModItems.UNDERLINE, Models.HANDHELD_ROD);
 

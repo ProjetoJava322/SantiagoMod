@@ -18,16 +18,12 @@ public class EnglishGenerator extends Translator {
     public void translate() {
         add("itemGroup.santiago", "Santiago Mod");
 
-        add(ModBlocks.CREATURE_BLOCK, "Block of Creature");
-        add(ModBlocks.CAT_BLOCK, "Block of Cat");
-        add(ModBlocks.MIKU_BLOCK, "Blocksune Miku");
         add(ModBlocks.INCUBATOR, "Incubator");
         add(ModBlocks.REVOLUTION_TABLE, "Revolution Table");
 
         add(ModBlocks.SANTIAGUITA_ORE, "Santiaguita Ore");
         add(ModBlocks.DEEPSLATE_SANTIAGUITA_ORE, "Deepslate Santiaguita Ore");
 
-        add(ModItems.HAMSTER, "Hamster");
 
         add(ModItems.SANTIAGUITA_AXE, "Santiaguita Axe");
         add(ModItems.SANTIAGUITA_HOE, "Santiaguita Hoe");
