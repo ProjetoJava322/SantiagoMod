@@ -5,12 +5,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.util.math.BlockPos;
 import org.amemeida.santiago.registry.blocks.ModScreenHandlers;
 import org.amemeida.santiago.registry.items.ModComponents;
 
@@ -25,15 +21,15 @@ public class ComputerScreenHandler extends ScreenHandler {
     private final Inventory inventory;
     private final ComputerEntity blockEntity;
     private final PropertyDelegate propertyDelegate;
-    private final ComputerData data;
+    private final ComputerEntity.ComputerData data;
 
-    public ComputerScreenHandler(int syncId, PlayerInventory playerInventory, ComputerData data) {
+    public ComputerScreenHandler(int syncId, PlayerInventory playerInventory, ComputerEntity.ComputerData data) {
         this(syncId, playerInventory, playerInventory.player.getWorld().getBlockEntity(data.pos()),
                 new ArrayPropertyDelegate(2), data);
     }
 
     public ComputerScreenHandler(int syncId, PlayerInventory playerInventory, BlockEntity blockEntity,
-                                 PropertyDelegate propertyDelegate, ComputerData data) {
+                                 PropertyDelegate propertyDelegate, ComputerEntity.ComputerData data) {
         super(ModScreenHandlers.COMPUTER_SCREEN_HANDLER, syncId);
 
         this.inventory = (Inventory) blockEntity;
@@ -47,33 +43,24 @@ public class ComputerScreenHandler extends ScreenHandler {
         addPlayerSlots(playerInventory, 8, 170);
     }
 
-    public ComputerData getData() {
+    public ComputerEntity.ComputerData getData() {
         return data;
     }
 
-    public static record ComputerData(BlockPos pos, boolean write, boolean and) {
-            public static final PacketCodec<RegistryByteBuf, ComputerData> PACKET_CODEC = PacketCodec.tuple(
-                    BlockPos.PACKET_CODEC, ComputerData::pos,
-                    PacketCodecs.BOOLEAN, ComputerData::write,
-                    PacketCodecs.BOOLEAN, ComputerData::and,
-                    ComputerData::new
-            );
+    public ComputerEntity.OutputMode getOutputMode() {
+        return ComputerEntity.OutputMode.values()[propertyDelegate.get(0)];
     }
 
-    public boolean getWrite() {
-        return propertyDelegate.get(0) == 1;
+    public void setOutputMode(ComputerEntity.OutputMode mode) {
+        propertyDelegate.set(0, mode.ordinal());
     }
 
-    public void setWrite(boolean write) {
-        propertyDelegate.set(0, write ? 1 : 0);
+    public ComputerEntity.ResultMode getResultMode() {
+        return ComputerEntity.ResultMode.values()[propertyDelegate.get(1)];
     }
 
-    public boolean getAnd() {
-        return propertyDelegate.get(1) == 1;
-    }
-
-    public void setAnd(boolean and) {
-        propertyDelegate.set(1, and ? 1 : 0);
+    public void setResultMode(ComputerEntity.ResultMode mode) {
+        propertyDelegate.set(1, mode.ordinal());
     }
 
     private void addSlots() {
@@ -136,7 +123,7 @@ public class ComputerScreenHandler extends ScreenHandler {
 
         @Override
         public boolean canInsert(ItemStack stack) {
-            if (!stack.contains(ModComponents.IO)) {
+            if (!stack.contains(ModComponents.IO) && !stack.contains(ModComponents.ENDER)) {
                 return false;
             }
 

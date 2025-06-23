@@ -47,6 +47,7 @@ public class PortugueseGenerator extends Translator {
 
         add(ModItems.SUPER_SNOWBALL, "Bolinha");
         add(ModItems.PUNCH_CARD, "Cartão Perfurado");
+        add(ModItems.ENDER_CARD, "Cartão do Fim");
         add(ModItems.FLOPPY_DISK, "Disquete");
         add(ModBlocks.COMPUTER, "Computador");
     }

@@ -5,6 +5,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
+import org.amemeida.santiago.components.EnderIOComponent;
 import org.amemeida.santiago.components.IOComponent;
 import org.amemeida.santiago.components.ScriptComponent;
 import org.amemeida.santiago.components.TextContent;
@@ -23,6 +24,10 @@ public class ModComponents {
     public static final ComponentType<TextContent> IO = register(
             "local_text", builder ->
                     builder.codec(IOComponent.CODEC).cache());
+
+    public static final ComponentType<EnderIOComponent> ENDER = register(
+            "ender_io", builder ->
+                    builder.codec(EnderIOComponent.CODEC).cache());
 
     private static <T> ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         return Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of(Santiago.MOD_ID, name),

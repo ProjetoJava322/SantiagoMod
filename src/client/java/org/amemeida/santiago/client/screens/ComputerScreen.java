@@ -5,12 +5,16 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
+import org.amemeida.santiago.computer.Computer;
+import org.amemeida.santiago.computer.ComputerEntity;
 import org.amemeida.santiago.computer.ComputerScreenHandler;
-import org.amemeida.santiago.net.PCModeC2SPayload;
+import org.amemeida.santiago.net.PCDataC2SPayload;
+import org.amemeida.santiago.net.TriggerPCC2SPayload;
 
 /**
  * @see net.minecraft.client.gui.screen.ingame.CrafterScreen
@@ -22,60 +26,75 @@ import org.amemeida.santiago.net.PCModeC2SPayload;
  */
 
 public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
+    private final ClientWorld world;
+
     public static final Identifier TEXTURE = Identifier.of(Santiago.MOD_ID, "textures/gui/computer_in_out_gui.png");
+    private ButtonWidget run;
+
     public ComputerScreen(ComputerScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
         this.backgroundWidth = 243;
         this.backgroundHeight = 251;
         this.playerInventoryTitleX = 9;
         this.playerInventoryTitleY = this.backgroundHeight - 94;
+
+        this.world = (ClientWorld) inventory.player.getWorld();
     }
 
     @Override
     protected void init() {
         super.init();
 
-        var btn_oper = ButtonWidget.builder(Text.literal(handler.getData().write() ? "Write" : "Compare"),
+        addDrawableChild(ButtonWidget.builder(Text.literal(handler.getData().output().toString()),
                 (button) -> {
-            System.out.println("click: " + handler.getWrite());
-            var newWrite = !handler.getWrite();
-            handler.setWrite(newWrite);
+            System.out.println("click: " + handler.getOutputMode());
+            var newWrite = handler.getOutputMode().cycleNext();
+            handler.setOutputMode(newWrite);
 
-            var payload = new PCModeC2SPayload(this.getScreenHandler().syncId,  newWrite);
-            ClientPlayNetworking.send(payload);
+            this.sendPayload();
+            button.setMessage(Text.literal(handler.getOutputMode().toString()));
+        }).position(width/2 + 66, height/2 - 105).size(50, 15).build());
 
-            if (handler.getWrite()) {
-                button.setMessage(Text.literal("Write"));
-            } else {
-                button.setMessage(Text.literal("Compare"));
-            }
-        }).position(width/2 + 66, height/2 - 105).size(50, 15).build();
+        addDrawableChild(ButtonWidget.builder(Text.literal(handler.getData().result().toString()),
+            (button) -> {
+            System.out.println("click: " + handler.getResultMode());
+            var newAnd = handler.getResultMode().cycleNext();
+            handler.setResultMode(newAnd);
 
-        var btn_and =  ButtonWidget.builder(Text.literal(handler.getData().and() ? "And" : "Or"),
-                (button) -> {
-                    System.out.println("click: " + handler.getAnd());
-                    var newAnd = !handler.getAnd();
-                    handler.setAnd(newAnd);
+            System.out.println(newAnd);
 
-                    System.out.println(newAnd);
+            this.sendPayload();
+            button.setMessage(Text.literal(handler.getResultMode().toString()));
+        }).position(width/2 + 66, height/2 - 81).size(50, 15).build());
 
-                    var payload = new PCModeC2SPayload(this.getScreenHandler().syncId,  newAnd);
-                    ClientPlayNetworking.send(payload);
+        this.run = (ButtonWidget.builder(Text.literal("Run"), (button) -> {
+            this.trigger();
+        }).position(width/2 + 66, height/2 - 57).size(50, 15).build());
 
-                    if (handler.getAnd()) {
-                        button.setMessage(Text.literal("And"));
-                    } else {
-                        button.setMessage(Text.literal("Or"));
-                    }
-                }).position(width/2 + 66, height/2 - 81).size(50, 15).build();
+        addDrawableChild(run);
+    }
 
-        addDrawableChild(btn_oper);
-        addDrawableChild(btn_and);
+    public Computer.ComputerState getState() {
+        return world.getBlockState(handler.getData().pos()).get(Computer.STATE);
+    }
+
+    public void sendPayload() {
+        var data = new ComputerEntity.ComputerData(handler.getData().pos(), handler.getOutputMode(),
+                handler.getResultMode());
+
+        var payload = new PCDataC2SPayload(this.getScreenHandler().syncId, data);
+        ClientPlayNetworking.send(payload);
+    }
+
+    public void trigger() {
+        var payload = new TriggerPCC2SPayload(handler.getData().pos());
+        ClientPlayNetworking.send(payload);
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
+        run.setMessage(Text.literal(getState().toString()));
         drawMouseoverTooltip(context, mouseX, mouseY);
     }
 

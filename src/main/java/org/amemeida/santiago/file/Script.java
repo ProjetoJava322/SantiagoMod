@@ -41,6 +41,8 @@ public class Script {
         Script.server = server;
     }
 
+    public static MinecraftServer getServer() { return server; }
+
     public static @NotNull String scriptName(@NotNull String title) {
         var trimmed = title.trim();
         return trimmed.endsWith(".py") ? trimmed : trimmed + ".py";

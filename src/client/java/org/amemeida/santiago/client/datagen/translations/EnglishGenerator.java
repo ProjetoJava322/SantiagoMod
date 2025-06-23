@@ -48,6 +48,7 @@ public class EnglishGenerator extends Translator {
 
         add(ModItems.SUPER_SNOWBALL, "Super Snowball");
         add(ModItems.PUNCH_CARD, "Punch Card");
+        add(ModItems.ENDER_CARD, "Ender Card");
         add(ModItems.FLOPPY_DISK, "Floppy Disk");
         add(ModBlocks.COMPUTER, "Computer");
 

@@ -81,14 +81,28 @@ public class Computer extends BlockWithEntity {
         return new ComputerEntity(pos, state);
     }
 
+    public void trigger(BlockState state, World world, BlockPos pos) {
+        if (state.get(STATE) != ComputerState.IDLE) {
+            return;
+        }
+
+        var entity = (ComputerEntity) world.getBlockEntity(pos);
+
+        if (entity == null || !entity.hasDisk()) {
+            return;
+        }
+
+        world.setBlockState(pos, state.with(STATE, ComputerState.RUNNING), Block.NOTIFY_LISTENERS);
+        world.scheduleBlockTick(pos, this, 4);
+    }
+
     @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
         boolean has_redstone = world.isReceivingRedstonePower(pos);
         var curr_state = state.get(STATE);
 
         if (has_redstone && curr_state == ComputerState.IDLE) {
-            world.setBlockState(pos, state.with(STATE, ComputerState.RUNNING), Block.NOTIFY_LISTENERS);
-            world.scheduleBlockTick(pos, this, 4);
+            this.trigger(state, world, pos);
         }
 
         if (!has_redstone && curr_state == ComputerState.LOCKED) {
