@@ -14,11 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public record EnderIOComponent(String syncID) implements TextContent {
-    public static final Codec<EnderIOComponent> CODEC = RecordCodecBuilder.create(builder -> {
-        return builder.group(
+    public static final Codec<EnderIOComponent> CODEC = RecordCodecBuilder.create(
+            builder -> builder.group(
                 Codec.STRING.fieldOf("sync").forGetter(EnderIOComponent::syncID)
-        ).apply(builder, EnderIOComponent::new);
-    });
+    ).apply(builder, EnderIOComponent::new));
 
     @Override
     public String text() {
@@ -35,7 +34,6 @@ public record EnderIOComponent(String syncID) implements TextContent {
 
     /**
      * @see PersistentState
-     * @see ChunkUpdateState
      */
     public static class Saver extends PersistentState {
         private final Map<String, String> ender;
@@ -84,7 +82,7 @@ public record EnderIOComponent(String syncID) implements TextContent {
         }
 
         public static final PersistentStateType<Saver> TYPE =
-                new PersistentStateType<Saver>("ender_card_map", Saver::new, CODEC, null);
+                new PersistentStateType<>("ender_card_map", Saver::new, CODEC, null);
 
         public static Saver getInstance() {
             if (instance != null) {

@@ -173,12 +173,20 @@ public class Computer extends BlockWithEntity {
         var cases = entity.testCases(world);
         System.out.println(cases);
 
+        var resultMode = entity.getResult();
+
         new Thread(() -> {
             try {
-                boolean result = true;
+                boolean result = switch(resultMode) {
+                    case AND -> true;
+                    case OR -> false;
+                };
 
                 for (var test : cases) {
-                    result = test.run() && result;
+                    result = switch(resultMode) {
+                        case AND -> test.run() && result;
+                        case OR -> test.run() || result;
+                    };
                 }
 
                 if (result) {

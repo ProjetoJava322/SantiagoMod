@@ -41,6 +41,15 @@ public class ComputerEntity extends BlockEntity implements ImplementedInventory,
     public static final int IO_SLOTS = 4;
 
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(IO_SLOTS * 2 + 1, ItemStack.EMPTY);
+
+    public OutputMode getOutput() {
+        return output;
+    }
+
+    public ResultMode getResult() {
+        return result;
+    }
+
     private OutputMode output;
     private ResultMode result;
     private final PropertyDelegate propertyDelegate;
