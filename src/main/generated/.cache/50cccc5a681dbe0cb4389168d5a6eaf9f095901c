@@ -32,6 +32,7 @@ d8a44ac6e5626cc12c6259f438b74a7a204da4b1 assets/santiago/items/revolution_table.
 2981d19c1bd7e0f231cd139cf37dc5db10d35881 assets/santiago/items/santiaguita_pickaxe.json
 3b3ebb3d3dea1e51e2e80e4753ae8d0337be7367 assets/santiago/items/santiaguita_shovel.json
 8bc5923284259084ecc931799ed93f928af52dbc assets/santiago/items/santiaguita_sword.json
+18d46330922bc744aa74e427660a88dafc4c4fe8 assets/santiago/items/strike_totem.json
 5e229ab9c91d79fc456eae8db8137276c40ee982 assets/santiago/items/super_snowball.json
 f86234ebd707884ce49a36e36da6faad48645650 assets/santiago/items/underline.json
 ead1488bb0f107a029ce4478a3f1e7f848c91935 assets/santiago/models/block/cat_block.json
@@ -59,5 +60,6 @@ d3d399252a29ccc40d30cd0bd8b80510b788d9d1 assets/santiago/models/item/santiaguita
 a300efdf362748c881eee9b83d9a6fc48d2841fd assets/santiago/models/item/santiaguita_pickaxe.json
 7358aa45c7e01961a8a2d5685cd64e8fc517e1ca assets/santiago/models/item/santiaguita_shovel.json
 2c516c04c7afdde516dc6cf7e6287ba91438f416 assets/santiago/models/item/santiaguita_sword.json
+b0362de9732490ed055ada461e52afd6b6362c34 assets/santiago/models/item/strike_totem.json
 e764e51f355015f776b1798998e060eb5481dd55 assets/santiago/models/item/super_snowball.json
 1ec12648cae85ca0863fe6fa4983dc8ba3b9e989 assets/santiago/models/item/underline.json
