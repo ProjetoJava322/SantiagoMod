@@ -106,16 +106,26 @@ public class Computer extends BlockWithEntity {
         }
 
         if (!has_redstone && curr_state == ComputerState.LOCKED) {
-            world.setBlockState(pos, state.with(STATE, ComputerState.IDLE), Block.NOTIFY_LISTENERS);
+            world.scheduleBlockTick(pos, this, 0);
         }
     }
 
     @Override
     protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (state.get(STATE) != ComputerState.RUNNING && state.get(STATE) != ComputerState.IDLE) {
-            world.setBlockState(pos, state.with(STATE, ComputerState.LOCKED), Block.NOTIFY_LISTENERS);
-            world.updateNeighbors(pos, state.getBlock());
-            return;
+        switch (state.get(STATE)) {
+            case RUNNING: break;
+            case IDLE: return;
+            case LOCKED:
+                if (!world.isReceivingRedstonePower(pos)) {
+                    world.setBlockState(pos, state.with(STATE, ComputerState.IDLE), Block.NOTIFY_LISTENERS);
+                    world.updateNeighbors(pos, state.getBlock());
+                }
+                return;
+            default:
+                world.setBlockState(pos, state.with(STATE, ComputerState.LOCKED), Block.NOTIFY_LISTENERS);
+                world.updateNeighbors(pos, state.getBlock());
+                world.scheduleBlockTick(pos, this, 0);
+                return;
         }
 
         var entity = (ComputerEntity) world.getBlockEntity(pos);
