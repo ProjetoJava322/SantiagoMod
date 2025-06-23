@@ -7,11 +7,6 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
 import org.amemeida.santiago.santiaguita.encubadora.recipes.IncubatorRecipe;
-
-
-
-public class ModRecipeTypes {
-
 import org.amemeida.santiago.santiaguita.revolution_table.recipes.RevolutionTableRecipe;
 
 public class ModRecipeTypes {

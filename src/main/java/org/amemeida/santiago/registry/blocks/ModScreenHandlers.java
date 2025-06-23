@@ -19,7 +19,7 @@ import org.amemeida.santiago.santiaguita.revolution_table.RevolutionTableScreenH
 
 public class ModScreenHandlers {
     public static final ScreenHandlerType<IncubatorScreenHandler> INCUBATOR_SCREEN_HANDLER = register("incubator",
-            IncubatorScreenHandler::new);
+            IncubatorScreenHandler::new, BlockPos.PACKET_CODEC);
     public static final ScreenHandlerType<RevolutionTableScreenHandler> REVOLUTION_TABLE_SCREEN_HANDLER = register("revolution_table",
             RevolutionTableScreenHandler::new, BlockPos.PACKET_CODEC);
     public static final ScreenHandlerType<ComputerScreenHandler> COMPUTER_SCREEN_HANDLER = register("computer",
