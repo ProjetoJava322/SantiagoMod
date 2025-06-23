@@ -1,10 +1,14 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "category": "misc",
-  "group": "santiago_computer",
-  "ingredients": [
-    "santiago:santiaguita_ingot",
-    "santiago:santiaguita_ingot"
+  "type": "santiago:revolution_table",
+  "key": {
+    "s": "santiago:santiaguita_ingot",
+    "c": "minecraft:chest"
+  },
+  "pattern": [
+    "ss",
+    "sccs",
+    "sccs",
+    "ss"
   ],
   "result": {
     "count": 1,
