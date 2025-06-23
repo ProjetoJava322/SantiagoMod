@@ -35,7 +35,7 @@ public class TextEditScreen extends Screen {
                 (str) -> this.text = Text.literal(str),
                 this::getClipboard,
                 this::setClipboard,
-                (str) -> str.length() < 50 && this.textRenderer.getWrappedLinesHeight(str, 114) <= 128
+                (str) -> str.length() < Integer.MAX_VALUE && this.textRenderer.getWrappedLinesHeight(str, 114) <= 128
         );
     }
 
