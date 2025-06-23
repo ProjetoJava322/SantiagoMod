@@ -17,6 +17,9 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.amemeida.santiago.registry.blocks.ModBlockEntities;
 import org.jetbrains.annotations.Nullable;
@@ -30,6 +33,11 @@ public class RevolutionTableBlock extends BlockWithEntity implements BlockEntity
 
     public RevolutionTableBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
+        return VoxelShapes.cuboid(0f, 0f, 0f, 1f, 0.96875f, 1f);
     }
 
     @Override

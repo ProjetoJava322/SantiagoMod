@@ -2,20 +2,20 @@ package org.amemeida.santiago.santiaguita.encubadora;
 
 import com.mojang.serialization.MapCodec;
 
+import net.minecraft.block.*;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
 import org.amemeida.santiago.santiaguita.encubadora.IncubatorBlockEntity;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.block.BlockWithEntity;
 import net.minecraft.world.World;
 import org.amemeida.santiago.registry.blocks.ModBlockEntities;
 import org.jetbrains.annotations.Nullable;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -26,6 +26,11 @@ public class IncubatorBlock extends BlockWithEntity implements BlockEntityProvid
 
     public IncubatorBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
+        return VoxelShapes.cuboid(0f, 0f, 0f, 1f, 0.5625f, 1f);
     }
 
     @Override
