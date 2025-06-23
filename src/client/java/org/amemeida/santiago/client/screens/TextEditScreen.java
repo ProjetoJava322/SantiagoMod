@@ -3,45 +3,58 @@ package org.amemeida.santiago.client.screens;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.NarratorManager;
 import net.minecraft.client.util.SelectionManager;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.OrderedText;
+import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
 import net.minecraft.util.StringHelper;
 import net.minecraft.client.gui.widget.MultilineTextWidget;
 import org.amemeida.santiago.components.TextContent;
 import org.amemeida.santiago.net.UpdateStackC2SPayload;
 
+import java.util.Arrays;
+import java.util.List;
 
-/**
- * @see net.minecraft.client.gui.screen.ingame.BookEditScreen
- */
+import static net.minecraft.util.StringHelper.countLines;
 
 @Environment(EnvType.CLIENT)
 public class TextEditScreen extends Screen {
     private final int slot;
     private final ItemStack stack;
-
+    private String[] lines;
     private Text text;
-
+    private int currCursorLinePos;
     private final SelectionManager selectionManager;
 
     public TextEditScreen(int slot, ItemStack stack, String text) {
         super(NarratorManager.EMPTY);
         this.slot = slot;
         this.stack = stack;
-
+        this.currCursorLinePos = 0;
         this.text = Text.literal(text);
+        this.lines = getLines(this.text);
 
         this.selectionManager = new SelectionManager(
                 () -> this.text.getString(),
                 (str) -> this.text = Text.literal(str),
                 this::getClipboard,
                 this::setClipboard,
-                (str) -> str.length() < 1024 && this.textRenderer.getWrappedLinesHeight(str, 114) <= 128
+                (str) -> str.length() < 50 && this.textRenderer.getWrappedLinesHeight(str, 114) <= 128
         );
+    }
+
+    private String[] getLines(Text text) {
+        String string = text.getString();
+        String[] result = string.split("\n");
+        for (int i = 0; i < result.length; i++) {
+            result[i] = result[i].concat("\n");
+        }
+        return result;
     }
 
 //    private void finalizeBook(boolean signBook) {
@@ -67,9 +80,49 @@ public class TextEditScreen extends Screen {
     public void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
         super.render(context, mouseX, mouseY, deltaTicks);
         this.setFocused(null);
-
         MultilineTextWidget textWidget = new MultilineTextWidget(20, 20, this.text, this.textRenderer);
         textWidget.renderWidget(context, mouseX, mouseY, deltaTicks);
+
+        this.lines = getLines(this.text);
+
+        int cursorPos = this.selectionManager.getSelectionStart();
+        cursorPos = Math.min(cursorPos, this.text.getString().length());
+
+        int lineIndex = 0, beforeCursor = 0;
+
+        for (int i = 0; i < cursorPos; i++) {
+            beforeCursor++;
+            if (this.text.getString().charAt(i) == '\n') {
+                lineIndex++;
+                beforeCursor = 0;
+            }
+        }
+        int x = beforeCursor == 0 ? 20 : 20 + getXPos(beforeCursor, lines[lineIndex]);
+        int y = 20 + lineIndex * this.textRenderer.fontHeight + 1; // 1 pixel a baixo da linha
+        context.drawText(this.textRenderer,"_", x, y, 16777215, false);
+
+    }
+
+    private int getXPos(int beforeCursor, String line){
+        int width = 0;
+        for (int i = 0; i < beforeCursor; i++) {
+            char currChar = line.charAt(i);
+            if (currChar == '\n' || ((currChar >= 'A' &&  currChar <= 'Z') && currChar != 'I') || currChar == ' ') {
+                width += 6;
+            } else if ((currChar >= 'a' && currChar <= 'z') && currChar != 'i' && currChar != 'l' && currChar != 't' && currChar != 'f' && currChar != 'k'|| currChar == '(' || currChar == ')') {
+                width += 6;
+            } else if (currChar == ',' || currChar == '.' || currChar == ';' || currChar == '\'' || currChar == 'i') {
+                width += 2;
+            } else if (currChar == 't' || currChar == '[' || currChar == ']' || currChar == '{' || currChar == '}' || currChar == '"') {
+                width += 4;
+            } else if (currChar == 'f' || currChar == 'k') {
+                width += 5;
+            } else {
+                width += 3;
+            }
+        }
+
+        return width;
     }
 
     @Override
