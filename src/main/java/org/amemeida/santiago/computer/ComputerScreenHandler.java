@@ -19,7 +19,6 @@ import org.amemeida.santiago.registry.items.ModComponents;
 
 public class ComputerScreenHandler extends ScreenHandler {
     private final Inventory inventory;
-    private final ComputerEntity blockEntity;
     private final PropertyDelegate propertyDelegate;
     private final ComputerEntity.ComputerData data;
 
@@ -33,7 +32,6 @@ public class ComputerScreenHandler extends ScreenHandler {
         super(ModScreenHandlers.COMPUTER_SCREEN_HANDLER, syncId);
 
         this.inventory = (Inventory) blockEntity;
-        this.blockEntity = (ComputerEntity) blockEntity;
         this.data = data;
         this.propertyDelegate = propertyDelegate;
 

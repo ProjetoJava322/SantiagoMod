@@ -22,7 +22,6 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import org.amemeida.santiago.components.TextContent;
-import org.amemeida.santiago.file.Script;
 import org.amemeida.santiago.file.runner.PythonRunner;
 import org.amemeida.santiago.registry.blocks.ModBlockEntities;
 import org.amemeida.santiago.registry.blocks.ModBlocks;

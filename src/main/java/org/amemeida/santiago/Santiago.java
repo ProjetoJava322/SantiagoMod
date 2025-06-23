@@ -4,10 +4,11 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.server.MinecraftServer;
+
 import org.amemeida.santiago.components.TextContent;
 import org.amemeida.santiago.computer.Computer;
 import org.amemeida.santiago.computer.ComputerScreenHandler;
-import org.amemeida.santiago.file.Script;
 import org.amemeida.santiago.net.OpenScreenS2CPayload;
 import org.amemeida.santiago.net.PCDataC2SPayload;
 import org.amemeida.santiago.net.TriggerPCC2SPayload;
@@ -24,6 +25,11 @@ import org.amemeida.santiago.registry.recipes.ModRecipeTypes;
 
 public class Santiago implements ModInitializer {
     public static final String MOD_ID = "santiago";
+    private static MinecraftServer server;
+
+    public static MinecraftServer getServer() {
+        return server;
+    }
 
     @Override
     public void onInitialize() {
@@ -49,7 +55,9 @@ public class Santiago implements ModInitializer {
         PayloadTypeRegistry.playC2S().register(PCDataC2SPayload.ID, PCDataC2SPayload.CODEC);
         PayloadTypeRegistry.playC2S().register(TriggerPCC2SPayload.ID, TriggerPCC2SPayload.CODEC);
 
-        ServerLifecycleEvents.SERVER_STARTED.register(Script::setServer);
+        ServerLifecycleEvents.SERVER_STARTED.register((server) -> {
+            Santiago.server = server;
+        });
 
         ServerPlayNetworking.registerGlobalReceiver(UpdateStackC2SPayload.ID, (payload, context) -> {
             var playerStack = context.player().getInventory().getStack(payload.slot());
@@ -58,7 +66,6 @@ public class Santiago implements ModInitializer {
             var component = TextContent.get(playerStack);
             assert component != null;
 
-            Script.setServer(context.server());
             component.setComponent(payload.text(), playerStack);
         });
 
@@ -75,9 +82,9 @@ public class Santiago implements ModInitializer {
         ServerPlayNetworking.registerGlobalReceiver(TriggerPCC2SPayload.ID, (payload, context) -> {
             var block = context.player().getServerWorld().getBlockState(payload.pos());
 
-           if (block.getBlock() instanceof Computer computer) {
-               computer.trigger(block, context.player().getServerWorld(), payload.pos());
-           }
+            if (block.getBlock() instanceof Computer computer) {
+                computer.trigger(block, context.player().getServerWorld(), payload.pos());
+            }
         });
     }
 }

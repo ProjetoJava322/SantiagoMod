@@ -3,9 +3,11 @@ package org.amemeida.santiago.components;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.*;
-import org.amemeida.santiago.file.Script;
+import net.minecraft.world.PersistentState;
+import net.minecraft.world.PersistentStateType;
+import net.minecraft.world.World;
+
+import org.amemeida.santiago.Santiago;
 import org.amemeida.santiago.registry.items.ModComponents;
 
 import java.util.HashMap;
@@ -20,13 +22,13 @@ public record EnderIOComponent(String syncID) implements TextContent {
 
     @Override
     public String text() {
-        var saver = Saver.getInstance(Script.getServer());
+        var saver = Saver.getInstance();
         return saver.getText(syncID);
     }
 
     @Override
     public void setComponent(String script, ItemStack stack) {
-        var saver = Saver.getInstance(Script.getServer());
+        var saver = Saver.getInstance();
         saver.setText(this.syncID(), script);
         stack.set(ModComponents.ENDER, new EnderIOComponent(this.syncID));
     }
@@ -84,12 +86,12 @@ public record EnderIOComponent(String syncID) implements TextContent {
         public static final PersistentStateType<Saver> TYPE =
                 new PersistentStateType<Saver>("ender_card_map", Saver::new, CODEC, null);
 
-        public static Saver getInstance(MinecraftServer server) {
+        public static Saver getInstance() {
             if (instance != null) {
                 return instance;
             }
 
-            var world = server.getWorld(World.OVERWORLD);
+            var world = Santiago.getServer().getWorld(World.OVERWORLD);
             assert world != null;
 
             instance = world.getPersistentStateManager().getOrCreate(TYPE);

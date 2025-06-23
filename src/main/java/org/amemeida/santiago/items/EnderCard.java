@@ -5,9 +5,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Uuids;
 import net.minecraft.world.World;
 import org.amemeida.santiago.components.EnderIOComponent;
 import org.amemeida.santiago.registry.items.ModComponents;
+import org.amemeida.santiago.util.RandomId;
+
 import java.util.Random;
 
 public class EnderCard extends PunchCard {
@@ -47,18 +50,8 @@ public class EnderCard extends PunchCard {
         var stack = user.getStackInHand(hand);
 
         if (!stack.contains(ModComponents.ENDER)) {
-            int leftLimit = 97; // letter 'a'
-            int rightLimit = 122; // letter 'z'
-            int targetStringLength = 10;
-            Random random = new Random();
-            StringBuilder buffer = new StringBuilder(targetStringLength);
-            for (int i = 0; i < targetStringLength; i++) {
-                int randomLimitedInt = leftLimit + (int)
-                        (random.nextFloat() * (rightLimit - leftLimit + 1));
-                buffer.append((char) randomLimitedInt);
-            }
-            String generatedString = buffer.toString();
-            stack.set(ModComponents.ENDER, new EnderIOComponent(generatedString));
+            var text = RandomId.genRandom();
+            stack.set(ModComponents.ENDER, new EnderIOComponent(text));
         }
 
         return super.use(world, user, hand);

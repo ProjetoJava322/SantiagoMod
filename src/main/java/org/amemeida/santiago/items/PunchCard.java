@@ -9,7 +9,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.amemeida.santiago.components.TextContent;
-import org.amemeida.santiago.file.Script;
 import org.amemeida.santiago.net.OpenScreenS2CPayload;
 
 /**
@@ -28,8 +27,6 @@ public class PunchCard extends Item {
         if (world.isClient) {
             return ActionResult.PASS;
         }
-
-        Script.setServer(world.getServer());
 
         int slot = hand == Hand.MAIN_HAND ? user.getInventory().getSelectedSlot() : 40;
         var content = TextContent.get(user.getInventory().getStack(slot));

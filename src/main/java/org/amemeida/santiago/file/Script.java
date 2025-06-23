@@ -5,7 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.WorldSavePath;
 import org.amemeida.santiago.Santiago;
 import org.amemeida.santiago.file.runner.PythonRunner;
@@ -26,7 +25,6 @@ public class Script {
     public static final PacketCodec<ByteBuf, Script> PACKET_CODEC = PacketCodecs.codec(CODEC);
 
     private final String file;
-    private static MinecraftServer server;
 
     public Script(String path) {
         this.file = scriptName(path);
@@ -35,12 +33,6 @@ public class Script {
     public String scriptName() {
         return this.file;
     }
-
-    public static void setServer(MinecraftServer server) {
-        Script.server = server;
-    }
-
-    public static MinecraftServer getServer() { return server; }
 
     public static @NotNull String scriptName(@NotNull String title) {
         var trimmed = title.trim();
@@ -93,7 +85,7 @@ public class Script {
     }
 
     public static Path folder() {
-        return server.getSavePath(WorldSavePath.ROOT)
+        return Santiago.getServer().getSavePath(WorldSavePath.ROOT)
                 .resolve(Santiago.MOD_ID)
                 .resolve("scripts");
     }

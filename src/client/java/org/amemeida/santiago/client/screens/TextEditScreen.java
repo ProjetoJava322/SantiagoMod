@@ -3,24 +3,15 @@ package org.amemeida.santiago.client.screens;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.NarratorManager;
 import net.minecraft.client.util.SelectionManager;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.OrderedText;
-import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
 import net.minecraft.util.StringHelper;
 import net.minecraft.client.gui.widget.MultilineTextWidget;
-import org.amemeida.santiago.components.TextContent;
 import org.amemeida.santiago.net.UpdateStackC2SPayload;
-
-import java.util.Arrays;
-import java.util.List;
-
-import static net.minecraft.util.StringHelper.countLines;
 
 @Environment(EnvType.CLIENT)
 public class TextEditScreen extends Screen {
