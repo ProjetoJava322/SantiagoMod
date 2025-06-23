@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "santiago_computer_reset",
+  "ingredients": [
+    "santiago:punch_card"
+  ],
+  "result": {
+    "count": 1,
+    "id": "santiago:punch_card"
+  }
+}

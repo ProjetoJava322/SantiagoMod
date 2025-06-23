@@ -32,6 +32,7 @@ public class ModelGenerator extends FabricModelProvider {
         gen.register(ModItems.UNDERLINE, Models.HANDHELD_ROD);
 
         gen.register(ModItems.SANTIAGUITA_INGOT, Models.GENERATED);
+        gen.register(ModItems.SANTIAGUITA_NUGGET, Models.GENERATED);
         gen.register(ModItems.RAW_SANTIAGUITA, Models.GENERATED);
 
         gen.register(ModItems.SANTIAGUITA_SHOVEL, Models.HANDHELD);
@@ -49,6 +50,7 @@ public class ModelGenerator extends FabricModelProvider {
         gen.register(ModItems.PUNCH_CARD, Models.GENERATED);
         gen.register(ModItems.ENDER_CARD, Models.GENERATED);
         gen.register(ModItems.FLOPPY_DISK, Models.GENERATED);
+        gen.register(ModItems.STRIKE_TOTEM, Models.GENERATED);
 
         gen.register(ModItems.SANTIAGOS_ANTHEM_MUSIC_DISC, Models.GENERATED);
     }

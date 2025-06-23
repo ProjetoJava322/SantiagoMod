@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "santiago_computer",
+  "ingredients": [
+    "santiago:santiaguita_ingot",
+    "santiago:santiaguita_ingot"
+  ],
+  "result": {
+    "count": 1,
+    "id": "santiago:floppy_disk"
+  }
+}

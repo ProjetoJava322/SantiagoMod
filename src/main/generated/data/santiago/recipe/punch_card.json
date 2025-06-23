@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "santiago_computer",
+  "ingredients": [
+    "minecraft:paper",
+    "santiago:santiaguita_nugget"
+  ],
+  "result": {
+    "count": 1,
+    "id": "santiago:punch_card"
+  }
+}
