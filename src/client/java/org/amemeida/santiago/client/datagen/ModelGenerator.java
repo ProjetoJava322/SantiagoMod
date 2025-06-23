@@ -20,6 +20,7 @@ public class ModelGenerator extends FabricModelProvider {
         gen.registerSimpleCubeAll(ModBlocks.INCUBATOR);
         gen.registerSimpleCubeAll(ModBlocks.REVOLUTION_TABLE);
         gen.registerSimpleCubeAll(ModBlocks.COMPUTER);
+        gen.registerSimpleCubeAll(ModBlocks.SANTIAGUITA_BLOCK);
     }
 
     @Override
