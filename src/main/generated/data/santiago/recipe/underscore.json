@@ -1,7 +1,0 @@
-{
-  "type": "santiago:incubator",
-  "ingredient": "minecraft:stick",
-  "result": {
-    "id": "santiago:underline"
-  }
-}
