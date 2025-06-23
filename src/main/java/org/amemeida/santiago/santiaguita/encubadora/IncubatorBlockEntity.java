@@ -33,9 +33,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.amemeida.santiago.santiaguita.encubadora.recipes.IncubatorRecipe;
 import org.amemeida.santiago.santiaguita.encubadora.recipes.IncubatorRecipeInput;
+import org.amemeida.santiago.util.ImplementedInventory;
 import org.amemeida.santiago.santiaguita.encubadora.recipes.ModRecipes;
 import org.jetbrains.annotations.Nullable;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import org.amemeida.santiago.registry.recipes.ModRecipeTypes;
 
 import java.util.Optional;
 
@@ -120,6 +122,7 @@ public class IncubatorBlockEntity extends BlockEntity implements ExtendedScreenH
     }
 
     public void tick(World world, BlockPos pos, BlockState state) {
+
         if(hasRecipe()) {
             increaseCraftingProgress();
             markDirty(world, pos, state);
@@ -129,6 +132,7 @@ public class IncubatorBlockEntity extends BlockEntity implements ExtendedScreenH
                 resetProgress();
             }
         } else {
+            System.out.println("não tem receita");
             resetProgress();
         }
     }
@@ -158,16 +162,27 @@ public class IncubatorBlockEntity extends BlockEntity implements ExtendedScreenH
     private boolean hasRecipe() {
         Optional<RecipeEntry<IncubatorRecipe>> recipe = getCurrentRecipe();
         if(recipe.isEmpty()) {
+            System.out.println("não nota que a receita está no input");
             return false;
         }
 
         ItemStack output = recipe.get().value().output();
+
+        if (!canInsertAmountIntoOutputSlot(output.getCount())){
+            System.out.println("o primeiro da erro");
+        }
+
+        if (!canInsertItemIntoOutputSlot(output)){
+            System.out.println("o segundo da erro");
+        }
+
         return canInsertAmountIntoOutputSlot(output.getCount()) && canInsertItemIntoOutputSlot(output);
     }
 
     private Optional<RecipeEntry<IncubatorRecipe>> getCurrentRecipe() {
         return ((ServerWorld) this.getWorld()).getRecipeManager() // INCUBATOR_type
-                .getFirstMatch(ModRecipes.INCUBATOR_TYPE, new IncubatorRecipeInput(inventory.get(INPUT_SLOT)), this.getWorld());
+                .getFirstMatch(ModRecipeTypes.INCUBATOR_RECIPE_TYPE, new IncubatorRecipeInput(inventory.get(INPUT_SLOT)), this.getWorld());
+
     }
 
     private boolean canInsertItemIntoOutputSlot(ItemStack output) {
