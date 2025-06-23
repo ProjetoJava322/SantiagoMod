@@ -132,7 +132,6 @@ public class IncubatorBlockEntity extends BlockEntity implements ExtendedScreenH
                 resetProgress();
             }
         } else {
-            System.out.println("não tem receita");
             resetProgress();
         }
     }
@@ -162,18 +161,15 @@ public class IncubatorBlockEntity extends BlockEntity implements ExtendedScreenH
     private boolean hasRecipe() {
         Optional<RecipeEntry<IncubatorRecipe>> recipe = getCurrentRecipe();
         if(recipe.isEmpty()) {
-            System.out.println("não nota que a receita está no input");
             return false;
         }
 
         ItemStack output = recipe.get().value().output();
 
         if (!canInsertAmountIntoOutputSlot(output.getCount())){
-            System.out.println("o primeiro da erro");
         }
 
         if (!canInsertItemIntoOutputSlot(output)){
-            System.out.println("o segundo da erro");
         }
 
         return canInsertAmountIntoOutputSlot(output.getCount()) && canInsertItemIntoOutputSlot(output);

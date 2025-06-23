@@ -47,17 +47,15 @@ public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
 
         addDrawableChild(ButtonWidget.builder(Text.literal(handler.getData().output().toString()),
                 (button) -> {
-            System.out.println("click: " + handler.getOutputMode());
             var newWrite = handler.getOutputMode().cycleNext();
             handler.setOutputMode(newWrite);
 
             this.sendPayload();
             button.setMessage(Text.literal(handler.getOutputMode().toString()));
-        }).position(width/2 + 66, height/2 - 105).size(50, 15).build());
+        }).position(width/2 + 66, height/2 - 107).size(50, 15).build());
 
         addDrawableChild(ButtonWidget.builder(Text.literal(handler.getData().result().toString()),
             (button) -> {
-            System.out.println("click: " + handler.getResultMode());
             var newAnd = handler.getResultMode().cycleNext();
             handler.setResultMode(newAnd);
 
@@ -65,11 +63,11 @@ public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
 
             this.sendPayload();
             button.setMessage(Text.literal(handler.getResultMode().toString()));
-        }).position(width/2 + 66, height/2 - 81).size(50, 15).build());
+        }).position(width/2 + 66, height/2 - 87).size(50, 15).build());
 
-        this.run = (ButtonWidget.builder(Text.literal("Run"), (button) -> {
+        this.run = (ButtonWidget.builder(Text.literal("▶"), (button) -> {
             this.trigger();
-        }).position(width/2 + 66, height/2 - 57).size(50, 15).build());
+        }).position(width/2 + 76, height/2 - 67).size(30, 15).build());
 
         addDrawableChild(run);
     }
@@ -94,7 +92,29 @@ public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
-        run.setMessage(Text.literal(getState().toString()));
+        Computer.ComputerState state = getState();
+        String message = " ";
+        switch(state){
+            case RUNNING:
+                message = "...";
+                break;
+            case SUCCESS:
+                message = "✔";
+                break;
+            case FAILURE:
+                message = "✖";
+                break;
+            case IDLE:
+                message = "▶";
+                break;
+            case LOCKED:
+                message = "LKD";
+                break;
+            case ERROR:
+                message = "ERR";
+                break;
+        }
+        run.setMessage(Text.literal(message));
         drawMouseoverTooltip(context, mouseX, mouseY);
     }
 

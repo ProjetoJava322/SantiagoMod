@@ -40,7 +40,7 @@ public class ComputerScreenHandler extends ScreenHandler {
         this.addProperties(propertyDelegate);
 
         addSlots();
-        addPlayerSlots(playerInventory, 8, 170);
+        addPlayerSlots(playerInventory, 8, 169);
     }
 
     public ComputerEntity.ComputerData getData() {

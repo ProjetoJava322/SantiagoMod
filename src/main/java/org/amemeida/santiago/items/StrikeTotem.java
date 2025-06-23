@@ -23,12 +23,12 @@ public class StrikeTotem extends Item {
         }
 
         if (entity instanceof PlayerEntity player) {
-            if (player.getOffHandStack().getItem() == ModItems.STRIKE_TOTEM) {
+            if (player.getMainHandStack().getItem() == ModItems.STRIKE_TOTEM) {
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 5, 2));
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 5, 2));
             }
 
-            if (player.getMainHandStack().getItem() == ModItems.STRIKE_TOTEM) {
+            if (player.getOffHandStack().getItem() == ModItems.STRIKE_TOTEM) {
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 5, 2));
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 5, 2));
             }
