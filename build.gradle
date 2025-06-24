@@ -89,6 +89,14 @@ jar {
     }
 }
 
+fabricApi {
+    configureTests {
+        createSourceSet = true
+        modId = "fabric-docs-reference-test-${project.name}"
+        eula = true
+    }
+}
+
 // configure the maven publication
 publishing {
     publications {
