@@ -191,27 +191,6 @@ public class RevolutionTableRecipe implements Recipe<RevolutionTableRecipeInput>
                     : DataResult.success(new RawRecipe(list, Optional.of(data)));
         }
 
-        /**
-         * Removes empty space from around the recipe pattern.
-         *
-         * <p>Turns patterns such as:
-         * <pre>
-         * {@code
-         * "   o"
-         * "   a"
-         * "	"
-         * }
-         * </pre>
-         * Into:
-         * <pre>
-         * {@code
-         * "o"
-         * "a"
-         * }
-         * </pre>
-         *
-         * @return a new recipe pattern with all leading and trailing empty rows/columns removed
-         */
         @VisibleForTesting
         static String[] removePadding(List<String> pattern) {
             // Trim each line

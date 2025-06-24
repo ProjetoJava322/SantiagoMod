@@ -31,7 +31,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-//PENDÊNCIA: SETAR O CRAFTING BASEADO NO MAXCOUNT DOS ITENS
 
 public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPos>, ImplementedInventory {
 
@@ -41,149 +40,161 @@ public class RevolutionTableBlockEntity extends BlockEntity implements ExtendedS
     private static final int OUTPUT_SLOT = 12;
     private boolean recipeStandby;
 
-    public RevolutionTableBlockEntity( BlockPos pos, BlockState state) {
+    public RevolutionTableBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.REVOLUTION_TABLE, pos, state);
         this.recipeStandby = false;
     }
 
+    // Dados para abrir a tela no cliente — passa a posição do block entity
     @Override
     public BlockPos getScreenOpeningData(ServerPlayerEntity serverPlayerEntity) {
         return this.pos;
     }
 
+    // Nome exibido no container (GUI)
     @Override
     public Text getDisplayName() {
         return Text.translatable(ModBlocks.REVOLUTION_TABLE.getTranslationKey());
     }
 
+    // Quando o bloco é destruído ou substituído, solta os itens do inventário no mundo
     @Override
     public void onBlockReplaced(BlockPos pos, BlockState oldState){
         this.removeStack(OUTPUT_SLOT);
-        ItemScatterer.spawn(world, pos, (this));
+        ItemScatterer.spawn(world, pos, this);
         super.onBlockReplaced(pos, oldState);
     }
 
+    // Cria o container para o inventário do jogador interagir
     @Override
     public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
         return new RevolutionTableScreenHandler(syncId, playerInventory, this);
     }
 
+    // Implementa o inventário (13 slots)
     @Override
     public DefaultedList<ItemStack> getItems() {
         return INVENTORY;
     }
 
-     public void tick(World world, BlockPos pos, BlockState state) {
-        //se tem ao menos uma receita
-         boolean recipe;
-        try{
+    // Lógica rodada a cada tick do bloco
+    public void tick(World world, BlockPos pos, BlockState state) {
+        boolean recipe;
+        try {
             recipe = hasRecipe();
-        } catch (RecipeNotFoundException e){
+        } catch (RecipeNotFoundException e) {
             recipe = false;
         }
+
         if (recipe) {
-            //conta quantas receitas tem, dando cap no máximo
-            int recipe_amnt = checkRecipeAmount();
-            int max_craft_amnt = getMaxCount(getOutput());
-            final int amnt = Math.min(recipe_amnt, max_craft_amnt);
+            int recipe_amnt = checkRecipeAmount();                   // Quantas receitas dá pra fazer com o inventário
+            int max_craft_amnt = getMaxCount(getOutput());           // Quantidade máxima permitida para output
+            final int amnt = Math.min(recipe_amnt, max_craft_amnt);  // Quantidade que vai ser craftada (mínimo)
 
-            //se o output passa do máximo, para o crafting
-            if (this.getStack(OUTPUT_SLOT).getCount() >= max_craft_amnt) {return;}
+            if (this.getStack(OUTPUT_SLOT).getCount() >= max_craft_amnt) {
+                return; // Se output já cheio, não faz nada
+            }
 
-            //se não tem receita em standby, liga o standby e crafta o item
-            if (!getRecipeStandby()){
-                toggleRecipeStandby(); //seta como true
+            if (!getRecipeStandby()) {
+                toggleRecipeStandby(); // ativa standby
+                craftItem(amnt);       // faz o craft
+            }
+
+            // Corrige o output caso o número no slot de output esteja diferente do esperado
+            if (getRecipeStandby() && !this.getStack(OUTPUT_SLOT).isEmpty() && this.getStack(OUTPUT_SLOT).getCount() != amnt) {
                 craftItem(amnt);
             }
 
-            //se tem uma receita em standby, o output não é vazio e os itens do output não batem com o número de receitas, corrige o output
-            if (getRecipeStandby() && !this.getStack(OUTPUT_SLOT).isEmpty() && this.getStack(OUTPUT_SLOT).getCount() != amnt) {craftItem(amnt);}
-
-            //se tem uma receita em standby, mas o output é vazio, então o player coletou o item
-            if (getRecipeStandby() && this.getStack(OUTPUT_SLOT).isEmpty()){
+            // Caso o output esteja vazio mas a receita estava em standby, significa que o player coletou o item
+            if (getRecipeStandby() && this.getStack(OUTPUT_SLOT).isEmpty()) {
                 recipe_amnt = checkRecipeAmount();
-                toggleRecipeStandby(); //seta como false
-
-                //"usa" os itens da grid
-                clearGrid(recipe_amnt);
+                toggleRecipeStandby(); // desativa standby
+                clearGrid(recipe_amnt); // remove os ingredientes usados
             }
 
-        //não tem receita
         } else {
-            //apaga oq tiver no output e, se estava em standby, desliga o standby
+            // Não tem receita, limpa output e desliga standby se ativo
             this.removeStack(OUTPUT_SLOT);
-            if (getRecipeStandby()){toggleRecipeStandby();} //seta como false
+            if (getRecipeStandby()) {
+                toggleRecipeStandby();
+            }
         }
-        //atualiza a tela
-         markDirty(world, pos, state);
-     }
 
-     private boolean getRecipeStandby(){
-        return this.recipeStandby;
-     }
-
-    private void toggleRecipeStandby() {
-        this.recipeStandby = !this.getRecipeStandby();
+        // Marca para atualizar estado e sincronia com cliente
+        markDirty(world, pos, state);
     }
 
-    //checa quantas receitas os itens da grid satisfazem
-    private int checkRecipeAmount(){
-        //64 é o stack máximo num geral, mudar essa função para receber um stack máximo depois;
-        int min_recipes = 64, item_amount;
-        for (int i = INPUT_GRID_START; i <= INPUT_GRID_END; i++){
-            item_amount = this.getStack(i).getCount();
-            if (item_amount < min_recipes){
+    private boolean getRecipeStandby() {
+        return this.recipeStandby;
+    }
+
+    private void toggleRecipeStandby() {
+        this.recipeStandby = !this.recipeStandby;
+    }
+
+    // Verifica a quantidade mínima de ingredientes para determinar quantas receitas podem ser feitas
+    private int checkRecipeAmount() {
+        int min_recipes = 64;  // valor base (max stack count)
+        for (int i = INPUT_GRID_START; i <= INPUT_GRID_END; i++) {
+            int item_amount = this.getStack(i).getCount();
+            if (item_amount < min_recipes) {
                 min_recipes = item_amount;
             }
         }
         return min_recipes;
     }
 
-    //receita hardcoded teste pra ver se o babado funciona
+    // Verifica se há uma receita válida para o inventário atual, lança exceção se não encontrar
     private boolean hasRecipe() throws RecipeNotFoundException {
         Optional<RecipeEntry<RevolutionTableRecipe>> recipe = getCurrentRecipe();
-        if (recipe.isEmpty()){
+        if (recipe.isEmpty()) {
             throw new RecipeNotFoundException("Receita não encontrada");
         }
         return true;
     }
 
-    private Optional<RecipeEntry<RevolutionTableRecipe>> getCurrentRecipe(){
+    // Obtém a receita atual baseada no inventário do bloco
+    private Optional<RecipeEntry<RevolutionTableRecipe>> getCurrentRecipe() {
         RevolutionTableRecipeInput recipeInput = RevolutionTableRecipeInput.create(INVENTORY);
         return world.getServer().getRecipeManager().getFirstMatch(ModRecipeTypes.REVOLUTION_TABLE_RECIPE_TYPE, recipeInput, world);
     }
 
-    private void clearGrid(int amnt){
+    // Remove uma quantidade (amnt) de cada slot de ingrediente
+    private void clearGrid(int amnt) {
         for (int i = INPUT_GRID_START; i <= INPUT_GRID_END; i++) {
             this.removeStack(i, amnt);
         }
     }
 
-    private ItemStack getOutput(){
+    // Obtém o output da receita atual
+    private ItemStack getOutput() {
         Optional<RecipeEntry<RevolutionTableRecipe>> recipe = getCurrentRecipe();
-        ItemStack output = recipe.get().value().result();
-        return output;
+        return recipe.get().value().result();
     }
 
+    // Define o item e quantidade no slot de saída conforme a receita
     private void craftItem(int recipe_amnt) {
         Optional<RecipeEntry<RevolutionTableRecipe>> recipe = getCurrentRecipe();
-        ItemStack output = recipe.get().value().result();
+        ItemStack output = recipe.get().value().result().copy(); // <-- importante fazer cópia!
         output.setCount(recipe_amnt);
         this.setStack(OUTPUT_SLOT, output);
     }
 
+    // Salvamento dos dados do inventário no NBT do bloco
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.writeNbt(nbt, registryLookup);
-        Inventories.writeNbt(nbt, INVENTORY,  registryLookup);
+        Inventories.writeNbt(nbt, INVENTORY, registryLookup);
     }
 
+    // Leitura dos dados do inventário do NBT do bloco
     @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        Inventories.writeNbt(nbt, INVENTORY,  registryLookup);
+        Inventories.readNbt(nbt, INVENTORY, registryLookup);  // <-- corrigido de writeNbt para readNbt!
         super.readNbt(nbt, registryLookup);
     }
 
+    // Pacote enviado para o cliente quando o bloco precisa sincronizar estado
     @Nullable
     @Override
     public Packet<ClientPlayPacketListener> toUpdatePacket() {

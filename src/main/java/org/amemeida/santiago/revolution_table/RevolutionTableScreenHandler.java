@@ -10,18 +10,36 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.math.BlockPos;
 import org.amemeida.santiago.registry.blocks.ModScreenHandlers;
 
+/**
+ * Gerencia a interface de usuário (screen handler) do Revolution Table,
+ * controlando os slots de input, output e o inventário do jogador.
+ */
 public class RevolutionTableScreenHandler extends ScreenHandler {
     private final Inventory inventory;
     public final RevolutionTableBlockEntity blockEntity;
     private final Slot[] INPUT_SLOTS;
     private final Slot OUTPUT_SLOT;
 
+    /**
+     * Cria um ScreenHandler baseado na posição do bloco no mundo.
+     *
+     * @param syncId Identificador de sincronização da interface.
+     * @param inventory Inventário do jogador.
+     * @param pos Posição do bloco no mundo.
+     */
     public RevolutionTableScreenHandler(int syncId, PlayerInventory inventory, BlockPos pos) {
         this(syncId, inventory, inventory.player.getWorld().getBlockEntity(pos));
     }
 
+    /**
+     * Cria um ScreenHandler a partir de um BlockEntity específico.
+     *
+     * @param syncId Identificador de sincronização da interface.
+     * @param playerInventory Inventário do jogador.
+     * @param blockEntity Entidade do bloco associada ao inventário.
+     */
     public RevolutionTableScreenHandler(int syncId, PlayerInventory playerInventory,
-                                      BlockEntity blockEntity) {
+                                        BlockEntity blockEntity) {
         super(ModScreenHandlers.REVOLUTION_TABLE_SCREEN_HANDLER, syncId);
         this.inventory = ((Inventory) blockEntity);
         this.blockEntity = ((RevolutionTableBlockEntity) blockEntity);
@@ -44,9 +62,15 @@ public class RevolutionTableScreenHandler extends ScreenHandler {
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
-
     }
 
+    /**
+     * Trata a movimentação rápida de itens (shift-click) entre inventário do bloco e do jogador.
+     *
+     * @param player Jogador que está movendo o item.
+     * @param invSlot Índice do slot selecionado.
+     * @return ItemStack resultante após a tentativa de movimentação.
+     */
     @Override
     public ItemStack quickMove(PlayerEntity player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
@@ -71,11 +95,22 @@ public class RevolutionTableScreenHandler extends ScreenHandler {
         return newStack;
     }
 
+    /**
+     * Verifica se o jogador pode usar esta interface.
+     *
+     * @param player Jogador que está tentando usar a interface.
+     * @return true se o jogador pode usar, false caso contrário.
+     */
     @Override
     public boolean canUse(PlayerEntity player) {
         return this.inventory.canPlayerUse(player);
     }
 
+    /**
+     * Adiciona os slots do inventário principal do jogador à interface.
+     *
+     * @param playerInventory Inventário do jogador.
+     */
     private void addPlayerInventory(PlayerInventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
@@ -84,18 +119,28 @@ public class RevolutionTableScreenHandler extends ScreenHandler {
         }
     }
 
+    /**
+     * Adiciona os slots da hotbar do jogador à interface.
+     *
+     * @param playerInventory Inventário do jogador.
+     */
     private void addPlayerHotbar(PlayerInventory playerInventory) {
         for (int i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 23 + i * 18, 161));
         }
     }
 
+    /**
+     * Slot personalizado para saída, que não permite inserção de itens.
+     */
     private class OutputSlot extends Slot {
         public OutputSlot(Inventory inventory, int index, int x, int y) {
             super(inventory, index, x, y);
         }
 
         @Override
-        public boolean canInsert(ItemStack stack) {return false;}
+        public boolean canInsert(ItemStack stack) {
+            return false;
+        }
     }
 }
