@@ -7,6 +7,9 @@ import org.amemeida.santiago.registry.blocks.ModScreenHandlers;
  * @see net.minecraft.client.gui.screen.ingame.BookEditScreen
  */
 
+/**
+ * Registra as telas (screens) dos containers personalizados do mod.
+ */
 public class ModScreens {
     static {
         HandledScreens.register(ModScreenHandlers.INCUBATOR_SCREEN_HANDLER, IncubatorScreen::new);
@@ -14,5 +17,10 @@ public class ModScreens {
         HandledScreens.register(ModScreenHandlers.COMPUTER_SCREEN_HANDLER, ComputerScreen::new);
     }
 
+    /**
+     * Inicializa o registro das telas.
+     * Método vazio, apenas para forçar a classe a ser carregada.
+     */
     public static void initialize() {}
 }
+

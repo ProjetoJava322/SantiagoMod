@@ -18,28 +18,57 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
 
+/**
+ * Representa um script Python armazenado em arquivo dentro da pasta de scripts do mod.
+ * Fornece funcionalidades para executar, ler, escrever e criar o arquivo do script.
+ */
 public class Script {
+    /**
+     * Codec para serialização/deserialização do script usando o campo "file" (nome do arquivo).
+     */
     public static final Codec<Script> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-        Codec.STRING.fieldOf("file").forGetter(Script::scriptName)
+            Codec.STRING.fieldOf("file").forGetter(Script::scriptName)
     ).apply(instance, Script::new));
 
+    /**
+     * Codec para serialização via rede, baseado no CODEC.
+     */
     public static final PacketCodec<ByteBuf, Script> PACKET_CODEC = PacketCodecs.codec(CODEC);
 
     private final String file;
 
+    /**
+     * Construtor do Script a partir do caminho/nome do arquivo.
+     * @param path caminho ou nome do arquivo do script
+     */
     public Script(String path) {
         this.file = scriptName(path);
     }
 
+    /**
+     * Retorna o nome do arquivo do script.
+     * @return nome do arquivo do script
+     */
     public String scriptName() {
         return this.file;
     }
 
+    /**
+     * Garante que o nome do script termine com ".py".
+     * @param title nome ou caminho do script
+     * @return nome com extensão ".py"
+     */
     public static @NotNull String scriptName(@NotNull String title) {
         var trimmed = title.trim();
         return trimmed.endsWith(".py") ? trimmed : trimmed + ".py";
     }
 
+    /**
+     * Executa o script Python passando a string de entrada para o script.
+     * @param in entrada fornecida ao script
+     * @return saída produzida pelo script Python
+     * @throws RunningException se o script estiver vazio ou ocorrer erro na execução
+     */
     public String runScript(String in) throws RunningException {
         var file = file();
 
@@ -50,10 +79,19 @@ public class Script {
         return PythonRunner.getInstance().run(file, in);
     }
 
+    /**
+     * Executa o script Python sem entrada.
+     * @return saída produzida pelo script Python
+     * @throws RunningException se ocorrer erro na execução
+     */
     public String runScript() throws RunningException {
         return runScript("");
     }
 
+    /**
+     * Escreve o conteúdo do script no arquivo, criando a pasta e o arquivo se necessário.
+     * @param script conteúdo do script a ser escrito
+     */
     public void writeScript(String script) {
         var file = this.file();
 
@@ -71,6 +109,10 @@ public class Script {
         }
     }
 
+    /**
+     * Lê o conteúdo do script do arquivo.
+     * @return conteúdo do script como String, ou string vazia se o arquivo não existir
+     */
     public String getScript() {
         var file = this.file();
 
@@ -78,23 +120,34 @@ public class Script {
             return "";
         }
 
-        try (var scanner = new Scanner(file)) {
+        try {
             return Files.readString(file.toPath());
         } catch (IOException ex) {
             throw new RuntimeException("Cannot read script file.");
         }
     }
 
+    /**
+     * Retorna o caminho da pasta onde os scripts são armazenados dentro do diretório de salvamento do servidor.
+     * @return Path da pasta dos scripts
+     */
     public static Path folder() {
         return Santiago.getServer().getSavePath(WorldSavePath.ROOT)
                 .resolve(Santiago.MOD_ID)
                 .resolve("scripts");
     }
 
+    /**
+     * Retorna o arquivo do script (na pasta dos scripts).
+     * @return arquivo do script
+     */
     protected File file() {
         return folder().resolve(this.file).toFile();
     }
 
+    /**
+     * Cria a pasta dos scripts e o arquivo do script se ainda não existirem.
+     */
     protected void create() {
         try {
             Files.createDirectories(folder());
@@ -105,7 +158,7 @@ public class Script {
         var file = file();
 
         try {
-            /// SIDE EFFECT
+            // SIDE EFFECT: cria o arquivo se não existir
             file.createNewFile();
         } catch (IOException e) {
             throw new RuntimeException(e);

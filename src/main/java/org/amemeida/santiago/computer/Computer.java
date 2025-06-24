@@ -28,11 +28,25 @@ import org.jetbrains.annotations.Nullable;
  * @see net.minecraft.block.CrafterBlock
  */
 
+/**
+ * Representa o bloco "Computer" que funciona como uma máquina programável com estados e interação com redstone.
+ * O bloco pode estar em vários estados (idle, running, locked, sucesso, falha, erro) e responde a sinais de redstone.
+ */
 public class Computer extends BlockWithEntity {
+
+    /** Propriedade que armazena o estado atual do computador. */
     public static final EnumProperty<ComputerState> STATE = EnumProperty.of("state", ComputerState.class);
+
+    /** Propriedade que armazena a direção para qual o computador está virado. */
     public static final EnumProperty<Direction> FACING_COMPUTER = FacingBlock.FACING;
 
+    /**
+     * Enum que define os estados possíveis do computador, cada um com sua lógica para o próximo estado.
+     */
     public static enum ComputerState implements StringIdentifiable {
+        /**
+         * Estado inativo (idle). Se receber sinal de redstone, passa para RUNNING.
+         */
         IDLE(0) {
             @Override
             public ComputerState next(BlockState state, World world, BlockPos pos) {
@@ -44,42 +58,62 @@ public class Computer extends BlockWithEntity {
                 }
             }
         },
+        /**
+         * Estado bloqueado, permanece bloqueado enquanto houver redstone, caso contrário volta para IDLE.
+         */
         LOCKED(0) {
             @Override
             public ComputerState next(BlockState state, World world, BlockPos pos) {
                 return world.isReceivingRedstonePower(pos) ? LOCKED : IDLE;
             }
         },
+        /**
+         * Estado em execução. O método next não deve ser chamado nesse estado (lança exceção).
+         */
         RUNNING(5) {
             @Override
             public ComputerState next(BlockState state, World world, BlockPos pos) {
                 throw new IllegalStateException();
             }
         },
+        /**
+         * Estado de sucesso, aguarda sinal de redstone para passar para LOCKED ou volta para IDLE.
+         */
         SUCCESS(15) {
             @Override
             public ComputerState next(BlockState state, World world, BlockPos pos) {
-                return world.isReceivingRedstonePower(pos) ?
-                    ComputerState.LOCKED : ComputerState.IDLE;
+                return world.isReceivingRedstonePower(pos) ? ComputerState.LOCKED : ComputerState.IDLE;
             }
         },
+        /**
+         * Estado de falha, aguarda sinal de redstone para passar para LOCKED ou volta para IDLE.
+         */
         FAILURE(10) {
             @Override
             public ComputerState next(BlockState state, World world, BlockPos pos) {
-                return world.isReceivingRedstonePower(pos) ?
-                    ComputerState.LOCKED : ComputerState.IDLE;
+                return world.isReceivingRedstonePower(pos) ? ComputerState.LOCKED : ComputerState.IDLE;
             }
         },
+        /**
+         * Estado de erro, aguarda sinal de redstone para passar para LOCKED ou volta para IDLE.
+         */
         ERROR(1) {
             @Override
             public ComputerState next(BlockState state, World world, BlockPos pos) {
-                return world.isReceivingRedstonePower(pos) ?
-                    ComputerState.LOCKED : ComputerState.IDLE;
+                return world.isReceivingRedstonePower(pos) ? ComputerState.LOCKED : ComputerState.IDLE;
             }
         };
 
+        /** Valor de potência de redstone associada ao estado. */
         public final int redstone;
 
+        /**
+         * Retorna o próximo estado do computador com base no estado atual, mundo e posição.
+         * @param state Estado atual do bloco
+         * @param world Mundo onde o bloco está
+         * @param pos Posição do bloco
+         * @return Próximo estado do computador
+         */
         public abstract ComputerState next(BlockState state, World world, BlockPos pos);
 
         private ComputerState(int redstone) {
@@ -92,28 +126,49 @@ public class Computer extends BlockWithEntity {
         }
     }
 
+    /** Codec para serialização/deserialização do bloco. */
     public static final MapCodec<Computer> CODEC = createCodec(Computer::new);
 
+    /**
+     * Retorna o codec deste bloco.
+     * @return Codec do bloco
+     */
     public MapCodec<Computer> getCodec() {
         return CODEC;
     }
 
+    /**
+     * Construtor do bloco Computer.
+     * Inicializa o estado padrão como IDLE e direção para Norte.
+     * @param settings Configurações do bloco
+     */
     public Computer(AbstractBlock.Settings settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState().with(STATE, ComputerState.IDLE).with(FACING_COMPUTER, Direction.NORTH));
+        this.setDefaultState(this.stateManager.getDefaultState()
+                .with(STATE, ComputerState.IDLE)
+                .with(FACING_COMPUTER, Direction.NORTH));
     }
 
+    /**
+     * Adiciona as propriedades (STATE e FACING) ao gerenciador de estados do bloco.
+     */
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(STATE);
         builder.add(FACING_COMPUTER);
     }
 
+    /**
+     * Define o estado do bloco no momento da colocação, ajustando a direção conforme o olhar do jogador.
+     */
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         return this.getDefaultState().with(FACING_COMPUTER, ctx.getPlayerLookDirection());
     }
 
+    /**
+     * Evento de interação do jogador com o bloco. Abre a interface gráfica no lado servidor.
+     */
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (!world.isClient) {
@@ -122,11 +177,18 @@ public class Computer extends BlockWithEntity {
         return ActionResult.SUCCESS;
     }
 
+    /**
+     * Cria a entidade do bloco (block entity) associada a este bloco.
+     */
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new ComputerEntity(pos, state);
     }
 
+    /**
+     * Método para iniciar a execução do computador, alterando o estado para RUNNING caso esteja IDLE e haja disco presente.
+     * Agenda um tick para a execução.
+     */
     public void trigger(BlockState state, World world, BlockPos pos) {
         var currentState = state.get(STATE);
 
@@ -140,21 +202,29 @@ public class Computer extends BlockWithEntity {
             return;
         }
 
-        world.setBlockState(pos, state.with(STATE, ComputerState.RUNNING),
-            Block.NOTIFY_LISTENERS);
+        world.setBlockState(pos, state.with(STATE, ComputerState.RUNNING), Block.NOTIFY_LISTENERS);
         world.scheduleBlockTick(pos, state.getBlock(), 4);
-       }
+    }
 
+    /**
+     * Atualiza o estado do bloco em resposta a mudanças em blocos vizinhos.
+     * Se o estado for IDLE ou LOCKED, atualiza para o próximo estado conforme lógica do estado atual.
+     */
     @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock,
+                                  @Nullable WireOrientation wireOrientation, boolean notify) {
         var curr = state.get(STATE);
 
         if (curr == ComputerState.IDLE || curr == ComputerState.LOCKED) {
-            world.setBlockState(pos, state.with(STATE,
-                    curr.next(state, world, pos)), Block.NOTIFY_LISTENERS);
+            world.setBlockState(pos, state.with(STATE, curr.next(state, world, pos)), Block.NOTIFY_LISTENERS);
         }
     }
 
+    /**
+     * Executa a lógica programada a cada tick do bloco.
+     * - Se estado for RUNNING, executa testes em uma thread separada e atualiza o estado conforme resultado.
+     * - Para outros estados, atualiza o estado conforme a lógica do próximo estado.
+     */
     @Override
     protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         var curr = state.get(STATE);
@@ -205,13 +275,20 @@ public class Computer extends BlockWithEntity {
         }).start();
     }
 
+    /**
+     * Indica que o bloco suporta saída de sinal para comparador.
+     */
     @Override
     protected boolean hasComparatorOutput(BlockState state) {
         return true;
     }
 
+    /**
+     * Define a potência do sinal do comparador com base no estado atual do computador.
+     */
     @Override
     protected int getComparatorOutput(BlockState state, World world, BlockPos pos) {
         return state.get(STATE).redstone;
     }
 }
+
