@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.input.KeyboardInput;
 import net.minecraft.client.util.NarratorManager;
 import net.minecraft.client.util.SelectionManager;
 import net.minecraft.item.ItemStack;
@@ -12,6 +13,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.StringHelper;
 import net.minecraft.client.gui.widget.MultilineTextWidget;
 import org.amemeida.santiago.net.UpdateStackC2SPayload;
+
+import java.awt.event.KeyEvent;
 
 @Environment(EnvType.CLIENT)
 public class TextEditScreen extends Screen {
@@ -218,6 +221,10 @@ public class TextEditScreen extends Screen {
                 }
                 case 269 -> {
                     this.moveToLineEnd();
+                    yield true;
+                }
+                case 9 -> {
+                    this.selectionManager.insert("    ");
                     yield true;
                 }
                 default -> false;

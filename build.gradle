@@ -9,7 +9,9 @@ group = project.maven_group
 base {
     archivesName = project.archives_base_name
 }
-
+test {
+    useJUnitPlatform()
+}
 loom {
     splitEnvironmentSourceSets()
 
@@ -42,6 +44,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    testImplementation "net.fabricmc:fabric-loader-junit:${project.loader_version}"
 }
 
 processResources {
