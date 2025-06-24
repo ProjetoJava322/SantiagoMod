@@ -1,10 +1,7 @@
 package org.amemeida.santiago.computer;
 
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -20,35 +17,21 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.block.WireOrientation;
 import org.amemeida.santiago.exceptions.RunningException;
+import org.amemeida.santiago.file.runner.PythonRunner;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Bloco customizado "Computer" com lógica baseada em redstone e execução de scripts/testes.
- * Possui múltiplos estados que representam seu comportamento ao receber sinal de redstone.
- *
- * COMENTARIOS FEITOS POR IA
- *
  * @see net.minecraft.item.Items
  * @see net.minecraft.block.Blocks
  * @see net.minecraft.block.DispenserBlock
+ *
  * @see net.minecraft.block.CrafterBlock
  */
+
 public class Computer extends BlockWithEntity {
-
-    /**
-     * Propriedade que representa o estado atual do computador.
-     */
     public static final EnumProperty<ComputerState> STATE = EnumProperty.of("state", ComputerState.class);
+    public static final EnumProperty<Direction> FACING_COMPUTER = FacingBlock.FACING;
 
-    /**
-     * Direção que o bloco está voltado (como pistões ou fornalhas).
-     */
-    public static final EnumProperty<Direction> FACING_COMPUTER = EnumProperty.of("facing", Direction.class);
-
-    /**
-     * Enumeração dos estados possíveis do bloco computador.
-     * Cada estado pode definir sua própria transição para o próximo estado.
-     */
     public static enum ComputerState implements StringIdentifiable {
         IDLE(0) {
             @Override
@@ -76,19 +59,22 @@ public class Computer extends BlockWithEntity {
         SUCCESS(15) {
             @Override
             public ComputerState next(BlockState state, World world, BlockPos pos) {
-                return world.isReceivingRedstonePower(pos) ? LOCKED : IDLE;
+                return world.isReceivingRedstonePower(pos) ?
+                    ComputerState.LOCKED : ComputerState.IDLE;
             }
         },
         FAILURE(10) {
             @Override
             public ComputerState next(BlockState state, World world, BlockPos pos) {
-                return world.isReceivingRedstonePower(pos) ? LOCKED : IDLE;
+                return world.isReceivingRedstonePower(pos) ?
+                    ComputerState.LOCKED : ComputerState.IDLE;
             }
         },
         ERROR(1) {
             @Override
             public ComputerState next(BlockState state, World world, BlockPos pos) {
-                return world.isReceivingRedstonePower(pos) ? LOCKED : IDLE;
+                return world.isReceivingRedstonePower(pos) ?
+                    ComputerState.LOCKED : ComputerState.IDLE;
             }
         };
 
@@ -106,25 +92,15 @@ public class Computer extends BlockWithEntity {
         }
     }
 
-    /**
-     * Codec usado para serializar e registrar o bloco no sistema do Minecraft.
-     */
     public static final MapCodec<Computer> CODEC = createCodec(Computer::new);
 
     public MapCodec<Computer> getCodec() {
         return CODEC;
     }
 
-    /**
-     * Construtor do bloco computador.
-     *
-     * @param settings as configurações do bloco (dureza, material etc).
-     */
     public Computer(AbstractBlock.Settings settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState()
-                .with(STATE, ComputerState.IDLE)
-                .with(FACING_COMPUTER, Direction.NORTH));
+        this.setDefaultState(this.stateManager.getDefaultState().with(STATE, ComputerState.IDLE).with(FACING_COMPUTER, Direction.NORTH));
     }
 
     @Override
@@ -151,43 +127,41 @@ public class Computer extends BlockWithEntity {
         return new ComputerEntity(pos, state);
     }
 
-    /**
-     * Dispara a execução do computador caso esteja em estado IDLE e possua disco válido.
-     *
-     * @param state o estado atual do bloco
-     * @param world o mundo onde está
-     * @param pos   posição do bloco
-     */
     public void trigger(BlockState state, World world, BlockPos pos) {
         var currentState = state.get(STATE);
 
-        if (currentState != ComputerState.IDLE) return;
+        if (currentState != ComputerState.IDLE) {
+            return;
+        }
 
         var entity = (ComputerEntity) world.getBlockEntity(pos);
-        if (entity == null || !entity.hasDisk()) return;
 
-        world.setBlockState(pos, state.with(STATE, ComputerState.RUNNING), Block.NOTIFY_LISTENERS);
+        if (entity == null || !entity.hasDisk()) {
+            return;
+        }
+
+        world.setBlockState(pos, state.with(STATE, ComputerState.RUNNING),
+            Block.NOTIFY_LISTENERS);
         world.scheduleBlockTick(pos, state.getBlock(), 4);
-    }
+       }
 
     @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock,
-                                  @Nullable WireOrientation wireOrientation, boolean notify) {
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
         var curr = state.get(STATE);
 
         if (curr == ComputerState.IDLE || curr == ComputerState.LOCKED) {
-            world.setBlockState(pos, state.with(STATE, curr.next(state, world, pos)), Block.NOTIFY_LISTENERS);
+            world.setBlockState(pos, state.with(STATE,
+                    curr.next(state, world, pos)), Block.NOTIFY_LISTENERS);
         }
     }
 
-    /**
-     * Executado após o bloco entrar em estado RUNNING. Roda os testes associados e atualiza o estado.
-     */
     @Override
     protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         var curr = state.get(STATE);
 
-        if (curr == ComputerState.IDLE) return;
+        if (curr == ComputerState.IDLE) {
+            return;
+        }
 
         if (curr != ComputerState.RUNNING) {
             world.setBlockState(pos, state.with(STATE, curr.next(state, world, pos)), Block.NOTIFY_LISTENERS);
@@ -197,27 +171,30 @@ public class Computer extends BlockWithEntity {
 
         var entity = (ComputerEntity) world.getBlockEntity(pos);
         assert entity != null;
-
         var cases = entity.testCases(world);
+        System.out.println(cases);
+
         var resultMode = entity.getResult();
 
         new Thread(() -> {
             try {
-                boolean result = switch (resultMode) {
+                boolean result = switch(resultMode) {
                     case AND -> true;
                     case OR -> false;
                 };
 
                 for (var test : cases) {
-                    result = switch (resultMode) {
+                    result = switch(resultMode) {
                         case AND -> test.run() && result;
                         case OR -> test.run() || result;
                     };
                 }
 
-                world.setBlockState(pos, state.with(STATE,
-                                result ? ComputerState.SUCCESS : ComputerState.FAILURE),
-                        Block.NOTIFY_LISTENERS);
+                if (result) {
+                    world.setBlockState(pos, state.with(STATE, ComputerState.SUCCESS), Block.NOTIFY_LISTENERS);
+                } else {
+                    world.setBlockState(pos, state.with(STATE, ComputerState.FAILURE), Block.NOTIFY_LISTENERS);
+                }
             } catch (RunningException e) {
                 System.err.println(e.getMessage());
                 world.setBlockState(pos, state.with(STATE, ComputerState.ERROR), Block.NOTIFY_LISTENERS);
