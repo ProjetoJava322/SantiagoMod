@@ -11,44 +11,81 @@ import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.math.BlockPos;
-
+/**
+ * Classe responsável por gerenciar a interface gráfica (GUI) da incubadora,
+ * incluindo a interação com o inventário do bloco e do jogador,
+ * além da sincronização do progresso da incubação.
+ */
 public class IncubatorScreenHandler extends ScreenHandler {
-    private final Inventory inventory;
-    private final PropertyDelegate propertyDelegate;
-    public final IncubatorBlockEntity blockEntity;
+    private final Inventory inventory; // Inventário da incubadora
+    private final PropertyDelegate propertyDelegate; // Para sincronizar progresso e outras propriedades
+    public final IncubatorBlockEntity blockEntity; // Referência à entidade do bloco incubadora
 
+    /**
+     * Construtor usado para criar a tela a partir da posição do bloco no mundo.
+     * Obtém a entidade do bloco e cria um PropertyDelegate padrão.
+     */
     public IncubatorScreenHandler(int syncId, PlayerInventory inventory, BlockPos pos) {
         this(syncId, inventory, inventory.player.getWorld().getBlockEntity(pos), new ArrayPropertyDelegate(2));
     }
 
+    /**
+     * Construtor principal que inicializa a tela, slots e propriedades.
+     * 
+     * @param syncId id de sincronização da tela
+     * @param playerInventory inventário do jogador
+     * @param blockEntity entidade do bloco incubadora
+     * @param arrayPropertyDelegate delegate para propriedades sincronizadas (progresso)
+     */
     public IncubatorScreenHandler(int syncId, PlayerInventory playerInventory,
-                                      BlockEntity blockEntity, PropertyDelegate arrayPropertyDelegate) {
+                                  BlockEntity blockEntity, PropertyDelegate arrayPropertyDelegate) {
         super(ModScreenHandlers.INCUBATOR_SCREEN_HANDLER, syncId);
         this.inventory = ((Inventory) blockEntity);
         this.blockEntity = ((IncubatorBlockEntity) blockEntity);
         this.propertyDelegate = arrayPropertyDelegate;
 
-        this.addSlot(new Slot(inventory, 0, 54, 34));
-        this.addSlot(new Slot(inventory, 1, 104, 34));
+        // Adiciona slots do inventário da incubadora na GUI
+        this.addSlot(new Slot(inventory, 0, 54, 34));   // Slot de entrada
+        this.addSlot(new Slot(inventory, 1, 104, 34));  // Slot de saída
 
+        // Adiciona inventário do jogador (inventário principal e hotbar)
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
 
+        // Adiciona propriedades para sincronização (ex: progresso)
         addProperties(arrayPropertyDelegate);
     }
 
+    /**
+     * Verifica se a incubadora está atualmente processando um item (progresso > 0).
+     * 
+     * @return true se estiver incubando, false caso contrário
+     */
     public boolean isCrafting() {
         return propertyDelegate.get(0) > 0;
     }
 
+    /**
+     * Calcula o progresso para exibição da barra de progresso na GUI,
+     * escalando o progresso atual para o tamanho da seta animada.
+     * 
+     * @return valor do progresso escalado para pixels (largura da seta)
+     */
     public int getScaledArrowProgress() {
         int progress = this.propertyDelegate.get(0);
-        int maxProgress = this.propertyDelegate.get(1); // Max Progress
-        int arrowPixelSize = 24; // This is the width in pixels of your arrow
+        int maxProgress = this.propertyDelegate.get(1);
+        int arrowPixelSize = 24; // largura da seta na interface (pixels)
 
         return maxProgress != 0 && progress != 0 ? progress * arrowPixelSize / maxProgress : 0;
     }
 
+    /**
+     * Método para transferência rápida (shift-click) entre o inventário da incubadora e do jogador.
+     * 
+     * @param player jogador que está fazendo a ação
+     * @param invSlot índice do slot clicado
+     * @return o item movido ou ItemStack.EMPTY se não foi possível mover
+     */
     @Override
     public ItemStack quickMove(PlayerEntity player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
@@ -57,13 +94,18 @@ public class IncubatorScreenHandler extends ScreenHandler {
             ItemStack originalStack = slot.getStack();
             newStack = originalStack.copy();
             if (invSlot < this.inventory.size()) {
+                // Se o slot está no inventário da incubadora, tenta mover para o inventário do jogador
                 if (!this.insertItem(originalStack, this.inventory.size(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.insertItem(originalStack, 0, this.inventory.size(), false)) {
-                return ItemStack.EMPTY;
+            } else {
+                // Se o slot está no inventário do jogador, tenta mover para o inventário da incubadora
+                if (!this.insertItem(originalStack, 0, this.inventory.size(), false)) {
+                    return ItemStack.EMPTY;
+                }
             }
 
+            // Atualiza o slot após a movimentação
             if (originalStack.isEmpty()) {
                 slot.setStack(ItemStack.EMPTY);
             } else {
@@ -73,11 +115,17 @@ public class IncubatorScreenHandler extends ScreenHandler {
         return newStack;
     }
 
+    /**
+     * Verifica se o jogador pode usar a GUI da incubadora (distância e permissões).
+     */
     @Override
     public boolean canUse(PlayerEntity player) {
         return this.inventory.canPlayerUse(player);
     }
 
+    /**
+     * Adiciona os slots do inventário principal do jogador na GUI.
+     */
     private void addPlayerInventory(PlayerInventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
@@ -86,6 +134,9 @@ public class IncubatorScreenHandler extends ScreenHandler {
         }
     }
 
+    /**
+     * Adiciona os slots da hotbar do jogador na GUI.
+     */
     private void addPlayerHotbar(PlayerInventory playerInventory) {
         for (int i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
