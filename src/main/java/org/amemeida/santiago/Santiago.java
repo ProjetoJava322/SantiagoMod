@@ -23,14 +23,28 @@ import org.amemeida.santiago.registry.recipes.ModRecipeBooks;
 import org.amemeida.santiago.registry.recipes.ModRecipeSerializers;
 import org.amemeida.santiago.registry.recipes.ModRecipeTypes;
 
+/**
+ * Classe principal do mod Santiago, responsável pela inicialização dos elementos do mod
+ * e pelo registro de eventos e pacotes de rede.
+ */
 public class Santiago implements ModInitializer {
+    /** Identificador do mod. */
     public static final String MOD_ID = "santiago";
+
+    /** Instância do servidor Minecraft para acesso global. */
     private static MinecraftServer server;
 
+    /**
+     * Retorna a instância atual do servidor Minecraft.
+     * @return servidor Minecraft ativo
+     */
     public static MinecraftServer getServer() {
         return server;
     }
 
+    /**
+     * Inicializa todos os elementos do mod e registra os handlers de rede e eventos do servidor.
+     */
     @Override
     public void onInitialize() {
         ModEntities.initialize();
@@ -50,15 +64,18 @@ public class Santiago implements ModInitializer {
         ModRecipeTypes.initialize();
         ModFeatures.initialize();
 
+        // Registro dos pacotes de rede para comunicação cliente-servidor
         PayloadTypeRegistry.playS2C().register(OpenScreenS2CPayload.ID, OpenScreenS2CPayload.CODEC);
         PayloadTypeRegistry.playC2S().register(UpdateStackC2SPayload.ID, UpdateStackC2SPayload.CODEC);
         PayloadTypeRegistry.playC2S().register(PCDataC2SPayload.ID, PCDataC2SPayload.CODEC);
         PayloadTypeRegistry.playC2S().register(TriggerPCC2SPayload.ID, TriggerPCC2SPayload.CODEC);
 
+        // Evento disparado quando o servidor inicia, salva a referência do servidor
         ServerLifecycleEvents.SERVER_STARTED.register((server) -> {
             Santiago.server = server;
         });
 
+        // Registro dos handlers para pacotes recebidos do cliente
         ServerPlayNetworking.registerGlobalReceiver(UpdateStackC2SPayload.ID, (payload, context) -> {
             var playerStack = context.player().getInventory().getStack(payload.slot());
             playerStack.applyComponentsFrom(payload.stack().getComponents());
@@ -88,3 +105,4 @@ public class Santiago implements ModInitializer {
         });
     }
 }
+
