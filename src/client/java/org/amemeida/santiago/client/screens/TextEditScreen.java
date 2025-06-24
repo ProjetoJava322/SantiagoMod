@@ -17,6 +17,9 @@ import org.amemeida.santiago.net.UpdateStackC2SPayload;
 import java.awt.event.KeyEvent;
 
 @Environment(EnvType.CLIENT)
+/**
+ * Tela para edição de texto com suporte a múltiplas linhas, seleção e manipulação de texto.
+ */
 public class TextEditScreen extends Screen {
     private final int slot;
     private final ItemStack stack;
@@ -25,6 +28,13 @@ public class TextEditScreen extends Screen {
     private int currCursorLinePos;
     private final SelectionManager selectionManager;
 
+    /**
+     * Construtor da tela de edição de texto.
+     *
+     * @param slot  Slot do inventário que contém o item.
+     * @param stack Item sendo editado.
+     * @param text  Texto inicial exibido na tela.
+     */
     public TextEditScreen(int slot, ItemStack stack, String text) {
         super(NarratorManager.EMPTY);
         this.slot = slot;
@@ -42,6 +52,12 @@ public class TextEditScreen extends Screen {
         );
     }
 
+    /**
+     * Divide o texto em linhas, adicionando o caractere '\n' ao final de cada uma.
+     *
+     * @param text Texto a ser dividido.
+     * @return Array de linhas.
+     */
     private String[] getLines(Text text) {
         String string = text.getString();
         String[] result = string.split("\n");
@@ -51,25 +67,28 @@ public class TextEditScreen extends Screen {
         return result;
     }
 
-//    private void finalizeBook(boolean signBook) {
-//        if (this.dirty) {
-//            this.writeNbtData();
-//            int i = this.hand == Hand.MAIN_HAND ? this.player.getInventory().getSelectedSlot() : 40;
-//            this.client.getNetworkHandler().sendPacket(new BookUpdateC2SPacket(i, this.pages, signBook ? Optional.of(this.trim()) : Optional.empty()));
-//        }
-//    }
-
+    /**
+     * Remove espaços em branco do início e fim do texto e atualiza o campo de texto.
+     *
+     * @return Texto já cortado.
+     */
     public String trim() {
         this.text = Text.literal(this.text.getString().trim());
         return this.text.getString();
     }
 
+    /**
+     * Fecha a tela e envia os dados do texto editado para o servidor.
+     */
     @Override
     public void close() {
         this.writeNbtData();
         super.close();
     }
 
+    /**
+     * Renderiza a tela e o cursor de texto.
+     */
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
         super.render(context, mouseX, mouseY, deltaTicks);
@@ -92,18 +111,24 @@ public class TextEditScreen extends Screen {
             }
         }
         int x = beforeCursor == 0 ? 20 : 20 + getXPos(beforeCursor, lines[lineIndex]);
-        int y = 20 + lineIndex * this.textRenderer.fontHeight + 1; // 1 pixel a baixo da linha
+        int y = 20 + lineIndex * this.textRenderer.fontHeight + 1; // 1 pixel abaixo da linha
         context.drawText(this.textRenderer,"_", x, y, 16777215, false);
-
     }
 
+    /**
+     * Calcula a posição horizontal do cursor com base na largura dos caracteres antes dele.
+     *
+     * @param beforeCursor Número de caracteres antes do cursor na linha atual.
+     * @param line         Linha de texto atual.
+     * @return Posição horizontal em pixels.
+     */
     private int getXPos(int beforeCursor, String line){
         int width = 0;
         for (int i = 0; i < beforeCursor; i++) {
             char currChar = line.charAt(i);
             if (currChar == '\n' || ((currChar >= 'A' &&  currChar <= 'Z') && currChar != 'I') || currChar == ' ' || (currChar >= '0' && currChar <= '9')) {
                 width += 6;
-            //eu sei que isso é redundante, eu simplesmente não quis reescrever
+                //sabemos que isso é redundante, mas foi mantido intencionalmente
             } else if ((currChar >= 'a' && currChar <= 'z') && currChar != 'i' && currChar != 'l' && currChar != 't' && currChar != 'f' && currChar != 'k'|| currChar == '(' || currChar == ')') {
                 width += 6;
             } else if (currChar == ',' || currChar == '.' || currChar == ';' || currChar == '\'' || currChar == 'i') {
@@ -116,38 +141,54 @@ public class TextEditScreen extends Screen {
                 width += 3;
             }
         }
-
         return width;
     }
 
+    /**
+     * Renderiza o fundo da tela.
+     */
     @Override
     public void renderBackground(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
         this.renderInGameBackground(context);
         this.renderDarkening(context);
     }
 
+    /**
+     * Inicializa a tela.
+     */
     @Override
     protected void init() {
         super.init();
     }
 
+    /**
+     * Envia os dados atualizados do texto para o servidor.
+     */
     private void writeNbtData() {
         var text = this.trim();
-
         var payload = new UpdateStackC2SPayload(this.slot, this.stack, text);
         ClientPlayNetworking.send(payload);
     }
 
+    /**
+     * Define o conteúdo da área de transferência.
+     */
     private void setClipboard(String clipboard) {
         if (this.client != null) {
             SelectionManager.setClipboard(this.client, clipboard);
         }
     }
 
+    /**
+     * Obtém o conteúdo da área de transferência.
+     */
     private String getClipboard() {
         return this.client != null ? SelectionManager.getClipboard(this.client) : "";
     }
 
+    /**
+     * Processa pressionamentos de tecla.
+     */
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (super.keyPressed(keyCode, scanCode, modifiers)) {
@@ -157,6 +198,9 @@ public class TextEditScreen extends Screen {
         }
     }
 
+    /**
+     * Processa caracteres digitados.
+     */
     @Override
     public boolean charTyped(char chr, int modifiers) {
         if (super.charTyped(chr, modifiers)) {
@@ -169,12 +213,14 @@ public class TextEditScreen extends Screen {
         }
     }
 
+    /**
+     * Processa pressionamentos de tecla específicos do modo edição.
+     */
     private boolean keyPressedEditMode(int keyCode, int scanCode, int modifiers) {
         if (Screen.isSelectAll(keyCode)) {
             this.selectionManager.selectAll();
             return true;
         }
-
         if (Screen.isCopy(keyCode)) {
             this.selectionManager.copy();
             return true;
@@ -232,38 +278,56 @@ public class TextEditScreen extends Screen {
         }
     }
 
+    /**
+     * Move o cursor uma linha para cima.
+     */
     private void moveUpLine() {
         this.moveVertically(-1);
     }
 
+    /**
+     * Move o cursor uma linha para baixo.
+     */
     private void moveDownLine() {
         this.moveVertically(1);
     }
 
+    /**
+     * Move verticalmente o cursor um número especificado de linhas.
+     *
+     * @param lines Quantidade de linhas para mover (positivo para baixo, negativo para cima).
+     */
     private void moveVertically(int lines) {
         int i = this.selectionManager.getSelectionStart();
-//        int j = this.getPageContent().getVerticalOffset(i, lines);
+        // int j = this.getPageContent().getVerticalOffset(i, lines);
         this.selectionManager.moveCursorTo(10, Screen.hasShiftDown());
     }
 
+    /**
+     * Move o cursor para o início da linha atual ou para o início do texto se Ctrl estiver pressionado.
+     */
     private void moveToLineStart() {
         if (Screen.hasControlDown()) {
             this.selectionManager.moveCursorToStart(Screen.hasShiftDown());
         } else {
             int i = this.selectionManager.getSelectionStart();
-//            int j = this.getPageContent().getLineStart(i);
+            // int j = this.getPageContent().getLineStart(i);
             this.selectionManager.moveCursorTo(10, Screen.hasShiftDown());
         }
     }
 
+    /**
+     * Move o cursor para o fim da linha atual ou para o fim do texto se Ctrl estiver pressionado.
+     */
     private void moveToLineEnd() {
         if (Screen.hasControlDown()) {
             this.selectionManager.moveCursorToEnd(Screen.hasShiftDown());
         } else {
-//            BookEditScreen.PageContent pageContent = this.getPageContent();
+            // BookEditScreen.PageContent pageContent = this.getPageContent();
             int i = this.selectionManager.getSelectionStart();
             int j = this.text.getString().split("\n")[i].length() - 1;
             this.selectionManager.moveCursorTo(j, Screen.hasShiftDown());
         }
     }
 }
+
