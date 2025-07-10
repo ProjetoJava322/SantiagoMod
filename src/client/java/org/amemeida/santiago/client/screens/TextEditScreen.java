@@ -5,6 +5,8 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.ScrollableTextFieldWidget;
+import net.minecraft.client.gui.widget.ScrollableTextWidget;
 import net.minecraft.client.input.KeyboardInput;
 import net.minecraft.client.util.NarratorManager;
 import net.minecraft.client.util.SelectionManager;
@@ -15,6 +17,7 @@ import net.minecraft.client.gui.widget.MultilineTextWidget;
 import org.amemeida.santiago.net.UpdateStackC2SPayload;
 
 import java.awt.event.KeyEvent;
+import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
 /**
@@ -26,6 +29,8 @@ public class TextEditScreen extends Screen {
     private String[] lines;
     private Text text;
     private int currCursorLinePos;
+    private int scrollerPos;
+    private ScrollableTextWidget widget;
     private final SelectionManager selectionManager;
 
     /**
@@ -40,6 +45,7 @@ public class TextEditScreen extends Screen {
         this.slot = slot;
         this.stack = stack;
         this.currCursorLinePos = 0;
+        this.scrollerPos = 0;
         this.text = Text.literal(text);
         this.lines = getLines(this.text);
 
@@ -48,7 +54,7 @@ public class TextEditScreen extends Screen {
                 (str) -> this.text = Text.literal(str),
                 this::getClipboard,
                 this::setClipboard,
-                (str) -> str.length() < Integer.MAX_VALUE && this.textRenderer.getWrappedLinesHeight(str, 114) <= 128
+                (str) -> str.length() < Integer.MAX_VALUE && this.textRenderer.getWrappedLinesHeight(str, 114) <= Integer.MAX_VALUE
         );
     }
 
@@ -93,27 +99,49 @@ public class TextEditScreen extends Screen {
     public void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
         super.render(context, mouseX, mouseY, deltaTicks);
         this.setFocused(null);
-        MultilineTextWidget textWidget = new MultilineTextWidget(20, 20, this.text, this.textRenderer);
-        textWidget.renderWidget(context, mouseX, mouseY, deltaTicks);
-
-        this.lines = getLines(this.text);
-
-        int cursorPos = this.selectionManager.getSelectionStart();
-        cursorPos = Math.min(cursorPos, this.text.getString().length());
-
-        int lineIndex = 0, beforeCursor = 0;
-
-        for (int i = 0; i < cursorPos; i++) {
-            beforeCursor++;
-            if (this.text.getString().charAt(i) == '\n') {
-                lineIndex++;
-                beforeCursor = 0;
-            }
+        this.widget = new ScrollableTextWidget(20, 20, 200, 200, this.text, this.textRenderer);
+        if (widget != null) {
+            widget.render(context, mouseX, mouseY, deltaTicks);
         }
-        int x = beforeCursor == 0 ? 20 : 20 + getXPos(beforeCursor, lines[lineIndex]);
-        int y = 20 + lineIndex * this.textRenderer.fontHeight + 1; // 1 pixel abaixo da linha
-        context.drawText(this.textRenderer,"_", x, y, 16777215, false);
+        widget.setScrollY(this.scrollerPos);
+
+
+//        this.lines = getLines(this.text);
+//
+//        int cursorPos = this.selectionManager.getSelectionStart();
+//        cursorPos = Math.min(cursorPos, this.text.getString().length());
+//
+//        int lineIndex = 0, beforeCursor = 0;
+//
+//        for (int i = 0; i < cursorPos; i++) {
+//            beforeCursor++;
+//            if (this.text.getString().charAt(i) == '\n') {
+//                lineIndex++;
+//                beforeCursor = 0;
+//            }
+//        }
+//        int x = beforeCursor == 0 ? 20 : 20 + getXPos(beforeCursor, lines[lineIndex]);
+//        int y = 20 + lineIndex * this.textRenderer.fontHeight + 1; // 1 pixel abaixo da linha
+//        context.drawText(this.textRenderer,"_", x, y, 16777215, false);
     }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
+        if (verticalAmount > 0) {
+            System.out.println("Mouse up");
+            this.scrollerPos += 9;
+        } else if (verticalAmount < 0 && this.scrollerPos > 0) {
+            System.out.println("Mouse down");
+            this.scrollerPos += 9;
+        }
+        System.out.println("Scroller: " + this.scrollerPos);
+
+        if (widget != null && widget.isMouseOver(mouseX, mouseY)) {
+            return widget.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
+        }
+        return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
+    }
+
 
     /**
      * Calcula a posição horizontal do cursor com base na largura dos caracteres antes dele.

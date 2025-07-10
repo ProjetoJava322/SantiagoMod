@@ -133,7 +133,7 @@ public class RevolutionTableScreenHandler extends ScreenHandler {
     /**
      * Slot personalizado para saída, que não permite inserção de itens.
      */
-    private class OutputSlot extends Slot {
+    private static class OutputSlot extends Slot {
         public OutputSlot(Inventory inventory, int index, int x, int y) {
             super(inventory, index, x, y);
         }
