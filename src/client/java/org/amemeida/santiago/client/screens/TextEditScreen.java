@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ScrollableTextFieldWidget;
-import net.minecraft.client.gui.widget.ScrollableTextWidget;
+import org.amemeida.santiago.client.screens.ComputerScrollableTextWidget;
 import net.minecraft.client.input.KeyboardInput;
 import net.minecraft.client.util.NarratorManager;
 import net.minecraft.client.util.SelectionManager;
@@ -29,8 +29,8 @@ public class TextEditScreen extends Screen {
     private String[] lines;
     private Text text;
     private int currCursorLinePos;
-    private int scrollerPos;
-    private ScrollableTextWidget widget;
+    private double scrollerPos;
+    private ComputerScrollableTextWidget widget;
     private final SelectionManager selectionManager;
 
     /**
@@ -99,13 +99,10 @@ public class TextEditScreen extends Screen {
     public void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
         super.render(context, mouseX, mouseY, deltaTicks);
         this.setFocused(null);
-        this.widget = new ScrollableTextWidget(20, 20, 200, 200, this.text, this.textRenderer);
+        widget.setMessage(this.text);
         if (widget != null) {
             widget.render(context, mouseX, mouseY, deltaTicks);
         }
-        widget.setScrollY(this.scrollerPos);
-
-
 //        this.lines = getLines(this.text);
 //
 //        int cursorPos = this.selectionManager.getSelectionStart();
@@ -127,17 +124,11 @@ public class TextEditScreen extends Screen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
-        if (verticalAmount > 0) {
-            System.out.println("Mouse up");
-            this.scrollerPos += 9;
-        } else if (verticalAmount < 0 && this.scrollerPos > 0) {
-            System.out.println("Mouse down");
-            this.scrollerPos += 9;
-        }
-        System.out.println("Scroller: " + this.scrollerPos);
-
         if (widget != null && widget.isMouseOver(mouseX, mouseY)) {
-            return widget.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
+            double delta = -verticalAmount * widget.getScrollStep();  // Negative for natural scroll
+            scrollerPos = Math.clamp(scrollerPos + delta, 0, widget.getMaxScrollY());
+            widget.setScrollAmount(scrollerPos);
+            return true;
         }
         return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
     }
@@ -187,6 +178,8 @@ public class TextEditScreen extends Screen {
     @Override
     protected void init() {
         super.init();
+        this.widget = new ComputerScrollableTextWidget(20, 20, 200, 200, this.text, this.textRenderer);
+        this.addSelectableChild(widget);
     }
 
     /**
