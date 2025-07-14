@@ -1,5 +1,7 @@
 package org.amemeida.santiago.registry.blocks;
 
+import org.amemeida.santiago.components.TextEditScreenHandler;
+import org.amemeida.santiago.file.Script;
 import org.amemeida.santiago.incubator.IncubatorScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.network.RegistryByteBuf;
@@ -39,6 +41,11 @@ public class ModScreenHandlers {
      */
     public static final ScreenHandlerType<ComputerScreenHandler> COMPUTER_SCREEN_HANDLER = register("computer",
             ComputerScreenHandler::new, ComputerEntity.ComputerData.PACKET_CODEC);
+
+    /**
+     * Tipo de ScreenHandler para a Edição de Texto
+     */
+    //public static final ScreenHandlerType<TextEditScreenHandler> TEXT_EDIT_SCREEN_HANDLER = register("text_edit", TextEditScreenHandler::new, Script.PACKET_CODEC);
 
     /**
      * Registra um ScreenHandler simples com fábrica fornecida.

@@ -6,6 +6,10 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ScrollableTextFieldWidget;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
+import org.amemeida.santiago.Santiago;
 import org.amemeida.santiago.client.screens.ComputerScrollableTextWidget;
 import net.minecraft.client.input.KeyboardInput;
 import net.minecraft.client.util.NarratorManager;
@@ -15,9 +19,12 @@ import net.minecraft.text.Text;
 import net.minecraft.util.StringHelper;
 import net.minecraft.client.gui.widget.MultilineTextWidget;
 import org.amemeida.santiago.net.UpdateStackC2SPayload;
+import org.amemeida.santiago.registry.items.ModItems;
 
 import java.awt.event.KeyEvent;
 import java.util.Objects;
+
+import static java.lang.Math.max;
 
 @Environment(EnvType.CLIENT)
 /**
@@ -26,7 +33,10 @@ import java.util.Objects;
 public class TextEditScreen extends Screen {
     private final int slot;
     private final ItemStack stack;
+    public static final Identifier TEXTURE = Identifier.of(Santiago.MOD_ID, "textures/gui/text_edit_gui.png");
     private String[] lines;
+    private static final int BACKGROUND_WIDTH = 215;
+    private static final int BACKGROUND_HEIGHT = 224;
     private Text text;
     private int currCursorLinePos;
     private double scrollerPos;
@@ -99,10 +109,14 @@ public class TextEditScreen extends Screen {
     public void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
         super.render(context, mouseX, mouseY, deltaTicks);
         this.setFocused(null);
-        widget.setMessage(this.text);
         if (widget != null) {
+            widget.setMessage(this.text);
             widget.render(context, mouseX, mouseY, deltaTicks);
         }
+        String type = getEditType();
+        int xpos = width/2 - 100;
+        int ypos = height/2 - 105;
+        context.drawText(textRenderer, type, xpos, ypos, 5592405, false);
 //        this.lines = getLines(this.text);
 //
 //        int cursorPos = this.selectionManager.getSelectionStart();
@@ -168,8 +182,23 @@ public class TextEditScreen extends Screen {
      */
     @Override
     public void renderBackground(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
+        int x = (width - BACKGROUND_WIDTH) / 2;
+        int y = (height - BACKGROUND_HEIGHT) / 2;
         this.renderInGameBackground(context);
-        this.renderDarkening(context);
+        context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, x, y, 0, 0,
+                BACKGROUND_WIDTH, BACKGROUND_HEIGHT, 256,256);
+
+    }
+
+    private String getEditType(){
+        if (this.stack.isOf(ModItems.FLOPPY_DISK)){
+            return "Floppy Disk";
+        } else if (this.stack.isOf(ModItems.PUNCH_CARD)){
+            return "Punch Card";
+        } else if (this.stack.isOf(ModItems.ENDER_CARD)){
+            return "Ender Card";
+        }
+        return "";
     }
 
     /**
@@ -178,7 +207,9 @@ public class TextEditScreen extends Screen {
     @Override
     protected void init() {
         super.init();
-        this.widget = new ComputerScrollableTextWidget(20, 20, 200, 200, this.text, this.textRenderer);
+        int xPos = width/2 - 102;
+        int yPos = height/2 - 96;
+        this.widget = new ComputerScrollableTextWidget(xPos, yPos, 203, 202, this.text, this.textRenderer);
         this.addSelectableChild(widget);
     }
 
