@@ -62,12 +62,17 @@ public class PythonRunner {
             }
 
             long timeout = getTimeout();
-            boolean has_finished = proc.waitFor(timeout, TimeUnit.MILLISECONDS);
-            if (!has_finished) {
-                System.out.println("timeout");
-                throw new RunningException("TIMEOUT ERROR");
+            int exit;
+            if (timeout > -1){
+                boolean has_finished = proc.waitFor(timeout, TimeUnit.MILLISECONDS);
+                if (!has_finished) {
+                    System.out.println("timeout");
+                    throw new RunningException("TIMEOUT ERROR");
+                }
+                exit = proc.exitValue();
+            } else {
+                exit = proc.waitFor();
             }
-            int exit = proc.exitValue();
 
             if (exit != 0) {
                 throw new RunningException(streamToString(proc.getErrorStream()));
