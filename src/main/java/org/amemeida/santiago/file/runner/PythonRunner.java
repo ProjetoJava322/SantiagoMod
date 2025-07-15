@@ -1,9 +1,16 @@
 package org.amemeida.santiago.file.runner;
 
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.world.GameRules;
+import org.amemeida.santiago.Santiago;
 import org.amemeida.santiago.exceptions.RunningException;
+import org.amemeida.santiago.registry.ModGamerules;
 
 import java.io.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+import static org.amemeida.santiago.registry.ModGamerules.COMPUTER_TIMEOUT;
 
 /**
  * Classe utilitária para executar scripts Python a partir de arquivos.
@@ -54,7 +61,13 @@ public class PythonRunner {
                 out.write(in);
             }
 
-            int exit = proc.waitFor();
+            long timeout = getTimeout();
+            boolean has_finished = proc.waitFor(timeout, TimeUnit.MILLISECONDS);
+            if (!has_finished) {
+                System.out.println("timeout");
+                throw new RunningException("TIMEOUT ERROR");
+            }
+            int exit = proc.exitValue();
 
             if (exit != 0) {
                 throw new RunningException(streamToString(proc.getErrorStream()));
@@ -77,5 +90,14 @@ public class PythonRunner {
         }
 
         return runner;
+    }
+
+    private int getTimeout(){
+        int timeout = Santiago.getServer()
+                .getOverworld() //não tem problema pq a gamerule é a mesma em todas as dimensões.
+                .getGameRules()
+                .get(COMPUTER_TIMEOUT)
+                .get();
+        return timeout;
     }
 }

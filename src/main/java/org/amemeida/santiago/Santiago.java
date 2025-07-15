@@ -59,6 +59,8 @@ public class Santiago implements ModInitializer {
         ModTags.initialize();
         ModSounds.initialize();
 
+        ModGamerules.initialize();
+
         ModRecipeBooks.initialize();
         ModRecipeSerializers.initialize();
         ModRecipeTypes.initialize();
