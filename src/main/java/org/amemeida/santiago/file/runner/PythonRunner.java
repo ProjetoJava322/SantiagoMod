@@ -19,6 +19,8 @@ import static org.amemeida.santiago.registry.ModGamerules.COMPUTER_TIMEOUT;
 public class PythonRunner {
     private static PythonRunner runner = null;
 
+    private long executionTime;
+
     /**
      * Converte um InputStream em uma String, lendo todas as linhas.
      *
@@ -64,11 +66,15 @@ public class PythonRunner {
             long timeout = getTimeout();
             int exit;
             if (timeout > -1){
+                long start = System.currentTimeMillis();
                 boolean has_finished = proc.waitFor(timeout, TimeUnit.MILLISECONDS);
+                long end = System.currentTimeMillis();
                 if (!has_finished) {
                     System.out.println("timeout");
                     throw new RunningException("TIMEOUT ERROR");
                 }
+                this.executionTime = end - start;
+
                 exit = proc.exitValue();
             } else {
                 exit = proc.waitFor();
@@ -82,6 +88,10 @@ public class PythonRunner {
         } catch (Exception e) {
             throw new RunningException(e.getMessage());
         }
+    }
+
+    public long getExecutionTime(){
+        return this.executionTime;
     }
 
     /**

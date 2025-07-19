@@ -7,6 +7,7 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.amemeida.santiago.Santiago;
@@ -15,6 +16,7 @@ import org.amemeida.santiago.computer.ComputerEntity;
 import org.amemeida.santiago.computer.ComputerScreenHandler;
 import org.amemeida.santiago.net.PCDataC2SPayload;
 import org.amemeida.santiago.net.TriggerPCC2SPayload;
+import org.amemeida.santiago.registry.items.ModComponents;
 
 /**
  * @see net.minecraft.client.gui.screen.ingame.CrafterScreen
@@ -142,6 +144,13 @@ public class ComputerScreen extends HandledScreen<ComputerScreenHandler> {
                 break;
         }
         run.setMessage(Text.literal(message));
+        ItemStack itemStack = handler.getSlot(0).getStack();
+        long executionTime = -1;
+        if (itemStack.contains(ModComponents.SCRIPT)){
+            executionTime = itemStack.get(ModComponents.SCRIPT).getScript().getExecutionTime();
+        }
+        String text = executionTime == -1 ? "--" : String.valueOf(executionTime);
+        context.drawText(textRenderer, "Time Elapsed: " + text + "ms", 0, 0, 5592405, false);
         drawMouseoverTooltip(context, mouseX, mouseY);
     }
 

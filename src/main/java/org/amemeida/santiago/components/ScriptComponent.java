@@ -29,7 +29,6 @@ public class ScriptComponent implements TextContent {
      * Script associado a este componente.
      */
     private final Script script;
-
     /**
      * Construtor que define o script interno.
      *

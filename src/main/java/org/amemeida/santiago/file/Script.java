@@ -27,7 +27,8 @@ public class Script {
      * Codec para serialização/deserialização do script usando o campo "file" (nome do arquivo).
      */
     public static final Codec<Script> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.STRING.fieldOf("file").forGetter(Script::scriptName)
+            Codec.STRING.fieldOf("file").forGetter(Script::scriptName),
+            Codec.LONG.fieldOf("executionTime").forGetter(Script::getExecutionTime)
     ).apply(instance, Script::new));
 
     /**
@@ -37,12 +38,20 @@ public class Script {
 
     private final String file;
 
+    private long executionTime;
+
     /**
      * Construtor do Script a partir do caminho/nome do arquivo.
      * @param path caminho ou nome do arquivo do script
      */
     public Script(String path) {
         this.file = scriptName(path);
+        this.executionTime = -1;
+    }
+
+    public Script(String path, long executionTime) {
+        this.file = scriptName(path);
+        this.executionTime = executionTime;
     }
 
     /**
@@ -75,8 +84,17 @@ public class Script {
         if (file.length() <= 0) {
             throw new RunningException("Empty script");
         }
+        String exit = PythonRunner.getInstance().run(file, in);
+        setExecutionTime(PythonRunner.getInstance().getExecutionTime());
+        return exit;
+    }
 
-        return PythonRunner.getInstance().run(file, in);
+    public long getExecutionTime() {
+        return this.executionTime;
+    }
+
+    private void setExecutionTime(long executionTime) {
+        this.executionTime = executionTime;
     }
 
     /**
